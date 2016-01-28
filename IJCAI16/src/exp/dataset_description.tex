@@ -48,7 +48,7 @@ We compared the proposed method to a number of baselines:
 
 	\item Weighted matrix factorisation (WRMF) as defined in (\ref{eqn:wrmf}).
 
-	\item MF-RSVD of \citet{Tang:2013}.  We ran this method both on user and item based initialization, U-MF-RSVD  and I-MF-RSVD, as discussed in (\ref{eqn:U-MF-RSVD}) and (\ref{eqn:I-MF-RSVD}) respectively.
+	\item MF-RSVD of \citet{Tang:2013}.  We ran this method with user and item based initialization, U-MF-RSVD  and I-MF-RSVD, as discussed in (\ref{eqn:U-MF-RSVD}) and (\ref{eqn:I-MF-RSVD}) respectively.
 	\item SLIM, as per (\ref{eqn:slim}). For computational convenience, we used the SGDReg variant \citep{Levy:2013}, which is identical to SLIM  except that the nonnegativity constraint is removed. We did not evaluate SLIM with nonnegativity directly as~\citet{Levy:2013} reports superior performance to SLIM, and is considerably faster to train.
 \end{compactitem}
 Note that, We didn't compare against ~\citep{Sedhain:2016} due to its memory complexity on a large scale dataset. For instance, on \Lowes \ dataset LRec requires $\sim$260 GB of memory. 

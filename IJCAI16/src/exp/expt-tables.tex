@@ -2,13 +2,11 @@ Tables \ref{tbl:guitar-results} -- \ref{tbl:ml10m-results} summarise the results
 We make the following observations:
 \begin{compactitem}
 
-\item \LinearLow generally is competitive with SLIM and outperforms the other methods on all four datasets. Unlike other methods, \LinearLow performance is not very sensitive to the choice of user or item based method. In figure~\ref{fig:dimensionPerformance}, we observe that the performance of the $\LinearLow$ method improves with the number of the dimensions of the projection. 
+\item \LinearLow is generally competitive with SLIM and outperforms the other baselines on all four datasets. Unlike other methods, \LinearLow performance is not very sensitive to the choice of user or item based method. In figure~\ref{fig:dimensionPerformance}, we observe that the performance of the $\LinearLow$ method improves with the number of the projection dimensions. 
 
-\item Amongst the matrix factorisation methods, Randomized SVD method~\citep{Tang:2013} consistently performs the best in all dataset. This is possibly due to the fact that SVD provides a good initialization and the linear regression finds the optimal solution for the given initialization which could have been missed by optimizing non-convex bilinear objective initialized with random parameters. Furthermore, we observe that the performance of MF-RSVD varies depending upon the choice of latent factors we choose to initialize.
+\item Amongst the matrix factorisation methods, Randomized SVD method~\citep{Tang:2013} consistently performs the best in all dataset. This is possibly due to the fact that SVD provides a good initialization and the optimization finds optimal solution for the given initialization. Whereas, matrix factorization optimizes nonconvex bilinear objective with random initialization which may lead to the inferior solution. Furthermore, we observe that the performance of MF-RSVD varies significantly based on whether we initialize user or item latent factors.
 
-\item Neighborhood based methods are computationally inexpensive. However, they are consistently outperformed by the linear methods in all of our dataset.  %Furthermore, user based method ran out of memory on movielens 10M dataset. Hence, neighborhood methods can run into memory related issues on a fairly dense decent sized dataset. 
-
-\end{compactitem}
+\item Neighborhood based methods are computationally inexpensive. However, they are consistently outperformed by the linear methods in all of our dataset.  
 
 
 \begin{figure}[!ht]

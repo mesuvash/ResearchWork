@@ -190,8 +190,8 @@ Linear methods are attractive for several reasons. They have superior performanc
 
 %
 
-\subsection{Randomized SVD}
-SVD is a very popular matrix factorization algorithm and has been widely used for dimensionality reduction. Also, SVD has been applied in the context of top-n recommendation problem ~\citep{Cremonesi:2010}. However, SVD is computationally expensive and is not scalable to large scale datasets. To address the scalability issue, ~\citep{halko2011} proposed a fast randomized approximate SVD algorithm that scales to large matrix. The randomized SVD algorithm is summarized in Algorithm~\ref{algo:RSVD}.
+\subsection{Randomized Singular Value Decomposition (SVD)}
+Singular Value Decomposition (SVD) is a fundamental matrix factorization algorithm and has been widely used for dimensionality reduction. However, SVD is computationally expensive and is not scalable to large scale datasets. To address the scalability issue, ~\citep{halko2011} proposed a fast randomized approximate SVD algorithm that scales to a large matrix. The randomized SVD procedure is summarized in Algorithm~\ref{algo:RSVD}.
 
 \begin{algorithm}
   	% \algsetup{linenosize=\tiny}
@@ -223,7 +223,7 @@ Recently, ~\citep{Tang:2013} proposed a two step randomized SVD based algorithm 
 \begin{align*}
 	\R \approx \P_k \Sig_k \Q^T_k
 \end{align*}
-where, $\P_k \in \mathbb{R}^{m \times k}$, $\Q_k \in \mathbb{R}^{n \times k}$ and $\Sig_k \in \mathbb{R}^{k \times k}$. Given the truncated SVD solution, they initialize and fix the item latent factor with SVD solution and solve 
+where, $\P_k \in \mathbb{R}^{m \times k}$, $\Q_k \in \mathbb{R}^{n \times k}$ and $\Sig_k \in \mathbb{R}^{k \times k}$. Given the truncated SVD solution, they initialize the item latent factor with SVD solution and solve 
 
 \begin{align}
 \label{eqn:I-MF-RSVD}
