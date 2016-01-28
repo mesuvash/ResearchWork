@@ -1,14 +1,14 @@
-Personalised recommendation systems are a core component
-of many modern e-commerce services. Collaborative
-filtering (CF) is the de-facto approach to an algorithmic recommendation,
-based on extracted information from a database
-of item preferences for a collection of users. Most work on CF has considered 
+Personalised recommendation system is a core component
+in many modern e-commerce services. Collaborative
+filtering (CF) is the de-facto standard approach to making recommendation,
+based on information in a database
+of item preferences from a population of users. Most work on CF has considered 
 the explicit feedback
-setting, where users express positive and negative preferences
-for items in terms of ratings or likes/dislikes. By
+setting, where users express both positive and negative preferences
+for items in terms of ratings or likes/dislikes. In
 contrast, in the implicit feedback setting, we do not have
 explicit negative preference information. For example, consider
-recommending items to users of an e-commerce website,
+recommending items to users of an e-commerce website
 based on their purchase history. One can assume that a
 purchase indicates a positive preference for an item. However,
 the lack of a purchase does not necessarily indicate
@@ -28,38 +28,45 @@ filtering(OC-CF)
 % training of such models is challenging, due to strong coupling
 % between parameters.
 
+
+In designing a real world recommender systems there are various factors to be 
+considered. First and foremost, a recommender system should  produce good recommendation which can be quantified in terms of \textbf{relevance}. The relevance of a recommender system is measured using evaluation metrics such as $precision@k$, $recall@k$ etc. Second, recommender systems should be highly \textbf{scalable}. In modern day applications, it is very common to have millions of users and items. A model should be able to handle the data as the number of user and item grows to this scale. \textbf{Similarity metric} is another important aspect of personalization. For instance, item-item similarity allows us to recommend similar items to the users. Recommending similar items is very prevalent in a real-world recommender systems. Hence, it is highly desirable to have a recommendation algorithm where the similarity is directly expressed and incorporated in the model. Also, \textbf{interpretability} of the recommendation is very critical in persuading users. By explaining the recommendations, the system becomes more transparent, build users' trust in the system and convince users in consuming the recommended items. Lack of interpretability weakens the ability to persuade users in decision making~\citep{explainabiltyVIG2009}.
+
 While there is a rich literature on OC-CF (discussed subsequently),
 to our knowledge, all existing methods lack one
-or more desiderata. For example, methods that do not employ
-learning (such as neighbourhood approaches) cannot
-ensure optimal exploitation of available data. On the other hand,
-amongst methods that employ learning (such as matrix factorisation),
-it is common to employ learning objectives that
-are non-convex, which limits the range of methods for 
-efficient global optimisation (if even possible) for OC-CF problems.
-While linear models have been shown to perform well on OC-CF problems, they are
-computationally expensive as they require solving large number of regression
-problem.
-
-Furthermore, while designing a real world recommender systems there are various factors to be 
-considered. First and foremost, a recommender system should  produce good recommendation which can be quantified in terms of \textbf{performance}. The performance of a recommender system is measured using evaluation metrics such as $precision@k$, $recall@k$ etc. Second, recommender systems should be highly \textbf{scalable}. In modern day applications, it is very common to have millions of users and items. A model should be able to handle the data as the number of user and item grows to this scale. \textbf{Similarity} is another important aspect of personalization. For instance, item-item similarity allows us to recommend similar items to the users. Recommending similar items is very prevalent in a real-world recommender systems. Hence, it is highly desirable to have a recommendation algorithm where the similarity is directly expressed and incorporated in the model. Also, \textbf{interpretability} of the recommendation is very critical in persuading users. By explaining the recommendations, the system becomes more transparent, build users' trust in the system and convince users in consuming the recommended items. Lack of interpretability weakens the ability to persuade users in decision making~\citep{explainabiltyVIG2009}.
-
-Neighborhood based methods are scalable, incorporates similarity metric in the model and gives explainable recommendations. However, they do not perform well compared to the linear counterparts. Matrix Factorization models are scalable but are not competitive in terms of performance. Also, the recommendations are not explainable and there is no notion of similarity in the model. On the other hand, Linear recommenders are state-of-the-art in terms of performance. Furthermore, the model explicitly learns the similarity metric. Also, like neighborhood models, recommendations from linear model are easily explainable. This makes linear methods an ideal choice for OC-CF. However, the linear methods are computationally expensive which limits its applicability in real world scenario. Table~\ref{tbl:comparison} summarises the strengths and weaknesses of existing OC-CF methods.
+or more desiderata. 
+%For example, methods that do not employ
+%learning (such as neighbourhood approaches) cannot
+%ensure optimal exploitation of the available data. On the other hand,
+%amongst methods that employ learning (such as matrix factorisation),
+%it is common to employ learning objectives that
+%are non-convex, which limits the range of methods for 
+%efficient global optimisation (if even possible) for OC-CF problems.
+%While linear models have been shown to perform well on OC-CF problems, they are
+%computationally expensive as they require solving a large number of regression
+%problems.
+Neighborhood-based methods are scalable, incorporates similarity metric in the model and gives explainable recommendations. 
+However, the relevance of their recommendation is weaker compared to the linear counterparts. 
+Matrix Factorization models are scalable but are also not competitive in terms of relevance. Also, the recommendations are not explainable and there is no notion of similarity in the model. On the other hand, Linear recommenders are state-of-the-art in terms of relevance. Furthermore, the model explicitly learns a similarity metric. Also, like neighborhood models, recommendations from linear model are easily explainable. However, current linear methods are computationally expensive which limits their applicability in large scale real world problems. Table~\ref{tbl:comparison} summarises the strengths and weaknesses of existing OC-CF methods.
 % computational cost of the linear models limits its applicability in real world recommendation. 
 %This motivates us to address the scalability of the linear models which we will discuss in the following section.
 
-In this paper, we address the computational limitation of linear models by proposing an algorithm that uses fast randomized SVD dimensionality reduction to scale linear models on large-scale datasets. 
+This paper addresses the computational bottleneck of linear model, enabling it to scale up to large OC-CF problem while retaining essentially
+the same performance. Our method, \LinearLow (Fast Low Rank Linear Model), employ two ingredients that are known in the literature: 
+the formulation of OC-CF as a regularised linear multi-regression problem, and the use of randomized SVD for fast dimensionality reduction. 
+However, the combination of these two ideas, to the best of our knowledge, is novel. 
+Extensive experiments using a number of real-world datasets demonstrate that \LinearLow provides competitive performance with a significant reduction of the computational cost compared to the state-of-the-art Linear models. 
+Due to its scalabiity and performance, 
+\LinearLow has all the desirable properties of a practical recommender system and compared favourably to other methods.
+%By proposing an algorithm that uses fast randomized SVD dimensionality reduction to scale linear models on large-scale datasets. 
 %First, we view linear model as a standard multiple regression problem. Then we  perform fast randomized dimensionality reduction on the design matrix allowing us to solve the extremely efficiently in a closed form. 
-Experimentation on a range of real-world datasets reveals that \LinearLow provides competitive performance with a significant reduction of the computational cost compared to the state-of-the-art Linear models. Also, as shown in Table~\ref{tbl:comparison}, \LinearLow has all desirable properties of a practical recommender system compared to other state-of-the-art methods.
-
-
 \begin{table*}[!t]
 	\centering
 
 		\begin{tabular}{llccc}
 		\toprule
 		\toprule	
-		\textbf{Method} & \textbf{Performance} & \textbf{Scalability} & \textbf{Similarity} & \textbf{Interpretability} \\
+		\textbf{Method} & \textbf{Relevance} & \textbf{Scalability} & \textbf{Similarity} & \textbf{Interpretability} \\
 		\toprule
 		Neighborhood & \cross & \tick & \tick & \tick \\
 		MF & \cross & \tick$^*$  & \cross & \cross \\
