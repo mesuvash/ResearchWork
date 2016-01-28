@@ -72,6 +72,57 @@ However, their biggest drawback is that they rely on a fixed $\Sim$ that is not 
 Recommendation performance can be quite sensitive to the choice of $\Sim$, and the choice generally depends on the problem domain.
 Therefore, neighbourhood methods are unable to adapt to the characteristics of the data at hand.
 
+\subsection{Matrix factorisation}
+% \subsubsection{Matrix factorisation}
+
+Matrix factorisation methods are the \emph{de facto} approach to collaborative filtering with explicit feedback.
+The basic idea is to embed users and items into some shared latent space, with the aim of inferring complex preference profiles for both users and items \citep{Srebro:2003, Koren:2009}.
+
+Formally, let $\J \in \Real_+^{\numUsers \times \numItems}$ be some pre-defined weighting matrix to be defined shortly.
+Let $\ell \colon \Real \times \Real \to \Real_+$ be some loss function, typically squared loss $\ell( y, \hat{y} ) = (y - \hat{y})^2$.
+Then, matrix factorisation methods optimise
+\begin{equation}
+\label{eqn:wrmf}
+\min_{ \theta } \sum_{ u \in \userSet, i \in \itemSet } \J_{\ui} \cdot \ell( \R_{\ui}, \predUserItem( \theta ) ) + \mathrm{\Omega}( \theta ) ,
+\end{equation}
+where the recommendation matrix is\footnote{Typically, one also includes user- and item- bias terms in the recommendation matrix. We omit these for brevity.}
+\begin{equation}
+\label{eqn:factorisation}
+\RHat(\theta) = \A^T \B
+\end{equation}
+for $\theta = \{ \A, \B \}$, 
+and $\mathrm{\Omega}( \theta )$ is the \emph{regulariser}, which is typically
+$$\mathrm{\Omega}( \theta ) = \frac{\lambda}{2} \cdot ( ||\A||_F^2 + ||\B||_F^2 )$$
+for some $\lambda > 0$.
+The matrices $\A \in \Real^{\K \times \numUsers}, \B \in \Real^{\K \times \numItems}$ are the \emph{latent representations} of users and items respectively, with $\K \in \mathbb{N}_+$ being the \emph{latent dimension} of the factorisation.
+
+In standard collaborative filtering applications with explicit negative feedback, one typically sets \citep{Koren:2009} $\J_{\ui} = \indicator{ \R_{\ui} > 0 },$
+so that one only considers (user, item) pairs with known preference information.
+In implicit feedback problems, this is not appropriate, as one will simply learn on the known positive preferences, and thus predict $\predUserItem = 1$ uninformatively.
+
+An alternative is to set $\J_{ui} = 1$ uniformly. This treats all absent purchases as indications of a negative preference. 
+While this appears problematic, the resulting approach been shown to perform well in recommendation (as opposed to rating prediction) tasks, and is termed PureSVD in \citep{Cremonesi:2010}.
+%While this prevents trivial solutions, it intuitively may lead to suppressing items that the user would enjoy, but is just unaware of.
+One appealing property of this choice of $\J$ is that the parameters $\A, \B$ can be found using the singular value decomposition (SVD) of $\R$. 
+% Let's not give competing methods too much credit, also does SVD scale to Netflix?  -Scott
+%, for which efficient routines are available.
+
+
+%
+% \subsubsection{Weighted matrix factorisation}
+
+As an intermediate between the two extreme weighting schemes above, the WRMF method \citep{Pan:2008} sets $\J_{\ui}$ to be
+\begin{equation}
+\label{eqn:wrmf-weight}
+\J_{\ui} =  \indicator{ \R_{\ui} = 0 } + \alpha \cdot \indicator{ \R_{\ui} > 0 } 
+\end{equation}
+where $\alpha$ assigns an importance weight to the observed ratings. 
+% This effectively replaces the unknown preferences with \emph{noisy negative preferences}, since by not placing them on an equal footing with the known positive preferences, we allow for the fact that some of these preferences may actually be positives.
+% More sophisticated weighting schemes have also been explored.
+% In scenarios where there are multiple observations for each (user, item) pair, \citet{Hu:2008} considered a logarithmic weighting of these counts.
+% The LogisticMF approach of \citet{Johnson:2014} uses a similar weighting strategy in the context of song play counts, with logistic rather than squared loss.
+% \citet{Lin:2014} proposed to choose $\J$ based on the popularity of items, so that the lack of a stated preference for a highly popular item is seen as a stronger indication of a negative preference than for a less popular item.
+
 
 \subsection{Linear Recommenders}
 
@@ -87,7 +138,7 @@ where $\lambda, \mu > 0$ are appropriate constants, and
 \end{equation}
 Here, $|| \cdot ||_1$ denotes the elementwise $\ell_1$ norm of $\W$ so as to encourage sparsity, and the constraint $\text{diag}( \W ) = 0$ prevents a trivial solution of $\W = \id_{\numItems \times \numItems}$. SLIM is equivalent to an item-based neighbourhood approach where the similarity matrix $\Sim = \W$ is \emph{learned} from the data.
 
-Similarly, ~\citep{Sedhain:2016} decomposed OO-CF as learning a linear model per user for personalized recommendation. Despite its superior performance, proposed method is computationally expensive and memory exhaustive restricting its applicability in real world problem.
+Similarly, ~\citep{Sedhain:2016} decomposed OC-CF as learning a linear model per user for personalized recommendation. Despite its superior performance, proposed method is computationally expensive and memory exhaustive restricting its applicability in real world problem.
 % LRec solves
 % \begin{equation}
 % \label{eqn:lrec}
@@ -138,58 +189,37 @@ Linear methods are attractive for several reasons. They have superior performanc
 % Linear loss and logistic loss are favored due to the availability of the efficient solvers. LRec allows fine tuing per user level and efficient hyperparameter selection by cross-validating on the subset of the users.
 
 %
-\subsection{Bilinear Models}
-\subsubsection{Matrix factorisation}
 
-Matrix factorisation methods are the \emph{de facto} approach to collaborative filtering with explicit feedback.
-The basic idea is to embed users and items into some shared latent space, with the aim of inferring complex preference profiles for both users and items \citep{Srebro:2003, Koren:2009}.
+\subsection{Randomized SVD}
+SVD is a very popular matrix factorization algorithm and has been widely used for dimensionality reduction. Also, SVD has been applied in the context of top-n recommendation problem ~\citep{Cremonesi:2010}. However, SVD is computationally expensive and is not scalable to large scale datasets. To address the scalability issue, ~\citep{halko2011} proposed a fast randomized approximate SVD algorithm that scales to large matrix. The randomized SVD algorithm is summarized in Algorithm~\ref{algo:RSVD}.
 
-Formally, let $\J \in \Real_+^{\numUsers \times \numItems}$ be some pre-defined weighting matrix to be defined shortly.
-Let $\ell \colon \Real \times \Real \to \Real_+$ be some loss function, typically squared loss $\ell( y, \hat{y} ) = (y - \hat{y})^2$.
-Then, matrix factorisation methods optimise
-\begin{equation}
-\label{eqn:wrmf}
-\min_{ \theta } \sum_{ u \in \userSet, i \in \itemSet } \J_{\ui} \cdot \ell( \R_{\ui}, \predUserItem( \theta ) ) + \mathrm{\Omega}( \theta ) ,
-\end{equation}
-where the recommendation matrix is\footnote{Typically, one also includes user- and item- bias terms in the recommendation matrix. We omit these for brevity.}
-\begin{equation}
-\label{eqn:factorisation}
-\RHat(\theta) = \A^T \B
-\end{equation}
-for $\theta = \{ \A, \B \}$, 
-and $\mathrm{\Omega}( \theta )$ is the \emph{regulariser}, which is typically
-$$\mathrm{\Omega}( \theta ) = \frac{\lambda}{2} \cdot ( ||\A||_F^2 + ||\B||_F^2 )$$
-for some $\lambda > 0$.
-The matrices $\A \in \Real^{\K \times \numUsers}, \B \in \Real^{\K \times \numItems}$ are the \emph{latent representations} of users and items respectively, with $\K \in \mathbb{N}_+$ being the \emph{latent dimension} of the factorisation.
+\begin{algorithm}
+  	% \algsetup{linenosize=\tiny}
+  	\small
+	\caption{Given $R \in \mathbb{R}^{m \times n}$, compute approximate rank-k SVD; R $\approx$ $P_k \Sig_k Q_k$}
+	\label{algo:RSVD}
+	\begin{algorithmic}[1]
 
-In standard collaborative filtering applications with explicit negative feedback, one typically sets \citep{Koren:2009} $\J_{\ui} = \indicator{ \R_{\ui} > 0 },$
-so that one only considers (user, item) pairs with known preference information.
-In implicit feedback problems, this is not appropriate, as one will simply learn on the known positive preferences, and thus predict $\predUserItem = 1$ uninformatively.
-
-An alternative is to set $\J_{ui} = 1$ uniformly. This treats all absent purchases as indications of a negative preference. 
-While this appears problematic, the resulting approach been shown to perform well in recommendation (as opposed to rating prediction) tasks, and is termed PureSVD in \citep{Cremonesi:2010}.
-%While this prevents trivial solutions, it intuitively may lead to suppressing items that the user would enjoy, but is just unaware of.
-One appealing property of this choice of $\J$ is that the parameters $\A, \B$ can be found using the singular value decomposition (SVD) of $\R$. 
-% Let's not give competing methods too much credit, also does SVD scale to Netflix?  -Scott
-%, for which efficient routines are available.
+	\Procedure{RSVD}{R, k}
+	\State Draw $n\times k$ Gaussian random matrix $\Omega$
+	\State Construct $n\times k$ sample matrix $A = R\Omega$
+	\State Construct $m\times k$ orthonormal matrix $Z$, such that $A  = ZX$
+	\State Constuct $k\times n$ matrix $B = Z^TR$
+	\State Compute the SVD of B, B =  $\hat{P_k} \Sig_k Q_k$
+	\State  $R \Rightarrow ZB \Rightarrow Z \hat{P_k} \Sig_k Q_k \Rightarrow  P_k \Sig_k Q_k, where\ P_k = Z \hat{P_k}$
+	% \State \begin{eqnarray*}
+	% 		R & = & ZB\\
+	% 		& = &  Z\hat{P_k}Σ_kQ_k\\
+	% 		& = & P_kΣ_kQ_k\\
+	% 		&   & where,\ P_k = Z\hat{P_k}\\
+	% 		\end{eqnarray*}
+	\State return $P_k \Sig_k Q_k$
+	\EndProcedure
+	\end{algorithmic}
+\end{algorithm}
 
 
-%
-% \subsubsection{Weighted matrix factorisation}
-
-As an intermediate between the two extreme weighting schemes above, the WRMF method \citep{Pan:2008} sets $\J_{\ui}$ to be
-\begin{equation}
-\label{eqn:wrmf-weight}
-\J_{\ui} =  \indicator{ \R_{\ui} = 0 } + \alpha \cdot \indicator{ \R_{\ui} > 0 } 
-\end{equation}
-where $\alpha$ assigns an importance weight to the observed ratings. 
-% This effectively replaces the unknown preferences with \emph{noisy negative preferences}, since by not placing them on an equal footing with the known positive preferences, we allow for the fact that some of these preferences may actually be positives.
-More sophisticated weighting schemes have also been explored.
-In scenarios where there are multiple observations for each (user, item) pair, \citet{Hu:2008} considered a logarithmic weighting of these counts.
-% The LogisticMF approach of \citet{Johnson:2014} uses a similar weighting strategy in the context of song play counts, with logistic rather than squared loss.
-% \citet{Lin:2014} proposed to choose $\J$ based on the popularity of items, so that the lack of a stated preference for a highly popular item is seen as a stronger indication of a negative preference than for a less popular item.
-
-~\citep{Tang:2013} proposed a two step randomized SVD based algorithm to scale matrix factorization. First, they compute the rank-k SVD of the matrix $\R$,
+Recently, ~\citep{Tang:2013} proposed a two step randomized SVD based algorithm to scale matrix factorization. First, they compute the rank-k SVD of the matrix $\R$,
 \begin{align*}
 	\R \approx \P_k \Sig_k \Q^T_k
 \end{align*}
