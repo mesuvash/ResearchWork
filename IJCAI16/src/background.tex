@@ -1,0 +1,215 @@
+% !TEX root = ../implicit-logistic-kdd15.tex
+
+We now introduce our notation, summarised in table \ref{tbl:glossary}. % summarises the commonly used symbols.
+%Let $\userSet = \{ 1, \ldots, \numUsers \}$ denote a set of users, and $\itemSet = \{ 1, \ldots, \numItems \}$ a set of items.
+Let $\userSet$ denote a set of users, and $\itemSet$ a set of items,
+with $\numUsers = | \userSet |$ and $\numItems = | \itemSet |$.
+In one-class collaborative filtering (OC-CF), we have a purchase 
+\footnote{We use the word ``purchase'' simply for the purposes of exposition. The method described in this paper is applicable in other implicit feedback settings, such as modelling users' play counts of songs.} 
+matrix $\R \in \{ 0, 1 \}^{\numUsers \times \numItems}$. %, where $\numItems$ is the number of items and $\numUsers$ the number of users.
+We use $\R_{\ui}$ to refer to the purchase status for the user $\u$ and item $\i$.
+We use $\R_{:\i}$ to denote the indicator vector of each users' purchase of an item, and similarly $\R_{\u:}$ to denote the vector of a user's preference for each item $i$.
+We denote by  $\ratedSet{\u}$ the set of the items purchased by user $\u$.
+
+The goal in OC-CF is to learn a recommender, which for our purposes is simply a matrix $\RHat \in \Real^{\numUsers \times \numItems}$. %of the same size as $\R$.
+We call $\RHat$ the \emph{recommendation matrix}.
+As the entries are real-valued, for each user $u$, we can sort the entries of $\RHat_{\u:}$ to obtain a predicted ranking over items.
+%We will use $\predUserItem$ to denote the predicted score for a given (user, item) pair.
+We evaluate $\RHat$ assuming we are in the \emph{top-$N$ recommendation} scenario \citep{Deshpande:2004}.
+Here, the interest is in finding $\RHat$ such that the head of the ranked list for each user comprises items she will enjoy. %, as measured by metrics such as Precision@K.
+% This is more realistic than the \emph{rating prediction} scenario, where the interest is in accurately predicting the (typically ordinal) entries of $\R$ \citep{Marlin:2004}. %, as measured by \eg RMSE.
+%One can use techniques from the latter for top-$N$ recommendation, but they may underperform \citep{Cremonesi:2010}.
+
+\begin{table}[t]
+	\centering
+	\caption{Commonly used symbols.}
+	\label{tbl:glossary}
+	\resizebox{0.5\textwidth}{!}{%
+
+	\begin{tabular}{@{}llll@{}}
+	\toprule
+	\toprule
+	\textbf{Symbol} & \textbf{Meaning} & \textbf{Symbol} & \textbf{Meaning} \\
+	\toprule
+	$\userSet$ & Set of users & $\R$ & Purchase matrix \\
+	$\itemSet$ & Set of items & $\RHat$ & Recommendation matrix \\
+	$m$ & Number of users & $\ratedSet{\u}$	& Items purchased by $\u$ \\
+	$n$ & Number of items & $\Sim$ & Item similarity matrix \\
+	\bottomrule
+	\end{tabular}
+	}
+\end{table}
+
+The challenge in OC-CF is the lack of examples of explicit negative preference.
+%We may assume that if a user purchased an item, \ie $\R_{\ui} = 1$, this indicates a positive preference.
+%However, if a user has not purchased an item, \ie $\R_{\ui} = 0$, this does not necessarily indicate a negative preference, as the user may simply be unaware of the item.
+While we may assume that a user purchasing an item is an indication of positive preference, a user not purchasing an item does not necessarily indicate a negative preference: the user may simply be unaware of the item.
+Henceforth, we say that $(\u, \i)$ pairs with $\R_{\ui} = 1$ denote ``known positive preference'', while pairs with $\R_{\ui} = 0$ denote ``unknown preference''.
+
+We now review some existing approaches to OC-CF. Broadly, the OC-CF algorithms can be categorised into three categories, namely, Neighborhood, Linear and Bilinear methods.
+
+%
+\subsection{Neighbourhood methods}
+\label{sec:knn}
+
+In (item-based) neighbourhood methods, we produce a recommendation matrix of the form
+\begin{equation}
+\label{eqn:knn}
+%\predUserItem = \sum_{\i' \in \itemSet} \R_{\u \i'} \cdot \Sim_{\i' \i},
+\RHat = \R \Sim
+\end{equation}
+where $\Sim \in \Real^{\numItems \times \numItems}$ is some \emph{item-similarity matrix}.
+That is, for a user $\u$, one scores an item $\i$ as the \emph{sum of $\i$'s similarity to all other items that $\u$ enjoys}.
+%Given an item $i$, the nonzero entries of $\Sim_{i:}$ are known as the \emph{neighbours} of the item.
+Typically, one uses a predefined matrix $\Sim$ that relies on $\R$. A popular example is cosine similarity \citep{Sarwar:2001, Linden:2003},
+$$ \Sim_{\i' \i} = \frac{ \R_{:\i}^T \R_{:\i'} }{|| \R_{:\i} ||_2 || \R_{:\i'} ||_2}. $$
+Other examples are the Pearson correlation, Jaccard coefficient and conditional probability \citep{Deshpande:2004}. It is typical to sparsify $\Sim$ so that its rows and columns only keep the largest entries, \ie to compute the $k$-neighbourhood graph based on $\Sim$.
+
+Neighbourhood methods are attractive for several reasons.
+They are simple to implement, efficient (as the computation of (\ref{eqn:knn}) requires $O( | \ratedSet{\u} | )$ time), and interpretable.
+%Further, they may also be applied as-is to OC-CF problems \citep{Linden:2003, Deshpande:2004}, unlike most other popular CF models such as matrix factorisation (to be discussed subsequently).
+However, their biggest drawback is that they rely on a fixed $\Sim$ that is not learned from data \citep{Koren:2008b}.
+Recommendation performance can be quite sensitive to the choice of $\Sim$, and the choice generally depends on the problem domain.
+Therefore, neighbourhood methods are unable to adapt to the characteristics of the data at hand.
+
+
+\subsection{Linear Recommenders}
+
+An alternative to neighborhood models, Linear methods~\cite{Ning:2011, Sedhain:2016} learns the similarity metric from the data. SLIM~\citep{Ning:2011} views the recommendation as learning item-item similarity and learns an item-similarity matrix $\W \in \Real^{\numItems \times \numItems}$ via
+\begin{equation}
+\label{eqn:slim}
+\min_{ \W \in \C } || \R - \R \W ||_F^2 + \frac{\lambda}{2} || \W ||_F^2 + \mu || \W ||_1,
+\end{equation}
+where $\lambda, \mu > 0$ are appropriate constants, and
+\begin{equation}
+\label{eqn:slim-constraint}
+\C = \{ \W \in \Real^{\numItems \times \numItems} \colon \text{diag}( \W ) = 0, \W \geq 0 \}.
+\end{equation}
+Here, $|| \cdot ||_1$ denotes the elementwise $\ell_1$ norm of $\W$ so as to encourage sparsity, and the constraint $\text{diag}( \W ) = 0$ prevents a trivial solution of $\W = \id_{\numItems \times \numItems}$. SLIM is equivalent to an item-based neighbourhood approach where the similarity matrix $\Sim = \W$ is \emph{learned} from the data.
+
+Similarly, ~\citep{Sedhain:2016} decomposed OO-CF as learning a linear model per user for personalized recommendation. Despite its superior performance, proposed method is computationally expensive and memory exhaustive restricting its applicability in real world problem.
+% LRec solves
+% \begin{equation}
+% \label{eqn:lrec}
+% \min_{ \theta } \sum_{\u \in \userSet} \sum_{\i \in \itemSet} \ell( \y^{(\u)}_{\i}, \X_{\i :} \w^{(\u)} ) + \mathrm{\Omega}(\theta),
+% \end{equation}
+% %where $\ell(y, v) = \log(1 + e^{-yv})$ is the logistic loss,
+% where $X = R^T$; $\ell$ is some convex loss function such as squared or logistic loss; 
+% $\theta = \{ \w^{(\u)}  \}_{\u \in \userSet}$. 
+
+% For squared loss, we minimize the following objective 
+% \begin{equation}
+% \label{eqn:lrecsquared}
+% \min_{ \W  } || \X - \X \W ||_F^2 + \frac{\lambda}{2} || \W ||_F^2 
+% \end{equation}
+Linear methods are attractive for several reasons. They have superior performance~\cite{Ning:2011, Sedhain:2016} and unlike neighborhood methods, they adapt with the data as the parameters are learned from data itself. Furthermore, the recommendations are easily interpretable. However, the linear methods are computationally expensive as they require solving large number of regression problem for a huge design matrix $R$.
+
+% The nonnegativity constraint encourages interpretability, but \citet{Levy:2013} demonstrated that good performance can be achieved without it.
+
+% Given a learned $\W$, SLIM produces a recommendation matrix
+% $$\RHat(\theta) = \R \W.$$
+% Thus, SLIM is equivalent to an item-based neighbourhood approach where the similarity matrix $\Sim = \W$ is \emph{learned} from data.
+
+% \subsubsection{LRec}
+% LRec \citep{LRec}  decomposes the OO-CF into learning a linear model per user for personalized recommendation. 
+% Let's define a matrix $\X \in \Real^{\numItems \times \numUsers}$ by
+% $$\X = \R^T,$$
+% and, for each $\u  \in \userSet$, define a vector $\y^{(\u)} \in \PMOne^{\numItems}$ that is the same as $\R_{\u:}$ except with zeros in $\R_{\u:}$ replaced by -1:
+% \begin{align*}
+% \y^{(\u)} &= 2 \R_{\u:} - 1.
+% \end{align*}
+
+% Then, LRec solves
+% \begin{equation}
+% \label{eqn:lrec}
+% \min_{ \theta } \sum_{\u \in \userSet} \sum_{\i \in \itemSet} \ell( \y^{(\u)}_{\i}, \X_{\i :} \w^{(\u)} ) + \mathrm{\Omega}(\theta),
+% \end{equation}
+% %where $\ell(y, v) = \log(1 + e^{-yv})$ is the logistic loss,
+% where $\ell$ is some convex loss function such as squared loss, logistic loss; 
+% $\theta = \{ \w^{(\u)}  \}_{\u \in \userSet}$. 
+
+% For squared loss, we minimize the following objective 
+% \begin{equation}
+% \label{eqn:lrecsquared}
+% \min_{ \W  } || \X - \X \W ||_F^2 + \frac{\lambda}{2} || \W ||_F^2 
+% \end{equation}
+%Each $\w^{(\u)} \in \Real^{\numUsers}$, and so we can equivalently think of $\theta = \{ \W \}$ for some $\W \in \Real^{\numUsers \times \numUsers}$, with $\w^{(\u)} = \W_{:\u}$.
+% LRec employs squared loss and logistic loss
+% Linear loss and logistic loss are favored due to the availability of the efficient solvers. LRec allows fine tuing per user level and efficient hyperparameter selection by cross-validating on the subset of the users.
+
+%
+\subsection{Bilinear Models}
+\subsubsection{Matrix factorisation}
+
+Matrix factorisation methods are the \emph{de facto} approach to collaborative filtering with explicit feedback.
+The basic idea is to embed users and items into some shared latent space, with the aim of inferring complex preference profiles for both users and items \citep{Srebro:2003, Koren:2009}.
+
+Formally, let $\J \in \Real_+^{\numUsers \times \numItems}$ be some pre-defined weighting matrix to be defined shortly.
+Let $\ell \colon \Real \times \Real \to \Real_+$ be some loss function, typically squared loss $\ell( y, \hat{y} ) = (y - \hat{y})^2$.
+Then, matrix factorisation methods optimise
+\begin{equation}
+\label{eqn:wrmf}
+\min_{ \theta } \sum_{ u \in \userSet, i \in \itemSet } \J_{\ui} \cdot \ell( \R_{\ui}, \predUserItem( \theta ) ) + \mathrm{\Omega}( \theta ) ,
+\end{equation}
+where the recommendation matrix is\footnote{Typically, one also includes user- and item- bias terms in the recommendation matrix. We omit these for brevity.}
+\begin{equation}
+\label{eqn:factorisation}
+\RHat(\theta) = \A^T \B
+\end{equation}
+for $\theta = \{ \A, \B \}$, 
+and $\mathrm{\Omega}( \theta )$ is the \emph{regulariser}, which is typically
+$$\mathrm{\Omega}( \theta ) = \frac{\lambda}{2} \cdot ( ||\A||_F^2 + ||\B||_F^2 )$$
+for some $\lambda > 0$.
+The matrices $\A \in \Real^{\K \times \numUsers}, \B \in \Real^{\K \times \numItems}$ are the \emph{latent representations} of users and items respectively, with $\K \in \mathbb{N}_+$ being the \emph{latent dimension} of the factorisation.
+
+In standard collaborative filtering applications with explicit negative feedback, one typically sets \citep{Koren:2009} $\J_{\ui} = \indicator{ \R_{\ui} > 0 },$
+so that one only considers (user, item) pairs with known preference information.
+In implicit feedback problems, this is not appropriate, as one will simply learn on the known positive preferences, and thus predict $\predUserItem = 1$ uninformatively.
+
+An alternative is to set $\J_{ui} = 1$ uniformly. This treats all absent purchases as indications of a negative preference. 
+While this appears problematic, the resulting approach been shown to perform well in recommendation (as opposed to rating prediction) tasks, and is termed PureSVD in \citep{Cremonesi:2010}.
+%While this prevents trivial solutions, it intuitively may lead to suppressing items that the user would enjoy, but is just unaware of.
+One appealing property of this choice of $\J$ is that the parameters $\A, \B$ can be found using the singular value decomposition (SVD) of $\R$. 
+% Let's not give competing methods too much credit, also does SVD scale to Netflix?  -Scott
+%, for which efficient routines are available.
+
+
+%
+% \subsubsection{Weighted matrix factorisation}
+
+As an intermediate between the two extreme weighting schemes above, the WRMF method \citep{Pan:2008} sets $\J_{\ui}$ to be
+\begin{equation}
+\label{eqn:wrmf-weight}
+\J_{\ui} =  \indicator{ \R_{\ui} = 0 } + \alpha \cdot \indicator{ \R_{\ui} > 0 } 
+\end{equation}
+where $\alpha$ assigns an importance weight to the observed ratings. 
+% This effectively replaces the unknown preferences with \emph{noisy negative preferences}, since by not placing them on an equal footing with the known positive preferences, we allow for the fact that some of these preferences may actually be positives.
+More sophisticated weighting schemes have also been explored.
+In scenarios where there are multiple observations for each (user, item) pair, \citet{Hu:2008} considered a logarithmic weighting of these counts.
+% The LogisticMF approach of \citet{Johnson:2014} uses a similar weighting strategy in the context of song play counts, with logistic rather than squared loss.
+% \citet{Lin:2014} proposed to choose $\J$ based on the popularity of items, so that the lack of a stated preference for a highly popular item is seen as a stronger indication of a negative preference than for a less popular item.
+
+~\citep{Tang:2013} proposed a two step randomized SVD based algorithm to scale matrix factorization. First, they compute the rank-k SVD of the matrix $\R$,
+\begin{align*}
+	\R \approx \P_k \Sig_k \Q^T_k
+\end{align*}
+where, $\P_k \in \mathbb{R}^{m \times k}$, $\Q_k \in \mathbb{R}^{n \times k}$ and $\Sig_k \in \mathbb{R}^{k \times k}$. Given the truncated SVD solution, they initialize and fix the item latent factor with SVD solution and solve 
+
+\begin{align}
+\label{eqn:I-MF-RSVD}
+\begin{split}
+\underset{\A}{\mathrm{argmin}}  \left \| \R - \A^T\B\right \|_F^2 + \lambda \left \|  \A \right \|_F^2   \\
+where,\ \B = \Sig^{\frac{1}{2}} \Q^T_k 
+\end{split}
+\end{align}
+In the (\ref{eqn:I-MF-RSVD}), the item latent factors, $\B$, is initialized with SVD solution and fixed. Similarly, instead of fixing $\B$, if we fix $\A$, we get the following objective  
+\begin{align}
+\label{eqn:U-MF-RSVD}
+\begin{split}
+% \label{eqn:U-MF-RSVD}
+\underset{\B}{\mathrm{argmin}}  \left \| \R - \A^T\B\right \|_F^2 + \lambda \left \|  \B \right \|_F^2 f\\
+where,\ \A = \P_k \Sig^{\frac{1}{2}}\\
+\end{split}
+\end{align}
+
+We refer (\ref{eqn:U-MF-RSVD}) and (\ref{eqn:I-MF-RSVD}) as U-MF-RSVD and I-MF-RSVD respectively. Furthermore, we emperically show that the performance varies for these variants .

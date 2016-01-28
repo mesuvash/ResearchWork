@@ -1,0 +1,168 @@
+Tables \ref{tbl:guitar-results} -- \ref{tbl:ml10m-results} summarise the results of the various methods.
+We make the following observations:
+\begin{compactitem}
+
+\item \LinearLow generally is competitive with SLIM and outperforms the other methods on all four datasets. Unlike other methods, \LinearLow performance is not very sensitive to the choice of user or item based method. In figure~\ref{fig:dimensionPerformance}, we observe that the performance of the $\LinearLow$ method improves with the number of the dimensions of the projection. 
+
+\item Amongst the matrix factorisation methods, Randomized SVD method~\citep{Tang:2013} consistently performs the best in all dataset. This is possibly due to the fact that SVD provides a good initialization and the linear regression finds the optimal solution for the given initialization which could have been missed by optimizing non-convex bilinear objective initialized with random parameters. Furthermore, we observe that the performance of MF-RSVD varies depending upon the choice of latent factors we choose to initialize.
+
+\item Neighborhood based methods are computationally inexpensive. However, they are consistently outperformed by the linear methods in all of our dataset.  %Furthermore, user based method ran out of memory on movielens 10M dataset. Hence, neighborhood methods can run into memory related issues on a fairly dense decent sized dataset. 
+
+\end{compactitem}
+
+
+\begin{figure}[!ht]
+ 
+  \caption{Performance of the user and item Linear-Flow with the number of dimensions. [NOTE: This graph is incomplete and will be updated as soon as I get the results of the ongoing experiment.]}
+  \label{fig:dimensionPerformance}
+
+  \centering
+    \includegraphics[width=0.5\textwidth]{imgs/mapvsdim}
+\end{figure}
+
+\begin{table*} \centering
+\caption{Results on the \Guitar\ Dataset.Reported numbers are the mean and standard errors across test folds.}
+\label{tbl:guitar-results}
+\sisetup{round-mode=places,round-precision=4}
+\setlength{\arrayrulewidth}{.2em}
+\resizebox{\textwidth}{!}{%
+	\begin{tabular}{l|cccc|cccc|c}
+
+		\hline
+		& prec@3 & prec@5 & prec@10 & prec@20 & recall@3 & recall@5 & recall@10 & recall@20 & mAP@20 \\
+		\hline
+		I-KNN & \num{0.0392946} $\pm$ \num{0.000740131}&\num{0.0290698} $\pm$ \num{0.000481972}&\num{0.0186035} $\pm$ \num{0.000183558}&\num{0.0114972} $\pm$ \num{0.000173495}&\num{0.0796737} $\pm$ \num{0.00114575}&\num{0.0972945} $\pm$ \num{0.0015189}&\num{0.123216} $\pm$ \num{0.00211853}&\num{0.152093} $\pm$ \num{0.00282882}&\num{0.0724802} $\pm$ \num{0.000847599} \\
+
+		U-KNN & \num{0.0513834} $\pm$ \num{0.000833489}&\num{0.0385951} $\pm$ \num{0.00053828}&\num{0.0248887} $\pm$ \num{0.000286595}&\num{0.0153466} $\pm$ \num{0.000131545}&\num{0.106753} $\pm$ \num{0.00353486}&\num{0.132133} $\pm$ \num{0.00367855}&\num{0.167949} $\pm$ \num{0.00294863}&\num{0.205186} $\pm$ \num{0.00361786}&\num{0.096853} $\pm$ \num{0.00327844}\\
+		\hline
+		PureSVD &\num{0.0376449} $\pm$ \num{0.00127358}&\num{0.0266772} $\pm$ \num{0.00089595}&\num{0.0160128} $\pm$ \num{0.000489187}&\num{0.00935938} $\pm$ \num{0.000274969}&\num{0.077575} $\pm$ \num{0.0018074}&\num{0.0905975} $\pm$ \num{0.00178722}&\num{0.10729} $\pm$ \num{0.00259282}&\num{0.124735} $\pm$ \num{0.00303375}&\num{0.0691732} $\pm$ \num{0.0022488}\\
+
+		WRMF & \num{0.0397423} $\pm$ \num{0.000829807}&\num{0.0292538} $\pm$ \num{0.00130488}&\num{0.0182918} $\pm$ \num{0.000777345}&\num{0.0112631} $\pm$ \num{0.000355525}&\num{0.0787259} $\pm$ \num{0.00205237}&\num{0.0955262} $\pm$ \num{0.00466977}&\num{0.118577} $\pm$ \num{0.00454186}&\num{0.146652} $\pm$ \num{0.00373931}&\num{0.0707377} $\pm$ \num{0.00250011}\\
+
+
+		 U-MF-RSVD & \num{0.0503115} $\pm$ \num{0.000706483}&\num{0.0380556} $\pm$ \num{0.000409447}&\num{0.024716} $\pm$ \num{0.000295929}&\num{0.0154737} $\pm$ \num{0.000138579}&\num{0.100346} $\pm$ \num{0.00244466}&\num{0.130098} $\pm$ \num{0.00172624}&\num{0.169269} $\pm$ \num{0.
+		 00324593}&\num{0.206917} $\pm$ \num{0.00388295}&\num{0.096142} $\pm$ \num{0.00256307}\\
+
+		 I-MF-RSVD &  \num{0.048024} $\pm$ \num{0.00101945}&\num{0.0360405} $\pm$ \num{0.000795975}&\num{0.0233964} $\pm$ \num{0.00040994}&\num{0.0143542} $\pm$ \num{0.000205676}&\num{0.0975785} $\pm$ \num{0.00295556}&\num{0.12106} $\pm$ \num{0.00333514}&\num{0.15495} $\pm$ \num{0.00377634}&\num{0.188591} $\pm$ \num{0.00370206}&\num{0.088872} $\pm$ \num{0.00298146}\\
+		 \hline
+		U-\LinearLow &  \num{0.0517661} $\pm$ \num{0.0013236}&\num{0.039076} $\pm$ \num{0.000453008}&\num{0.0259077} $\pm$ \num{0.000359636}&\num{0.0160148} $\pm$ \num{0.000156205}&\num{0.106044} $\pm$ \num{0.00354247}&\num{0.134986} $\pm$ \num{0.00321575}&\num{0.171069} $\pm$ \num{0.00256121}&\num{0.21182} $\pm$ \num{0.00287904}&\num{0.0970373} $\pm$ \num{0.00295675}\\
+
+		I-\LinearLow &  \num{0.0519634} $\pm$ \num{0.00118221}& \textbf{\num{0.0398248}} $\pm$ \textbf{\num{0.000395405}}&\textbf{\num{0.0261965}} $\pm$ \textbf{\num{0.00029752}}&\textbf{\num{0.0162194}} $\pm$ \textbf{\num{0.000176304}} &\num{0.106225} $\pm$ \num{0.00318998}&\textbf{\num{0.136158}} $\pm$ \textbf{\num{0.00263693}}& \textbf{\num{0.175846}} $\pm$ \textbf{\num{0.00259154}}&\textbf{\num{0.21445}} $\pm$ \textbf{\num{0.00329417}}&\num{0.0971399} $\pm$ \num{0.00278328} \\
+
+		SLIM & \textbf{\num{0.05193}} $\pm$ \textbf{\num{0.000993329}} &\num{0.0394536} $\pm$ \num{0.000446818}&\num{0.0258101} $\pm$ \num{0.000370669}&\num{0.0159822} $\pm$ \num{0.000179519}& \textbf{\num{0.106891}} $\pm$ \textbf{\num{0.00336095}} & \num{0.134075} $\pm$ \num{0.00263189}&\num{0.172917} $\pm$ \num{0.00393006}&\num{0.211739} $\pm$ \num{0.00334752}& \textbf{\num{0.0976171}} $\pm$ \textbf{\num{0.00285635}}\\
+		\hline
+	\end{tabular}
+}
+
+\end{table*}
+
+
+\begin{table*}
+\centering
+\caption{Results on the \Lowes\ Dataset. Reported numbers are the mean and standard errors across test folds.}
+\label{tbl:lowes-results}
+\sisetup{round-mode=places,round-precision=4}
+\setlength{\arrayrulewidth}{.2em}
+\resizebox{\textwidth}{!}{%
+	\begin{tabular}{l|cccc|cccc|c}
+		\hline
+		& prec@3 & prec@5 & prec@10 & prec@20 & recall@3 & recall@5 & recall@10 & recall@20 & mAP@20 \\
+		\hline
+
+		I-KNN& \num{0.0873112} $\pm$ \num{0.000312328}&\num{0.0641096} $\pm$ \num{0.000188717}&\num{0.039968} $\pm$ \num{2.497e-05}&\num{0.0236268} $\pm$ \num{2.21553e-05}&\num{0.174334} $\pm$ \num{0.000475527}&\num{0.209725} $\pm$ \num{0.000734376}&\num{0.25655} $\pm$ \num{0.000656016}&\num{0.298203} $\pm$ \num{0.000780293}&\num{0.159084} $\pm$ \num{0.000744553}\\
+
+		U-KNN & \num{0.083615} $\pm$ \num{0.000543698}&\num{0.0604791} $\pm$ \num{0.000315813}&\num{0.0365057} $\pm$ \num{0.000158705}&\num{0.0207183} $\pm$ \num{7.63958e-05}&\num{0.171068} $\pm$ \num{0.00114767}&\num{0.202927} $\pm$ \num{0.0013022}&\num{0.240684} $\pm$ \num{0.00133084}&\num{0.269529} $\pm$ \num{0.00139324}&\num{0.153226} $\pm$ \num{0.000677742} \\
+		\hline
+		WRMF & \num{0.0579444} $\pm$ \num{0.000533736}&\num{0.0436854} $\pm$ \num{0.000351719}&\num{0.0283301} $\pm$ \num{0.000132275}&\num{0.0174794} $\pm$ \num{8.66821e-05}&\num{0.114509} $\pm$ \num{0.00127688}&\num{0.141715} $\pm$ \num{0.00145374}&\num{0.180057} $\pm$ \num{0.00123648}&\num{0.218382} $\pm$ \num{0.00118803}&\num{0.105296} $\pm$ \num{0.00113906}\\
+
+		PureSVD& \num{0.0334664} $\pm$ \num{0.000371735}&\num{0.0243872} $\pm$ \num{0.000219215}&\num{0.0153198} $\pm$ \num{0.000192711}&\num{0.00940457} $\pm$ \num{9.78628e-05}&\num{0.0686033} $\pm$ \num{0.000613791}&\num{0.0822981} $\pm$ \num{0.000496161}&\num{0.101772} $\pm$ \num{0.000929943}&\num{0.123281} $\pm$ \num{0.000963618}&\num{0.0624199} $\pm$ \num{0.000409779}\\
+
+		U-MF-RSVD & \num{0.0698511} $\pm$ \num{0.000264063}&\num{0.0501735} $\pm$ \num{0.000168695}&\num{0.0305234} $\pm$ \num{6.92086e-05}&\num{0.0178093} $\pm$ \num{2.44251e-05}&\num{0.140823} $\pm$ \num{0.000744449}&\num{0.166043} $\pm$ \num{0.000756267}&\num{0.198482} $\pm$ \num{0.000496204}&\num{0.228237} $\pm$ \num{0.000372687}&\num{0.127657} $\pm$ \num{0.000605505}\\
+
+		I-MF-RSVD & \num{0.0879546} $\pm$ \num{0.000309565}&\num{0.0652340} $\pm$ \num{0.000125627}&\num{0.0408385} $\pm$ \num{6.59647e-05}&\num{0.024174} $\pm$ \num{3.46969e-05}&\num{0.17195} $\pm$ \num{0.000819305}&\num{0.219902} $\pm$ \num{0.000784415}&\num{0.268505} $\pm$ \num{0.000951328}&\num{0.320267} $\pm$ \num{0.00109792}&\num{0.158156} $\pm$ \num{0.000535714}\\
+
+		\hline
+		U-\LinearLow & \num{0.0887046} $\pm$ \num{0.000360732}&\num{0.0665582} $\pm$ \num{0.000216048}&\num{0.0430431} $\pm$ \num{8.65977e-05}&\num{0.0258449} $\pm$ \num{4.08943e-05}&\num{0.176274} $\pm$ \num{0.00116389}&\num{0.221449} $\pm$ \num{0.00103377}&\num{0.273932} $\pm$ \num{0.00128104}&\num{0.328884} $\pm$ \num{0.000962716}&\num{0.161136} $\pm$ \num{0.000796471} \\
+
+		I-\LinearLow & \num{0.088546} $\pm$ \num{0.000313667}&\num{0.0655582} $\pm$ \num{0.000184367}&\num{0.0428563} $\pm$ \num{8.65977e-05}&\num{0.0256449} $\pm$ \num{4.08943e-05}&\num{0.178274} $\pm$ \num{0.00116389}&\num{0.22019} $\pm$ \num{0.00115512}&\num{0.271932} $\pm$ \num{0.00098104}&\num{0.325884} $\pm$ \num{0.000962716}&\num{0.1598136} $\pm$ \num{0.00060563}\\
+
+		SLIM & \textbf{\num{0.0893233}} $\pm$ \textbf{\num{0.000368188}} & \textbf{\num{0.067148}} $\pm$ \textbf{\num{0.000265703}} & \textbf{\num{0.0432961}} $\pm$ \textbf{\num{9.56e-05}} & \textbf{\num{0.0264457}} $\pm$ \textbf{\num{4.35806e-05}} & \textbf{\num{0.179554}} $\pm$ \textbf{\num{0.00102426}} & \textbf{\num{0.221297}} $\pm$ \textbf{\num{0.00131012}} & \textbf{\num{0.27899}} $\pm$ \textbf{\num{0.00123667}} & \textbf{\num{0.333619}} $\pm$ \textbf{\num{0.000853983}} &\textbf{\num{0.165406}} $\pm$ \textbf{\num{0.000567257}}\\
+		\hline
+	\end{tabular}
+}
+
+\end{table*}
+
+
+\begin{table*}
+\centering
+\caption{Results on the \LastFM\ dataset. Reported numbers are the mean and standard errors across test folds.}
+\label{tbl:lfm-results}
+\sisetup{round-mode=places,round-precision=4}
+\setlength{\arrayrulewidth}{.2em}
+\resizebox{\textwidth}{!}{%
+	\begin{tabular}{l|cccc|cccc|c}
+		\hline
+		& prec@3 & prec@5 & prec@10 & prec@20 & recall@3 & recall@5 & recall@10 & recall@20 & mAP@20 \\
+		\hline
+		
+		I-KNN & \num{0.590416} $\pm$ \num{0.00681256}&\num{0.560014} $\pm$ \num{0.00665502}&\num{0.506819} $\pm$ \num{0.005335}&\num{0.439033} $\pm$ \num{0.00544237}&\num{0.0186925} $\pm$ \num{0.000409293}&\num{0.0284457} $\pm$ \num{0.00019801}&\num{0.0496602} $\pm$ \num{0.000725893}&\num{0.0824128} $\pm$ \num{0.00162769}&\num{0.328037} $\pm$ \num{0.00545731}\\
+		
+		U-KNN & \num{0.54343} $\pm$ \num{0.0082815}&\num{0.512716} $\pm$ \num{0.00379193}&\num{0.461895} $\pm$ \num{0.00435141}&\num{0.400865} $\pm$ \num{0.00279941}&\num{0.0168885} $\pm$ \num{0.000401477}&\num{0.0260217} $\pm$ \num{0.00109202}&\num{0.0448487} $\pm$ \num{0.00107688}&\num{0.0747077} $\pm$ \num{0.00137005}&\num{0.289443} $\pm$ \num{0.0028557}\\
+		\hline
+		WRMF& \num{0.627733} $\pm$ \num{0.00706182}&\num{0.589904} $\pm$ \num{0.0048549}&\num{0.530787} $\pm$ \num{0.00494584}&\num{0.457678} $\pm$ \num{0.0031882}&\num{0.0198242} $\pm$ \num{0.000626489}&\num{0.0300178} $\pm$ \num{0.00092226}&\num{0.0515797} $\pm$ \num{0.00145554}&\num{0.0842257} $\pm$ \num{0.00128816}&\num{0.356239} $\pm$ \num{0.00356279}\\
+		
+		PureSVD& \num{0.399314} $\pm$ \num{0.0121106}&\num{0.368972} $\pm$ \num{0.00820293}&\num{0.332126} $\pm$ \num{0.00686075}&\num{0.288016} $\pm$ \num{0.00694973}&\num{0.0128221} $\pm$ \num{0.000343921}&\num{0.0193537} $\pm$ \num{0.000436219}&\num{0.0338005} $\pm$ \num{0.000558837}&\num{0.0566592} $\pm$ \num{0.00184532}&\num{0.1723} $\pm$ \num{0.0064526}\\
+		
+		
+		U-MF-RSVD & \num{0.517611} $\pm$ \num{0.00420094}&\num{0.486515} $\pm$ \num{0.00679594}&\num{0.442329} $\pm$ \num{0.00284252}&\num{0.385893} $\pm$ \num{0.00379811}&\num{0.0141313} $\pm$ \num{0.000466199}&\num{0.0216847} $\pm$ \num{0.000816839}&\num{0.0387367} $\pm$ \num{0.000486377}&\num{0.065261} $\pm$ \num{0.00125401}&\num{0.28104} $\pm$ \num{0.00232539} \\
+
+		I-MF-RSVD & \num{0.577999} $\pm$ \num{0.00634419}&\num{0.544735} $\pm$ \num{0.00495392}&\num{0.490102} $\pm$ \num{0.00113919}&\num{0.423595} $\pm$ \num{0.00294237}&\num{0.0189928} $\pm$ \num{0.000802407}&\num{0.0291943} $\pm$ \num{0.000617191}&\num{0.0496356} $\pm$ \num{0.00111173}&\num{0.0810641} $\pm$ \num{0.000883613}&\num{0.31458} $\pm$ \num{0.00199473}\\
+		
+		\hline
+		U-\LinearLow & \num{0.622872} $\pm$ \num{0.00808055}&\num{0.591173} $\pm$ \num{0.00669141}&\num{0.533685} $\pm$ \num{0.00267285}&\num{0.462653} $\pm$ \num{0.00200248}&\num{0.0205295} $\pm$ \num{0.00088446}&\num{0.031471} $\pm$ \num{0.00136713}&\num{0.0540013} $\pm$ \num{0.000374292}&\num{0.0881041} $\pm$ \num{0.00104606}&\num{0.356342} $\pm$ \num{0.0024981} \\
+
+		I-\LinearLow & \num{0.622936} $\pm$ \num{0.0103349}&\num{0.591295} $\pm$ \num{0.00457034}&\num{0.533744} $\pm$ \num{0.00213843}& \textbf{\num{0.465254}} $\pm$ \textbf{\num{0.00230385}} & \num{0.0202518} $\pm$ \num{0.00113334}&\num{0.0309846} $\pm$ \num{0.0010114}&\num{0.0529278} $\pm$ \num{0.000586952}&\num{0.0874401} $\pm$ \num{0.00151923}&\textbf{\num{0.361476}} $\pm$ \textbf{\num{0.00135615}} \\
+
+		SLIM & \textbf{\num{0.631921}} $\pm$ \textbf{\num{0.00688652}} & \textbf{\num{0.600204}} $\pm$ \textbf{\num{0.00547024}} & \textbf{\num{0.538391}} $\pm$ \textbf{\num{0.00483142}} & \num{0.463855} $\pm$ \num{0.00564272}& \textbf{\num{0.0222616}} $\pm$ \textbf{\num{0.000640118}} & \textbf{\num{0.0345738}} $\pm$ \textbf{\num{0.000432309}} & \textbf{\num{0.0592139}} $\pm$ \textbf{\num{0.000665128}} & \textbf{\num{0.0971651}} $\pm$ \textbf{\num{0.00172048}} & \textbf{\num{0.358657}} $\pm$ \textbf{\num{0.00648519}}\\
+		\hline
+
+	\end{tabular}
+}
+
+\end{table*}
+
+
+\begin{table*}
+\centering
+\caption{Results on the \MLens \ dataset. Reported numbers are the mean and standard errors across test folds.}
+\label{tbl:ml10m-results}
+
+\sisetup{round-mode=places,round-precision=4}
+\setlength{\arrayrulewidth}{.2em}
+\resizebox{\textwidth}{!}{%
+	\begin{tabular}{l|cccc|cccc|c}
+		\hline
+		& prec@3 & prec@5 & prec@10 & prec@20 & recall@3 & recall@5 & recall@10 & recall@20 & mAP@20 \\
+		\hline
+		I-KNN & \num{0.175295} $\pm$ \num{0.00106952}&\num{0.150609} $\pm$ \num{0.00094119}&\num{0.117895} $\pm$ \num{0.000588135}&\num{0.0882615} $\pm$ \num{0.000277381}&\num{0.0994175} $\pm$ \num{0.000436698}&\num{0.139251} $\pm$ \num{0.000863745}&\num{0.212073} $\pm$ \num{0.00122592}&\num{0.306992} $\pm$ \num{0.0011675}&\num{0.121597} $\pm$ \num{0.000341949}\\
+		U-KNN & \multicolumn{9}{c}{Out of Memory} \\
+		WRMF& \num{0.183177} $\pm$ \num{0.000717378}&\num{0.156148} $\pm$ \num{0.000608973}&\num{0.120461} $\pm$ \num{0.000227475}&\num{0.0888908} $\pm$ \num{0.000191351}&\num{0.102434} $\pm$ \num{0.000341573}&\num{0.142791} $\pm$ \num{0.00079676}&\num{0.213899} $\pm$ \num{0.000900389}&\num{0.306102} $\pm$ \num{0.000965358}&\num{0.125477} $\pm$ \num{0.000306481}\\
+		\hline
+		PureSVD& \num{0.121602} $\pm$ \num{0.00130405}&\num{0.105352} $\pm$ \num{0.000630497}&\num{0.0835721} $\pm$ \num{0.00051333}&\num{0.0634407} $\pm$ \num{0.000190345}&\num{0.0729778} $\pm$ \num{0.00135302}&\num{0.103025} $\pm$ \num{0.00112297}&\num{0.157163} $\pm$ \num{0.000933525}&\num{0.226441} $\pm$ \num{0.00108551}&\num{0.0835647} $\pm$ \num{0.00104866}\\
+		U-MF-RSVD & \num{0.222923} $\pm$ \num{0.000720948}&\num{0.189479} $\pm$ \num{0.000693553}&\num{0.145598} $\pm$ \num{0.000755357}&\num{0.1069} $\pm$ \num{0.000389999}&\num{0.127299} $\pm$ \num{0.000347369}&\num{0.175504} $\pm$ \num{0.000534452}&\num{0.259163} $\pm$ \num{0.00140552}&\num{0.365583} $\pm$ \num{0.0018449}&\num{0.158626} $\pm$ \num{0.000496512}\\
+		I-MF-RSVD &\num{0.223153} $\pm$ \num{0.000891741}&\num{0.190154} $\pm$ \num{0.000992553}&\num{0.146148} $\pm$ \num{0.0004936}&\num{0.102704} $\pm$ \num{0.000366158}&\num{0.124622} $\pm$ \num{0.000675105}&\num{0.174479} $\pm$ \num{0.00103911}&\num{0.260198} $\pm$ \num{0.000789582}&\num{0.367512} $\pm$ \num{0.00172003}&\num{0.159046} $\pm$ \num{0.000668585}\\
+		\hline
+		U-\LinearLow & \textbf{\num{0.226995}} $\pm$ \textbf{\num{0.00118303} }& \textbf{\num{0.192692}} $\pm$ \textbf{\num{0.000863619}} & \textbf{\num{0.147724}} $\pm$ \textbf{\num{0.000644332}} & \textbf{\num{0.108314}} $\pm$ \textbf{\num{0.000379042}} & \textbf{\num{0.129017}} $\pm$ \textbf{\num{0.00043998} }& \textbf{\num{0.177729}} $\pm$ \textbf{\num{0.000842416}} & \textbf{\num{0.262384}} $\pm$ \textbf{\num{0.00131329} }& \textbf{\num{0.370079}} $\pm$ \textbf{\num{0.00160711} }& \textbf{\num{0.160144}} $\pm$ \textbf{\num{0.000564101}}\\
+
+		I-\LinearLow&\num{0.224153} $\pm$ \num{0.000891741}&\num{0.190854} $\pm$ \num{0.000992553}&\num{0.146848} $\pm$ \num{0.0004936}&\num{0.107704} $\pm$ \num{0.000366158}&\num{0.127622} $\pm$ \num{0.000675105}&\num{0.176479} $\pm$ \num{0.00103911}&\num{0.260898} $\pm$ \num{0.000789582}&\num{0.367572} $\pm$ \num{0.00172003}&\num{0.159246} $\pm$ \num{0.000668585}\\
+		
+		SLIM & \num{0.220762} $\pm$ \num{0.0011295}&\num{0.188849} $\pm$ \num{0.00108041}&\num{0.146434} $\pm$ \num{0.000411703}&\num{0.107985} $\pm$ \num{0.000422922}&\num{0.125832} $\pm$ \num{0.000297234}&\num{0.174751} $\pm$ \num{0.00123935}&\num{0.261108} $\pm$ \num{0.000859885}&\num{0.36903} $\pm$ \num{0.00160871}&\num{0.157878} $\pm$ \num{0.000725628}\\
+		\hline
+		% \hline
+	\end{tabular}
+}
+
+\end{table*}
+
+

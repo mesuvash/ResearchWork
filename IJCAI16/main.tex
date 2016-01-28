@@ -1,0 +1,258 @@
+
+
+\documentclass{article}
+\usepackage{ijcai16}
+\usepackage{times}
+%Todo: use proper bibliography style
+\usepackage{times}
+\usepackage{helvet}
+\usepackage{courier}
+% ===============================================================
+\usepackage{verbatim}
+\usepackage{color}
+\usepackage{epstopdf}
+
+% incompatible with AAAI
+%\usepackage[colorlinks=true,citecolor=blue]{hyperref}
+\usepackage{url}
+
+%\usepackage{mathptmx}
+\usepackage{times}
+
+\usepackage{subfig}
+\usepackage{graphicx}
+% \graphicspath{{plots//}}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+%\usepackage[mathscr]{eucal}
+\usepackage{stmaryrd}
+% \usepackage{algorithmicx}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{natbib}
+%\setlength{\bibsep}{4pt}
+
+\renewcommand{\citep}{\cite}
+\renewcommand{\citet}{\cite}
+
+%\usepackage[doi=false, isbn=false, url=false, natbib=true, style=numeric, backend=bibtex]{biblatex}
+%\addbibresource{bib/references.bib}
+%\setlength\bibitemsep{0.5\itemsep}
+
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{multicol}
+\usepackage{booktabs,colortbl}
+\usepackage{siunitx}
+\sisetup{detect-weight, detect-family=true}
+\definecolor{tabgrey}{rgb}{0.8,0.8,0.8}
+\arrayrulecolor{tabgrey}
+
+%\usepackage{paralist}
+%\setlength{\plitemsep}{1ex}
+\usepackage{enumitem}
+\newlist{compactitem}{itemize}{3} % 3 is max-depth
+\setlist[compactitem]{label=\textbullet, nosep, leftmargin=2em}
+
+% ===============================================================
+
+% biblatex + hyperref colouring
+%\DeclareCiteCommand{\cite}
+%  {\usebibmacro{prenote}}
+%  {\usebibmacro{citeindex}%
+%   \printtext[bibhyperref]{\usebibmacro{cite}}}
+%  {\multicitedelim}
+%  {\usebibmacro{postnote}}
+%
+%\DeclareCiteCommand*{\cite}
+%  {\usebibmacro{prenote}}
+%  {\usebibmacro{citeindex}%
+%   \printtext[bibhyperref]{\usebibmacro{citeyear}}}
+%  {\multicitedelim}
+%  {\usebibmacro{postnote}}
+%
+%\DeclareCiteCommand{\parencite}[\mkbibparens]
+%  {\usebibmacro{prenote}}
+%  {\usebibmacro{citeindex}%
+%    \printtext[bibhyperref]{\usebibmacro{cite}}}
+%  {\multicitedelim}
+%  {\usebibmacro{postnote}}
+%
+%\DeclareCiteCommand*{\parencite}[\mkbibparens]
+%  {\usebibmacro{prenote}}
+%  {\usebibmacro{citeindex}%
+%    \printtext[bibhyperref]{\usebibmacro{citeyear}}}
+%  {\multicitedelim}
+%  {\usebibmacro{postnote}}I-MF-RSVD
+%
+%\DeclareCiteCommand{\footcite}[\mkbibfootnote]
+%  {\usebibmacro{prenote}}
+%  {\usebibmacro{citeindex}%
+%  \printtext[bibhyperref]{ \usebibmacro{cite}}}
+%  {\multicitedelim}
+%  {\usebibmacro{postnote}}
+%
+%\DeclareCiteCommand{\footcitepext}[\mkbibfootnotetext]
+%  {\usebibmacro{prenote}}
+%  {\usebibmacro{citeindex}%
+%   \printtext[bibhyperref]{\usebibmacro{cite}}}
+%  {\multicitedelim}
+%  {\usebibmacro{postnote}}
+%
+%\DeclareCiteCommand{\textcite}
+%  {\boolfalse{cbx:parens}}
+%  {\usebibmacro{citeindex}%
+%   \printtext[bibhyperref]{\usebibmacro{textcite}}}
+%  {\ifbool{cbx:parens}
+%     {\bibcloseparen\global\boolfalse{cbx:parens}}
+%     {}%
+%   \multicitedelim}
+%  {\usebibmacro{textcite:postnote}}
+
+% ===============================================================
+\newcommand{\ie}{i.e.\ }
+\newcommand{\eg}{e.g.\ }
+\newcommand{\etc}{\emph{et cetera}}
+
+\newcommand{\tick}{$\checkmark$}
+\newcommand{\cross}{$\times$}
+
+\newcommand{\indicator}[1]{\llbracket #1 \rrbracket}
+
+\newcommand{\id}{\mathbf{I}}
+
+\newcommand{\Real}{\mathbb{R}}
+\newcommand{\PMOne}{\{ \pm 1 \}}
+
+\newcommand{\R}{\mathbf{R}}
+\newcommand{\RHat}{\hat{\mathbf{R}}}
+\newcommand{\Sim}{\mathbf{S}}
+\newcommand{\A}{\mathbf{A}}
+\newcommand{\B}{\mathbf{B}}
+\newcommand{\C}{\mathcal{C}}
+\newcommand{\I}{\mathbf{I}}
+
+\newcommand{\J}{\mathbf{J}}
+\newcommand{\Sig}{\mathbf{\Sigma}}
+
+\renewcommand{\P}{\mathbf{P}}
+\newcommand{\Q}{\mathbf{Q}}
+\newcommand{\K}{K}
+\newcommand{\V}{\mathbf{V}}
+\newcommand{\w}{\mathbf{w}}
+\newcommand{\W}{\mathbf{W}}
+\newcommand{\X}{\mathbf{X}}
+\newcommand{\Y}{\mathbf{Y}}
+\newcommand{\y}{\mathbf{y}}
+
+\newcommand{\numUsers}{m}
+\newcommand{\numItems}{n}
+\newcommand{\userSet}{\mathcal{U}}
+\newcommand{\itemSet}{\mathcal{I}}
+\newcommand{\itemVec}{\mathbf{v}}
+
+\renewcommand{\u}{u}
+\renewcommand{\i}{i}
+\newcommand{\ui}{\u\i}
+\newcommand{\nij}{\u\i'}
+
+\newcommand{\predUserItem}{\RHat_{\ui}}
+
+\newcommand{\ratedSet}[1]{\mathcal{R}(#1)}
+\newcommand{\itemNgbhd}[1]{\mathcal{N}(#1)}
+\newcommand{\ratedTestSet}[1]{\mathcal{R}_{\text{te}}(#1)}
+
+\newcommand{\MLens}{{\sc Ml10M}}
+\newcommand{\LastFM}{{\sc LastFM}}
+% \newcommand{\Guitar}{{\sc Adobe-1}}
+% \newcommand{\Lowes}{{\sc Adobe-2}}
+\newcommand{\Guitar}{{\sc Proprietary-1}}
+\newcommand{\Lowes}{{\sc Proprietary-2}}
+
+\newcommand{\ISLIM}{SLIM}
+\newcommand{\USLIM}{LRec+Sq+$\ell_1$+NN}
+\newcommand{\LRecSq}{LRec+Sq}
+\newcommand{\LinearLow}{Linear-Flow }
+% ===============================================================
+
+
+
+
+\begin{document}
+
+% \setcopyright{acmcopyright}
+
+
+% DOI
+% \doi{10.475/123_4}
+
+% % ISBN
+% \isbn{123-4567-24-567/08/06}
+
+% %Conference
+% \conferenceinfo{PLDI '13}{June 16--19, 2013, Seattle, WA, USA}
+
+% \acmPrice{\$15.00}
+
+% %
+% % --- Author Metadata here ---
+% \conferenceinfo{WOODSTOCK}{'97 El Paso, Texas USA}
+% %\CopyrightYear{2007} % Allows default copyright year (20XX) to be over-ridden - IF NEED BE.
+% %\crdata{0-12345-67-8/90/01}  % Allows default copyright data (0-89791-88-6/97/05) to be over-ridden - IF NEED BE.
+% % --- End of Author Metadata ---
+
+% % \title{Dimensionality Reducion for Large Scale One Class Collaborative Filtering}
+
+\title{Scaling Linear Models for One-Class Collaborative Filtering via Dimensionality Reduction}
+
+\author{Anonymous}
+% \author{ Suvash Sedhain \\ 
+% Australian National University, Canberra, Australia \\
+% suvash.sedhain@anu.edu.au}
+
+
+
+\maketitle
+\begin{abstract}
+
+In recent years, collaborative filtering has emerged as the de facto approach to personalized recommendation problems. However, a practically pervasive scenario that proves difficult for most collaborative filtering techniques is where one has only examples of items a user prefers, but no examples of items they do not prefer. In such implicit feedback or one-class collaborative filtering(OC-CF) problems, it is desirable to have recommendation methods that are personalized, learning based and highly scalable. Linear recommenders are proven to be very effective in OC-CF task and have several desirable properties. Although they have superior performance, linear models involves solving a large number of a regression problem making them computationally expensive and limiting their applicability in a large-scale recommendation task. This paper focuses on developing a pipeline and fast algorithm for fast large scale linear  OC-CF models to large datasets.
+%This paper focuses on developing a fast algorithm to scale linear OC-CF models to large datasets. 
+We propose a fast low dimensional regularized linear model, \LinearLow, that learns OC-CF model on low dimensional projection of large scale user-item interaction matrix.
+%Proposed method 
+%Efficient dimensionality reduction using randomized SVD and closed form multi-regression solution allows \LinearLow to scale on large scale datasets.
+A comprehensive set of experiments illustrates that \LinearLow is computationally superior and yields competitive performance compared to the state-of-the-art methods.
+% A comprehensive set of experiments illustrates that \LinearLow is 10 fold faster than the linear method with competitive performance compared to the state-of-the-art methods.
+
+\end{abstract}
+
+% A category with the (minimum) three required fields
+% \category{H.3.3}{Information Search and Retrieval}{Retrieval models}
+% \terms{Algorithms}
+% \keywords{one-class collaborative filtering, implicit feedback, linear models, Randomized SVD}
+
+
+\section{Introduction}
+\input{src/introduction}
+
+\section{Background}
+\input{src/background}
+
+% \section{Large Scale OC-CF}
+% \input{src/scaling/bilinear}
+
+% \subsection{Desired properties of a real world recommender systems}\
+% \input{src/desired_properties}
+\section{Large Scale Linear Methods}
+\input{src/scaling/linear}
+
+\section{Experiment and Evaluation}
+\input{src/experiments}
+
+\section{Conclusion}
+\input{src/conclusion}
+
+\bibliographystyle{abbrv}
+\bibliography{bib/references}
+
+\end{document}

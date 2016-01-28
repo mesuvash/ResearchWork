@@ -1,0 +1,30 @@
+% \subsection{Scaling Bilinear Models}
+
+% ~\citep{Hu:2008} proposed an efficient Alternate Square Method for large solving WRMF. This method can be easily distributed and is widely adopted in many distributed machine learning frameworks such as spark~\citep{Zaharia:2010}. 
+
+%Similarly, 
+~\citep{Tang:2013} proposed a two step randomized SVD based algorithm to scale matrix factorization. First, they compute the k-rank SVD of the matrix $R$,
+\begin{align*}
+	R \approx P \Sigma Q^T
+\end{align*}
+where, $P \in \mathbb{R}^{m \times k}$, $Q \in \mathbb{R}^{n \times k}$ and $\Sigma \in \mathbb{R}^{k \times k}$. Given the truncated SVD solution, they solve 
+
+\begin{align}
+\label{eqn:I-MF-RSVD}
+\begin{split}
+\underset{A}{\mathrm{argmin}}  \left \| R - A^TB\right \|_F^2 + \lambda \left \|  A \right \|_F^2   \\
+where,\ B = \Sigma^{\frac{1}{2}} Q^T 
+\end{split}
+\end{align}
+Although not discussed in ~\citep{Tang:2013}, we note this can also be solved as 
+\begin{align}
+\label{eqn:U-MF-RSVD}
+\begin{split}
+% \label{eqn:U-MF-RSVD}
+\underset{B}{\mathrm{argmin}}  \left \| R - A^TB\right \|_F^2 + \lambda \left \|  B \right \|_F^2 f\\
+where,\ A = P \Sigma^{\frac{1}{2}}\\
+\end{split}
+\end{align}
+
+We refer~\ref{eqn:U-MF-RSVD} and~\ref{eqn:I-MF-RSVD} as U-MF-RSVD and I-MF-RSVD respectively. 
+%Furthermore, we emperically show that the performance varies with the choice of the optimization objective.

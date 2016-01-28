@@ -1,0 +1,111 @@
+% Linear methods, LRec and SLIM, work very well in practice. However, they require solving multiple linear regression for a very large design matrix $R$. 
+
+%Although the algorithm is distributable, the number of users and items can be in the order of millions in a real world problems making it computationally expensive. 
+% Despite of superior performance, LRec's memory requirement is quadratic and thus limiting its applicability in real-world large scale recommendation.
+% Despite LRec's superior performance, the memory requirement is quadratic which limits its applicability in a large scale datasets.
+
+% \subsubsection{Via SVD}
+Despite the superior performance, applicability of Linear methods are constrained by its computational cost. Linear methods involve solving  a large number of regression problem on a huge design matrix $\R$ making it extremely challenging on real world applications where the order of user and items ranges in millions.
+
+In this section, we propose an algorithm to scale linear methods on large scale datasets. First, we define $L_2$ regularized linear model 
+\begin{equation}
+\label{eqn:squaredLinear}
+\underset{\W}{\mathrm{argmin}}|| \R - \R \W ||_F^2 + \frac{\lambda}{2} || \W ||_F^2 
+% \inf_{ \W  } || \R - \R \W ||_F^2 + \frac{\lambda}{2} || \W ||_F^2 
+\end{equation}
+
+We observe that (\ref{eqn:squaredLinear}) is a  standard multiple linear regression problem with analytical solution as
+% We can solve Equation~\ref{eqn:squaredLinear} analytically as
+\begin{equation}
+\W = (\R^T \R + \lambda \I)^{-1} \R^T \R
+\end{equation}
+However, the  memory requirement, computational cost and  numerical instability in computing the inverse, $(\R^T \R + \lambda \I)^{-1}$ , makes the analytical solution infeasible. Similarly, if we apply gradient based optimization, it becomes computationally expensive as it involves solving $n$ linear regression.
+% Gradient based optimization doesn't require computation of the inverse. However, it involves solving $n$ linear regression problem which is computationally expensive.
+
+To address the computational and numerical issues, we reformulate the linear model with additional rank constraints 
+\begin{align}
+\label{eqn:reg-rank}
+\begin{split}
+\underset{rank(\W) \le k}{\mathrm{argmin}}  \left \| \R - \R\W\right \|_F^2 + \lambda \left \|  \W \right \|_F^2 \\
+where,\ k\ <<\ n 
+\end{split}
+\end{align}
+
+% $ I \in \mathbb{R}^{n \times n}$ would be the trivial solution for W, however, the rank constraint prevents W from the trivial solution as $\{rank(I) = n\} > p $.
+
+For $\lambda = 0$ , the optimal solution is given by SVD as
+% Even though we can't directly solve the eqn~\ref{eqn:reg-rank}, the optimal solution when $\lambda = 0$ is given by SVD as 
+   \begin{align}
+   \label{eqn:SVDOptimal}
+   \W = \Q_k \Q_k^ T
+   \end{align}
+where  $\Q_k$ is given by truncated SVD 
+   \begin{align*}
+   % R =\ P \Sig Q^T \\
+   \R \approx \P_k \Sig_k \Q_k^T
+   \end{align*}
+However, the key limitation of the SVD solution is that it corresponds to an unregularized model, hence highly susceptible to overfitting. To incorporate model complexity control via regularization, we constrain (\ref{eqn:squaredLinear}) further by factoring $W\in span(Q_k)$ by writing $W = Q_k Y$ which gives the following optimization objective
+
+\begin{align}
+\label{eqn:i-reg-rank-low}
+\underset{\Y} {\mathrm{argmin}}  \left \| \R - \R \Q_k \Y \right \|_F^2 + \lambda \left \|  \Q_k \Y \right \|_F^2 
+\end{align}
+
+Since $\Q_k$ is orthonormal, we get $\left \| \Q_k \Y \right \|_F = \left \|\Y\right \|_F$. Hence~\ref{eqn:i-reg-rank-low} is equivalent to 
+\begin{align}
+% \begin{split}
+\underset{\Y}{\mathrm{argmin}} \left \| \R - \R\Q_k\Y\right \|_F^2 + \lambda \left \|  \Y \right \|_F^2 
+% \end{split}
+\end{align}
+
+For a resonable rank $k$, we can efficiently solve (\ref{eqn:i-reg-rank-low}) with the analytical solution 
+\begin{align*}
+\Y = (\Q_k^T \R^T\R\Q_k +\lambda I)^{-1} \Q_k^T \R^T \R
+\end{align*}
+
+In other words, the model corresponding to ~\ref{eqn:i-reg-rank-low} projects the user-item matrix rank-k orthogonal basis and then optimises the regularised squared loss objective on the projected representation.
+
+We refer to (\ref{eqn:i-reg-rank-low}) as I-\LinearLow as it corresponds to item-item model. Similarly, we can define a user-user model, U-\LinearLow, in (\ref{eqn:u-reg-rank-low})
+\begin{align}
+\label{eqn:u-reg-rank-low}
+% \begin{split}
+% \underset{rank(Y) = k}{\mathrm{argmin}}  \left \| R^T - R^TP_kY\right \|_F^2 + \lambda \left \|  P_kY \right \|_F^2 \\
+\underset{\Y}{\mathrm{argmin}}  \left \| \R - \R\P_k\Y\right \|_F^2 + \lambda \left \|  \Y \right \|_F^2 
+% \because  \left \|  P_kY \right \|_F^2 = \left \|  Y \right \|_F^2
+% \end{split}
+\end{align}
+
+Although low rank multiple-regression can be solved efficiently, it requires computationally expensive dimensionality reduction. However, the recent advances in randomized algorithms for approximate dimensionality reduction~\citep{halko2011} have made dimensionality reduction very efficient on large scale matrices. In this work, we use randomized SVD~\citep{halko2011} for low dimensional projection which is summarized in Algorithm~\ref{algo:RSVD}.
+
+
+\begin{algorithm}
+  	% \algsetup{linenosize=\tiny}
+  	\small
+	\caption{Given $R \in \mathbb{R}^{m \times n}$, compute approximate rank-k SVD; R $\approx$ $P_k \Sig_k Q_k$}
+	\label{algo:RSVD}
+	\begin{algorithmic}[1]
+
+	\Procedure{RSVD}{R, k}
+	\State Draw $n\times k$ Gaussian random matrix $\Omega$
+	\State Construct $n\times k$ sample matrix $A = R\Omega$
+	\State Construct $m\times k$ orthonormal matrix $Z$, such that $A  = ZX$
+	\State Constuct $k\times n$ matrix $B = Z^TR$
+	\State Compute the SVD of B, B =  $\hat{P_k} \Sig_k Q_k$
+	\State  $R \Rightarrow ZB \Rightarrow Z \hat{P_k} \Sig_k Q_k \Rightarrow  P_k \Sig_k Q_k, where\ P_k = Z \hat{P_k}$
+	% \State \begin{eqnarray*}
+	% 		R & = & ZB\\
+	% 		& = &  Z\hat{P_k}Σ_kQ_k\\
+	% 		& = & P_kΣ_kQ_k\\
+	% 		&   & where,\ P_k = Z\hat{P_k}\\
+	% 		\end{eqnarray*}
+	\State return $P_k \Sig_k Q_k$
+	\EndProcedure
+	\end{algorithmic}
+\end{algorithm}
+
+As discussed earlier, in a real world recommendation item-item similarities are widely used to recommend similar items. As a by-product of the I-\LinearLow model item-item similarity can be recovered as $Q_kY$. Unlike matrix factorization model, notion of the similarity is directly embedded in the model definition.
+
+\begin{equation*}
+\end{equation*}
+
+

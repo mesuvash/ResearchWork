@@ -1,0 +1,33 @@
+In this section, we briefly discuss properties of a real-world recommender systems. Furthermore, we motivate our model based on these properties.
+
+First and foremost, a recommender system should  produce good recommendation which can be quantified in terms of \textbf{performance}. The performance of a recommender system is measured using evaluation metrics such as $precision@k$, $recall@k$ etc. Second, recommender systems should be highly \textbf{scalable}. In modern day e-commerces, it is very common to have millions of users and items. Hence, a model should be able to handle the data as the number of user and item grows. \textbf{Similarity} is another important aspect of personalization. For instance, item-item similarity allows us to recommend similar items to the users. Recommending similar items is very prevalent in a real-world recommender systems. Hence, it is highly desirable to have a recommendation algorithm where the similarity is directly expressed and incorporated in the model. Also, \textbf{explainablilty} of the recommendation is very critical in persuading users. By explaining the recommendations, the system becomes more transparent, build users' trust in the system and convince users in consuming the recommended items. Lack of explainability weakens the ability to persuade users and aid users in decision making~\citep{explainabiltyVIG2009}.
+
+Neighborhood based methods are scalable, incorporates similarity metric in the model and gives explainable recommendations. However, they do not perform well compared to the linear counterparts. Bilinear models are scalable but are not competitive in terms of performance. Also, the recommendations are not explainable and there is no notion of similarity in the model. On the other hand, Linear recommenders are state-of-the-art in terms of performance. Furthermore, the model explicitly learns the similarity metric. Like neighborhood models, recommendations from linear model are easily explainable. This makes linear methods an ideal choice for recommendation. However, they are computationally expensive as they involve solving a large number of regression problem. This motivates us to address the scalability of the linear models which we will discuss in the following section.
+
+% Similarity is also an important source of personalization
+% in our service. Think of similarity in a very broad sense; it
+% can be between movies or between members, and can be in
+% multiple dimensions such as metadata, ratings, or viewing
+% data. Furthermore, these similarities can be blended and
+% used as features in other models. Similarity is used in multiple
+% contexts, for example in response to a member’s action
+% such as searching or adding a title to the queue
+
+% \begin{itemize}
+% \item {
+% \textbf{Performance} of a recommender systems is by far the most important property of a real world recommender system. Recommender systems performance is evaluated in terms of evaluation metrics such as $precision$, $recall$ etc.
+% }
+
+% \item { 
+% \textbf{Scalability} is another important factor considered in the design of an industrial recommender systems. Recommender systems should be able to scale with millions of users and items which is very common in e-commerces.
+% }
+
+% \item{
+% \textbf{Item-Item Similarity} 
+% }
+
+% \item{
+% \textbf{Explainability}
+% }
+
+% \end{itemize}
