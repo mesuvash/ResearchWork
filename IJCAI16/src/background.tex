@@ -13,10 +13,10 @@ We denote by  $\ratedSet{\u}$ the set of the items purchased by user $\u$.
 
 The goal in OC-CF is to learn a recommender, which for our purposes is simply a matrix $\RHat \in \Real^{\numUsers \times \numItems}$. %of the same size as $\R$.
 We call $\RHat$ the \emph{recommendation matrix}.
-As the entries are real-valued, for each user $u$, we can sort the entries of $\RHat_{\u:}$ to obtain a predicted ranking over items.
+%As the entries are real-valued, for each user $u$, we can sort the entries of $\RHat_{\u:}$ to obtain a predicted ranking over items.
 %We will use $\predUserItem$ to denote the predicted score for a given (user, item) pair.
 We evaluate $\RHat$ assuming we are in the \emph{top-$N$ recommendation} scenario \citep{Deshpande:2004}.
-Here, the interest is in finding $\RHat$ such that the head of the ranked list for each user comprises items she will enjoy. %, as measured by metrics such as Precision@K.
+%Here, the interest is in finding $\RHat$ such that the head of the ranked list for each user comprises items she will enjoy. %, as measured by metrics such as Precision@K.
 % This is more realistic than the \emph{rating prediction} scenario, where the interest is in accurately predicting the (typically ordinal) entries of $\R$ \citep{Marlin:2004}. %, as measured by \eg RMSE.
 %One can use techniques from the latter for top-$N$ recommendation, but they may underperform \citep{Cremonesi:2010}.
 
@@ -59,18 +59,22 @@ In (item-based) neighbourhood methods, we produce a recommendation matrix of the
 \RHat = \R \Sim
 \end{equation}
 where $\Sim \in \Real^{\numItems \times \numItems}$ is some \emph{item-similarity matrix}.
-That is, for a user $\u$, one scores an item $\i$ as the \emph{sum of $\i$'s similarity to all other items that $\u$ enjoys}.
+% That is, for a user $\u$, one scores an item $\i$ as the \emph{sum of $\i$'s similarity to all other items that $\u$ enjoys}.
 %Given an item $i$, the nonzero entries of $\Sim_{i:}$ are known as the \emph{neighbours} of the item.
 Typically, one uses a predefined matrix $\Sim$ that relies on $\R$. A popular example is cosine similarity \citep{Sarwar:2001, Linden:2003},
-$$ \Sim_{\i' \i} = \frac{ \R_{:\i}^T \R_{:\i'} }{|| \R_{:\i} ||_2 || \R_{:\i'} ||_2}. $$
-Other examples are the Pearson correlation, Jaccard coefficient and conditional probability \citep{Deshpande:2004}. It is typical to sparsify $\Sim$ so that its rows and columns only keep the largest entries, \ie to compute the $k$-neighbourhood graph based on $\Sim$.
-
+$$ \Sim_{\i' \i} = \frac{ \R_{:\i}^T \R_{:\i'} }{|| \R_{:\i} |s|_2 || \R_{:\i'} ||_2}. $$
+% Other examples are the Pearson correlation, Jaccard coefficient and conditional probability \citep{Deshpande:2004}. 
+It is typical to sparsify $\Sim$ so that its columns only keeps top-k similar items. 
+%the largest entries, \ie to compute the $k$-neighbourhood graph based on $\Sim$.
 Neighbourhood methods are attractive for several reasons.
-They are simple to implement, efficient (as the computation of (\ref{eqn:knn}) requires $O( | \ratedSet{\u} | )$ time), and interpretable.
+They are simple to implement, efficient 
+%(as the computation of (\ref{eqn:knn}) requires $O( | \ratedSet{\u} | )$ time),
+and interpretable.
 %Further, they may also be applied as-is to OC-CF problems \citep{Linden:2003, Deshpande:2004}, unlike most other popular CF models such as matrix factorisation (to be discussed subsequently).
-However, their biggest drawback is that they rely on a fixed $\Sim$ that is not learned from data \citep{Koren:2008b}.
-Recommendation performance can be quite sensitive to the choice of $\Sim$, and the choice generally depends on the problem domain.
-Therefore, neighbourhood methods are unable to adapt to the characteristics of the data at hand.
+However, they are unable to adapt to the characterstics of the data as they rely on a fixed $\Sim$ that is not learned from data \citep{Koren:2008b}. Furthermore, Recommendation performance can be quite sensitive to the choice of $\Sim$.
+% However, their biggest drawback is that they rely on a fixed $\Sim$ that is not learned from data \citep{Koren:2008b}.
+% Recommendation performance can be quite sensitive to the choice of $\Sim$, and the choice generally depends on the problem domain.
+% Therefore, neighbourhood methods are unable to adapt to the characteristics of the data at hand.
 
 \subsection{Matrix factorisation}
 % \subsubsection{Matrix factorisation}
