@@ -58,7 +58,7 @@ In (item-based) neighbourhood methods, we produce a recommendation matrix of the
 where $\Sim \in \Real^{\numItems \times \numItems}$ is some \emph{item-similarity matrix}.
 % That is, for a user $\u$, one scores an item $\i$ as the \emph{sum of $\i$'s similarity to all other items that $\u$ enjoys}.
 %Given an item $i$, the nonzero entries of $\Sim_{i:}$ are known as the \emph{neighbours} of the item.
-Typically, one uses a predefined matrix $\Sim$ that relies on $\R$. A popular example is cosine similarity \citep{Sarwar:2001, Linden:2003},
+Typically, one uses a predefined matrix $\Sim$ that relies on $\R$. A popular example is cosine similarity \citep{Sarwar:2001, Linden:2003}, \todob{Norms below are broken.}
 $$ \Sim_{\i' \i} = \frac{ \R_{:\i}^T \R_{:\i'} }{|| \R_{:\i} |s|_2 || \R_{:\i'} ||_2}. $$
 % Other examples are the Pearson correlation, Jaccard coefficient and conditional probability \citep{Deshpande:2004}. 
 It is typical to sparsify $\Sim$ so that its columns only keeps top-k similar items. 
@@ -68,7 +68,7 @@ They are simple to implement, efficient
 %(as the computation of (\ref{eqn:knn}) requires $O( | \ratedSet{\u} | )$ time),
 and interpretable.
 %Further, they may also be applied as-is to OC-CF problems \citep{Linden:2003, Deshpande:2004}, unlike most other popular CF models such as matrix Factorization (to be discussed subsequently).
-However, they are unable to adapt to the characterstics of the data as they rely on a fixed $\Sim$ that is not learned from data \citep{Koren:2008b}. Furthermore, Recommendation performance can be quite sensitive to the choice of $\Sim$.
+However, they are unable to adapt to the characteristics of the data as they rely on a fixed $\Sim$ that is not learned from data \citep{Koren:2008b}. Furthermore, recommendation performance can be quite sensitive to the choice of $\Sim$.
 % However, their biggest drawback is that they rely on a fixed $\Sim$ that is not learned from data \citep{Koren:2008b}.
 % Recommendation performance can be quite sensitive to the choice of $\Sim$, and the choice generally depends on the problem domain.
 % Therefore, neighbourhood methods are unable to adapt to the characteristics of the data at hand.
@@ -158,7 +158,7 @@ Similarly, ~\citep{Sedhain:2016} decomposed OC-CF as learning a linear model per
 % \label{eqn:lrecsquared}
 % \min_{ \W  } || \X - \X \W ||_F^2 + \frac{\lambda}{2} || \W ||_F^2 
 % \end{equation}
-Linear methods are attractive for several reasons. They have superior performance~\cite{Ning:2011, Sedhain:2016} and unlike neighborhood methods, they adapt with the data as the parameters are learned from data itself. Furthermore, the recommendations are easily interpretable. However, the linear methods are computationally expensive as they require solving a large number of regression subproblems with a huge design matrix $R$.
+Linear methods are attractive for several reasons. They have superior performance~\cite{Ning:2011, Sedhain:2016} and unlike neighborhood methods, they adapt with the data as the parameters are learned from data itself. Furthermore, the recommendations are easily interpretable. However, the linear methods are computationally expensive as they require solving a large number of regression subproblems with a huge design matrix $R$. \todob{This is a scaling up paper. Be precise about the computational cost.}
 
 % The nonnegativity constraint encourages interpretability, but \citet{Levy:2013} demonstrated that good performance can be achieved without it.
 
@@ -228,8 +228,7 @@ Recently, ~\citep{Tang:2013} proposed a two step randomized SVD based algorithm 
 \begin{align*}
 	\R \approx \P_k \Sig_k \Q^T_k
 \end{align*}
-where, $\P_k \in \mathbb{R}^{m \times k}$, $\Q_k \in \mathbb{R}^{n \times k}$ and $\Sig_k \in \mathbb{R}^{k \times k}$. Given the truncated SVD solution, they initialize the item latent factor with SVD solution and solve 
-
+where, $\P_k \in \mathbb{R}^{m \times k}$, $\Q_k \in \mathbb{R}^{n \times k}$ and $\Sig_k \in \mathbb{R}^{k \times k}$. Given the truncated SVD solution, they initialize the item latent factor with SVD solution and solve \todob{Use s.t. instead of where. $\Sigma_k$ instead of $\Sigma$?}
 \begin{align}
 \label{eqn:I-MF-RSVD}
 \begin{split}
@@ -237,7 +236,7 @@ where, $\P_k \in \mathbb{R}^{m \times k}$, $\Q_k \in \mathbb{R}^{n \times k}$ an
 where,\ \B = \Sig^{\frac{1}{2}} \Q^T_k 
 \end{split}
 \end{align}
-In the (\ref{eqn:I-MF-RSVD}), the item latent factors, $\B$, is initialized with SVD solution and fixed. Similarly, instead of fixing $\B$, if we fix $\A$, we get the following objective  
+In the (\ref{eqn:I-MF-RSVD}), the item latent factors, $\B$, is initialized with SVD solution and fixed. Similarly, instead of fixing $\B$, if we fix $\A$, we get the following objective \todob{Use s.t. instead of where. $\Sigma_k$ instead of $\Sigma$?}
 \begin{align}
 \label{eqn:U-MF-RSVD}
 \begin{split}

@@ -19,10 +19,10 @@ We observe that (\ref{eqn:squaredLinear}) is a  standard multiple linear regress
 \begin{equation}
 \W = (\R^T \R + \lambda \I)^{-1} \R^T \R
 \end{equation}
-However, the  memory requirement, computational cost and  numerical instability in computing the inverse, $(\R^T \R + \lambda \I)^{-1}$ , makes the analytical solution infeasible. Similarly, if we apply gradient based optimization, it becomes computationally expensive as it involves solving $n$ linear regression.
+However, the  memory requirement, computational cost and  numerical instability in computing the inverse, $(\R^T \R + \lambda \I)^{-1}$ , makes the analytical solution infeasible. Similarly, if we apply gradient based optimization, it becomes computationally expensive as it involves solving $n$ linear regression. \todob{This is a scaling up paper. Be precise about the computational cost.}
 % Gradient based optimization doesn't require computation of the inverse. However, it involves solving $n$ linear regression problem which is computationally expensive.
 
-To address the computational and numerical issues, we reformulate the linear model with additional rank constraints 
+To address the computational and numerical issues, we reformulate the linear model with additional rank constraints \todob{Use s.t. instead of where} \todob{Use $\ll$ instead of $< <$.}
 \begin{align}
 \label{eqn:reg-rank}
 \begin{split}
@@ -62,6 +62,7 @@ For a resonable rank $k$, we can efficiently solve (\ref{eqn:i-reg-rank-low}) wi
 \begin{align*}
 \Y = (\Q_k^T \R^T\R\Q_k +\lambda I)^{-1} \Q_k^T \R^T \R
 \end{align*}
+\todob{This is a scaling up paper. Be precise about the computational cost.}
 
 In other words, equation (~\ref{eqn:i-reg-rank-low}) corresponds to the linear Autoencoder ~\cite{Sedhain:2015} where the input-hidden layer weight is initialized with the rank-k orthogonal basis of the original matrix. 
 
