@@ -1,4 +1,4 @@
-We now report experimental results that compare the recommendation performance of the proposed method to competing methods on a number of datasets. We used two proprietary and two publicly available dataset for evaluating all methods. In all of our dataset, we remove the users and items with less than 3 purchases.  Table \ref{tbl:datasets} summarises statistics of the datasets.
+We now report experimental results and compare the recommendation performance of the proposed method to competing methods on a number of datasets. We used two proprietary and two publicly available dataset for evaluating the performance of all methods. In all of our dataset, we remove the users and items with less than 3 purchases.  Table \ref{tbl:datasets} summarises statistics of the datasets.
 
 \begin{table}
 	\centering
@@ -31,6 +31,8 @@ From the original rating matrix $\R \in \{ 0, 1, \ldots, 5 \}^{\numUsers \times 
 
 
 \Lowes\ \& \Guitar \ are anonymized dataset provided by XXX\footnote{{\scriptsize anonymised for the blind review and will be revealed later}}, a major provider of third party recommendation services. \Guitar \ dataset consists of $\sim$27,000 users, $\sim$14,000 items and $\sim$120,000 item purchases. Similarity, \Lowes \ dataset consists of $\sim$264,000 users, $\sim$57,000 items and $\sim$1 billion item purchases. 
+
+For the qualitative analysis of the item-item similarities learned by I-\LinearLow model, we use \Fotolia\ dataset. However, dataset sharing agreement with the provider restricts us from reporting the statistics and quantitative results. This dataset consist of interaction between user and various categories of the photos. 
 
 \subsection{Evaluation Protocol}
 We split the datasets into random $90\%$-$10\%$ train-test set and hold out $10\%$ of the training set for hyperparamater tuning. We report the mean test split performance, along with standard errors corresponding to 95\% confidence intervals.
