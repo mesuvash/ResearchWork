@@ -1,22 +1,21 @@
-Tables \ref{tbl:guitar-results} -- \ref{tbl:ml10m-results} summarise the results of the various methods.
+Tables \ref{tbl:guitar-results} -- \ref{tbl:ml10m-results} summarize the results of the various methods.
 We make the following observations:
 \begin{compactitem}
 
 \item \LinearLow is generally competitive with SLIM and outperforms the other baselines on all four datasets. Unlike other methods, \LinearLow performance is not very sensitive to the choice of user or item based method. In figure~\ref{fig:dimensionPerformance}, we observe that the performance of the \LinearLow method improves with the number of the projection dimensions. 
 
-\item Amongst the matrix factorisation methods, Randomized SVD method~\citep{Tang:2013} consistently performs the best in all dataset. This is possibly due to the fact that SVD provides a good initialization and the optimization finds optimal solution for the given initialization. Whereas, matrix factorization optimizes nonconvex bilinear objective with random initialization which may lead to the inferior solution. Furthermore, we observe that the performance of MF-RSVD varies significantly based on whether we initialize user or item latent factors.
+\item Amongst the matrix Factorization methods, Randomized SVD method~\citep{Tang:2013} consistently performs the best in all dataset. This is possibly due to the fact that SVD provides a good initialization and the optimization finds optimal solution for the given initialization. Whereas, matrix factorization optimizes nonconvex bilinear objective with random initialization which may lead to the inferior solution. Furthermore, we observe that the performance of MF-RSVD varies significantly based on whether we initialize user or item latent factors.
 
-\item Neighborhood based methods are computationally inexpensive. However, they are consistently outperformed by the linear methods in all of our dataset.  
+\item We observe that the neighborhood models yield inferior results compared to the Linear models. Also, the performance varies with the user and item based models. While they perform comparatively competitive in \Lowes\ and \Guitar\ dataset, they perform poorly in \LastFM\ and \MLens\ dataset. Hence, neighborhood methods are not consistent in terms of performance.
 
 \end{compactitem}
 
 \begin{figure}[!ht]
- 
-  \caption{Performance of the user and item Linear-Flow with the number of dimensions. [NOTE: This graph is incomplete and will be updated as soon as I get the results of the ongoing experiment.]}
-  \label{fig:dimensionPerformance}
-
   \centering
     \includegraphics[width=0.5\textwidth]{imgs/mapvsdim}
+  \caption{Performance of the U-\LinearLow and I-\LinearLow with the number of dimensions. [NOTE: This graph is incomplete and will be updated as soon as I get the results of the ongoing experiment.]}
+  \label{fig:dimensionPerformance}
+
 \end{figure}
 
 \begin{table*} \centering
@@ -146,8 +145,8 @@ We make the following observations:
 		\hline
 		I-KNN & \num{0.175295} $\pm$ \num{0.00106952}&\num{0.150609} $\pm$ \num{0.00094119}&\num{0.117895} $\pm$ \num{0.000588135}&\num{0.0882615} $\pm$ \num{0.000277381}&\num{0.0994175} $\pm$ \num{0.000436698}&\num{0.139251} $\pm$ \num{0.000863745}&\num{0.212073} $\pm$ \num{0.00122592}&\num{0.306992} $\pm$ \num{0.0011675}&\num{0.121597} $\pm$ \num{0.000341949}\\
 		U-KNN & \multicolumn{9}{c}{Out of Memory} \\
-		WRMF& \num{0.183177} $\pm$ \num{0.000717378}&\num{0.156148} $\pm$ \num{0.000608973}&\num{0.120461} $\pm$ \num{0.000227475}&\num{0.0888908} $\pm$ \num{0.000191351}&\num{0.102434} $\pm$ \num{0.000341573}&\num{0.142791} $\pm$ \num{0.00079676}&\num{0.213899} $\pm$ \num{0.000900389}&\num{0.306102} $\pm$ \num{0.000965358}&\num{0.125477} $\pm$ \num{0.000306481}\\
 		\hline
+		WRMF& \num{0.183177} $\pm$ \num{0.000717378}&\num{0.156148} $\pm$ \num{0.000608973}&\num{0.120461} $\pm$ \num{0.000227475}&\num{0.0888908} $\pm$ \num{0.000191351}&\num{0.102434} $\pm$ \num{0.000341573}&\num{0.142791} $\pm$ \num{0.00079676}&\num{0.213899} $\pm$ \num{0.000900389}&\num{0.306102} $\pm$ \num{0.000965358}&\num{0.125477} $\pm$ \num{0.000306481}\\
 		PureSVD& \num{0.121602} $\pm$ \num{0.00130405}&\num{0.105352} $\pm$ \num{0.000630497}&\num{0.0835721} $\pm$ \num{0.00051333}&\num{0.0634407} $\pm$ \num{0.000190345}&\num{0.0729778} $\pm$ \num{0.00135302}&\num{0.103025} $\pm$ \num{0.00112297}&\num{0.157163} $\pm$ \num{0.000933525}&\num{0.226441} $\pm$ \num{0.00108551}&\num{0.0835647} $\pm$ \num{0.00104866}\\
 		U-MF-RSVD & \num{0.222923} $\pm$ \num{0.000720948}&\num{0.189479} $\pm$ \num{0.000693553}&\num{0.145598} $\pm$ \num{0.000755357}&\num{0.1069} $\pm$ \num{0.000389999}&\num{0.127299} $\pm$ \num{0.000347369}&\num{0.175504} $\pm$ \num{0.000534452}&\num{0.259163} $\pm$ \num{0.00140552}&\num{0.365583} $\pm$ \num{0.0018449}&\num{0.158626} $\pm$ \num{0.000496512}\\
 		I-MF-RSVD &\num{0.223153} $\pm$ \num{0.000891741}&\num{0.190154} $\pm$ \num{0.000992553}&\num{0.146148} $\pm$ \num{0.0004936}&\num{0.102704} $\pm$ \num{0.000366158}&\num{0.124622} $\pm$ \num{0.000675105}&\num{0.174479} $\pm$ \num{0.00103911}&\num{0.260198} $\pm$ \num{0.000789582}&\num{0.367512} $\pm$ \num{0.00172003}&\num{0.159046} $\pm$ \num{0.000668585}\\
@@ -165,3 +164,22 @@ We make the following observations:
 \end{table*}
 
 
+In Table~\ref{tbl:similarity-evaluation}, we qualitatively evaluate the item-item similarity learned by the I-\LinearLow model. It shows that the I-\LinearLow model learns meaningful similarities which makes it very applicable in making similar items recommendation.
+
+\begin{table*}[!t]
+	\centering
+	% \setlength{\arrayrulewidth}{.2em}
+	\resizebox{0.8\textwidth}{!}{%
+		\begin{tabular}{cccccc}
+		\toprule
+		\textbf{Item} & Chemistry & Chilling out & Workers & Unemployment & Divorce and Conflict\\
+		\toprule
+		\multirow{3}{*}{\textbf{Similar items}} & Test and Analysis & Beach Holidays & Construction & Job Search & Depression \\
+		& Drug and Pills & Tourism & Teamwork & Tax and Accounting & Getting upset \\
+		& Health Care & Relaxing & Manufacturing & Breaking the law and Illegal Activity & Crying\\
+		\bottomrule
+		\end{tabular}
+	}
+	\caption{Top 3 similar items learned by I-\LinearLow\  model.}
+	\label{tbl:similarity-evaluation}
+\end{table*}

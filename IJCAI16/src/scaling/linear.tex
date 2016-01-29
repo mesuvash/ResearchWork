@@ -77,7 +77,8 @@ We refer to (\ref{eqn:i-reg-rank-low}) as I-\LinearLow as it corresponds to item
 
 Although low rank multiple-regression can be solved efficiently, it requires computationally expensive dimensionality reduction. However, the recent advances in randomized algorithms for approximate dimensionality reduction~\citep{halko2011} have made dimensionality reduction very efficient on large scale matrices. In this work, we use randomized SVD~\citep{halko2011} for low dimensional projection as summarized in Algorithm~\ref{algo:RSVD}.
 
-As discussed earlier, in a real world recommendation item-item similarities are widely used to recommend similar items. As a by-product of the I-\LinearLow model item-item similarity can be recovered as $Q_kY$. Unlike matrix factorization model, notion of the similarity is directly embedded in the model definition.
+As discussed earlier, recommending similar items is very prevalent in real-world recommender systems.
+In I-\LinearLow model, item-item similarity can be recovered as $Q_kY$. 
 
 \begin{equation*}
 \end{equation*}
