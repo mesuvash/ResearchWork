@@ -59,7 +59,7 @@ where $\Sim \in \Real^{\numItems \times \numItems}$ is some \emph{item-similarit
 % That is, for a user $\u$, one scores an item $\i$ as the \emph{sum of $\i$'s similarity to all other items that $\u$ enjoys}.
 %Given an item $i$, the nonzero entries of $\Sim_{i:}$ are known as the \emph{neighbours} of the item.
 Typically, one uses a predefined matrix $\Sim$ that relies on $\R$. A popular example is cosine similarity \citep{Sarwar:2001, Linden:2003}, \todob{Norms below are broken.}
-$$ \Sim_{\i' \i} = \frac{ \R_{:\i}^T \R_{:\i'} }{|| \R_{:\i} |s|_2 || \R_{:\i'} ||_2}. $$
+$$ \Sim_{\i' \i} = \frac{ \R_{:\i}^T \R_{:\i'} }{|| \R_{:\i} ||_2 || \R_{:\i'} ||_2}. $$
 % Other examples are the Pearson correlation, Jaccard coefficient and conditional probability \citep{Deshpande:2004}. 
 It is typical to sparsify $\Sim$ so that its columns only keeps top-k similar items. 
 %the largest entries, \ie to compute the $k$-neighbourhood graph based on $\Sim$.
@@ -233,7 +233,7 @@ where, $\P_k \in \mathbb{R}^{m \times k}$, $\Q_k \in \mathbb{R}^{n \times k}$ an
 \label{eqn:I-MF-RSVD}
 \begin{split}
 \underset{\A}{\mathrm{argmin}}  \left \| \R - \A^T\B\right \|_F^2 + \lambda \left \|  \A \right \|_F^2   \\
-where,\ \B = \Sig^{\frac{1}{2}} \Q^T_k 
+s.t.\ \B = \Sig^{\frac{1}{2}} \Q^T_k 
 \end{split}
 \end{align}
 In the (\ref{eqn:I-MF-RSVD}), the item latent factors, $\B$, is initialized with SVD solution and fixed. Similarly, instead of fixing $\B$, if we fix $\A$, we get the following objective \todob{Use s.t. instead of where. $\Sigma_k$ instead of $\Sigma$?}
@@ -242,7 +242,7 @@ In the (\ref{eqn:I-MF-RSVD}), the item latent factors, $\B$, is initialized with
 \begin{split}
 % \label{eqn:U-MF-RSVD}
 \underset{\B}{\mathrm{argmin}}  \left \| \R - \A^T\B\right \|_F^2 + \lambda \left \|  \B \right \|_F^2 f\\
-where,\ \A = \P_k \Sig^{\frac{1}{2}}\\
+s.t.\ \A = \P_k \Sig^{\frac{1}{2}}\\
 \end{split}
 \end{align}
 
