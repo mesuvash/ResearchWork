@@ -1,6 +1,6 @@
 % !TEX root = ../implicit-logistic-kdd15.tex
 
-We now introduce our notation, summarised in table \ref{tbl:glossary}. % summarises the commonly used symbols.
+We now introduce our notation, summarized in table \ref{tbl:glossary}. % summarizes the commonly used symbols.
 %Let $\userSet = \{ 1, \ldots, \numUsers \}$ denote a set of users, and $\itemSet = \{ 1, \ldots, \numItems \}$ a set of items.
 Let $\userSet$ denote a set of users, and $\itemSet$ a set of items,
 with $\numUsers = | \userSet |$ and $\numItems = | \itemSet |$.
@@ -9,13 +9,11 @@ In one-class collaborative filtering (OC-CF), we have a purchase
 matrix $\R \in \{ 0, 1 \}^{\numUsers \times \numItems}$. %, where $\numItems$ is the number of items and $\numUsers$ the number of users.
 We use $\R_{\ui}$ to refer to the purchase status for the user $\u$ and item $\i$.
 We use $\R_{:\i}$ to denote the indicator vector of each users' purchase of an item, and similarly $\R_{\u:}$ to denote the vector of a user's preference for each item $i$.
-We denote by  $\ratedSet{\u}$ the set of the items purchased by user $\u$.
-
-The goal in OC-CF is to learn a recommender, which for our purposes is simply a matrix $\RHat \in \Real^{\numUsers \times \numItems}$. %of the same size as $\R$.
+We denote by  $\ratedSet{\u}$ the set of the items purchased by user $\u$. The goal in OC-CF is to learn a recommender, which for our purposes is simply a matrix $\RHat \in \Real^{\numUsers \times \numItems}$. %of the same size as $\R$.
 We call $\RHat$ the \emph{recommendation matrix}.
 %As the entries are real-valued, for each user $u$, we can sort the entries of $\RHat_{\u:}$ to obtain a predicted ranking over items.
 %We will use $\predUserItem$ to denote the predicted score for a given (user, item) pair.
-We evaluate $\RHat$ assuming we are in the \emph{top-$N$ recommendation} scenario \citep{Deshpande:2004}.
+% We evaluate $\RHat$ assuming we are in the \emph{top-$N$ recommendation} scenario \citep{Deshpande:2004}.
 %Here, the interest is in finding $\RHat$ such that the head of the ranked list for each user comprises items she will enjoy. %, as measured by metrics such as Precision@K.
 % This is more realistic than the \emph{rating prediction} scenario, where the interest is in accurately predicting the (typically ordinal) entries of $\R$ \citep{Marlin:2004}. %, as measured by \eg RMSE.
 %One can use techniques from the latter for top-$N$ recommendation, but they may underperform \citep{Cremonesi:2010}.
@@ -40,14 +38,13 @@ We evaluate $\RHat$ assuming we are in the \emph{top-$N$ recommendation} scenari
 	}
 \end{table}
 
-The challenge in OC-CF is the lack of examples of explicit negative preference.
-%We may assume that if a user purchased an item, \ie $\R_{\ui} = 1$, this indicates a positive preference.
-%However, if a user has not purchased an item, \ie $\R_{\ui} = 0$, this does not necessarily indicate a negative preference, as the user may simply be unaware of the item.
-While we may assume that a user purchasing an item is an indication of positive preference, a user not purchasing an item does not necessarily indicate a negative preference: the user may simply be unaware of the item.
-Henceforth, we say that $(\u, \i)$ pairs with $\R_{\ui} = 1$ denote ``known positive preference'', while pairs with $\R_{\ui} = 0$ denote ``unknown preference''.
+% The challenge in OC-CF is the lack of examples of explicit negative preference.
+% %We may assume that if a user purchased an item, \ie $\R_{\ui} = 1$, this indicates a positive preference.
+% %However, if a user has not purchased an item, \ie $\R_{\ui} = 0$, this does not necessarily indicate a negative preference, as the user may simply be unaware of the item.
+% While we may assume that a user purchasing an item is an indication of positive preference, a user not purchasing an item does not necessarily indicate a negative preference: the user may simply be unaware of the item.
+% Henceforth, we say that $(\u, \i)$ pairs with $\R_{\ui} = 1$ denote ``known positive preference'', while pairs with $\R_{\ui} = 0$ denote ``unknown preference''.
 
-We now review some existing approaches to OC-CF. Broadly, the OC-CF algorithms can be categorised into three categories, namely, Neighborhood, Linear and Bilinear methods.
-
+We now review some approaches to OC-CF.
 %
 \subsection{Neighbourhood methods}
 \label{sec:knn}
@@ -61,8 +58,8 @@ In (item-based) neighbourhood methods, we produce a recommendation matrix of the
 where $\Sim \in \Real^{\numItems \times \numItems}$ is some \emph{item-similarity matrix}.
 % That is, for a user $\u$, one scores an item $\i$ as the \emph{sum of $\i$'s similarity to all other items that $\u$ enjoys}.
 %Given an item $i$, the nonzero entries of $\Sim_{i:}$ are known as the \emph{neighbours} of the item.
-Typically, one uses a predefined matrix $\Sim$ that relies on $\R$. A popular example is cosine similarity \citep{Sarwar:2001, Linden:2003},
-$$ \Sim_{\i' \i} = \frac{ \R_{:\i}^T \R_{:\i'} }{|| \R_{:\i} |s|_2 || \R_{:\i'} ||_2}. $$
+Typically, one uses a predefined matrix $\Sim$ that relies on $\R$. A popular example is cosine similarity \citep{Sarwar:2001, Linden:2003}, \todob{Norms below are broken.}
+$$ \Sim_{\i' \i} = \frac{ \R_{:\i}^T \R_{:\i'} }{|| \R_{:\i} ||_2 || \R_{:\i'} ||_2}. $$
 % Other examples are the Pearson correlation, Jaccard coefficient and conditional probability \citep{Deshpande:2004}. 
 It is typical to sparsify $\Sim$ so that its columns only keeps top-k similar items. 
 %the largest entries, \ie to compute the $k$-neighbourhood graph based on $\Sim$.
@@ -70,57 +67,61 @@ Neighbourhood methods are attractive for several reasons.
 They are simple to implement, efficient 
 %(as the computation of (\ref{eqn:knn}) requires $O( | \ratedSet{\u} | )$ time),
 and interpretable.
-%Further, they may also be applied as-is to OC-CF problems \citep{Linden:2003, Deshpande:2004}, unlike most other popular CF models such as matrix factorisation (to be discussed subsequently).
-However, they are unable to adapt to the characterstics of the data as they rely on a fixed $\Sim$ that is not learned from data \citep{Koren:2008b}. Furthermore, Recommendation performance can be quite sensitive to the choice of $\Sim$.
+%Further, they may also be applied as-is to OC-CF problems \citep{Linden:2003, Deshpande:2004}, unlike most other popular CF models such as matrix Factorization (to be discussed subsequently).
+However, they are unable to adapt to the characteristics of the data as they rely on a fixed $\Sim$ that is not learned from data \citep{Koren:2008b}. Furthermore, recommendation performance can be quite sensitive to the choice of $\Sim$.
 % However, their biggest drawback is that they rely on a fixed $\Sim$ that is not learned from data \citep{Koren:2008b}.
 % Recommendation performance can be quite sensitive to the choice of $\Sim$, and the choice generally depends on the problem domain.
 % Therefore, neighbourhood methods are unable to adapt to the characteristics of the data at hand.
 
-\subsection{Matrix factorisation}
-% \subsubsection{Matrix factorisation}
+\subsection{Matrix Factorization}
+% \subsubsection{Matrix Factorization}
 
-Matrix factorisation methods are the \emph{de facto} approach to collaborative filtering with explicit feedback.
-The basic idea is to embed users and items into some shared latent space, with the aim of inferring complex preference profiles for both users and items \citep{Srebro:2003, Koren:2009}.
+Matrix Factorization methods are the \emph{de facto} approach to collaborative filtering with explicit feedback. The basic idea is to embed users and items into some shared latent space, with the aim of inferring complex preference profiles for both users and items. ~\cite{Hu:2008, Pan:2009} proposed a weighted matrix factorization (WRMF) model for one class collaborative filtering setting.
 
-Formally, let $\J \in \Real_+^{\numUsers \times \numItems}$ be some pre-defined weighting matrix to be defined shortly.
-Let $\ell \colon \Real \times \Real \to \Real_+$ be some loss function, typically squared loss $\ell( y, \hat{y} ) = (y - \hat{y})^2$.
-Then, matrix factorisation methods optimise
+Formally, let $\J \in \Real_+^{\numUsers \times \numItems}$ be some pre-defined weighting matrix to be defined shortly. Then, WRMF optimise
 \begin{equation}
 \label{eqn:wrmf}
-\min_{ \theta } \sum_{ u \in \userSet, i \in \itemSet } \J_{\ui} \cdot \ell( \R_{\ui}, \predUserItem( \theta ) ) + \mathrm{\Omega}( \theta ) ,
+\min_{ \theta } \sum_{ u \in \userSet, i \in \itemSet } \J_{\ui} \cdot ( \R_{\ui} - A_u^T B_i )^2 + \frac{\lambda}{2} \cdot ( ||\A||_F^2 + ||\B||_F^2 )
 \end{equation}
-where the recommendation matrix is\footnote{Typically, one also includes user- and item- bias terms in the recommendation matrix. We omit these for brevity.}
-\begin{equation}
-\label{eqn:factorisation}
-\RHat(\theta) = \A^T \B
-\end{equation}
-for $\theta = \{ \A, \B \}$, 
-and $\mathrm{\Omega}( \theta )$ is the \emph{regulariser}, which is typically
-$$\mathrm{\Omega}( \theta ) = \frac{\lambda}{2} \cdot ( ||\A||_F^2 + ||\B||_F^2 )$$
-for some $\lambda > 0$.
-The matrices $\A \in \Real^{\K \times \numUsers}, \B \in \Real^{\K \times \numItems}$ are the \emph{latent representations} of users and items respectively, with $\K \in \mathbb{N}_+$ being the \emph{latent dimension} of the factorisation.
 
-In standard collaborative filtering applications with explicit negative feedback, one typically sets \citep{Koren:2009} $\J_{\ui} = \indicator{ \R_{\ui} > 0 },$
-so that one only considers (user, item) pairs with known preference information.
-In implicit feedback problems, this is not appropriate, as one will simply learn on the known positive preferences, and thus predict $\predUserItem = 1$ uninformatively.
+% Let $\ell \colon \Real \times \Real \to \Real_+$ be some loss function, typically squared loss $\ell( y, \hat{y} ) = (y - \hat{y})^2$.
+% Then, matrix Factorization methods optimise
+% \begin{equation}
+% \label{eqn:wrmf}
+% \min_{ \theta } \sum_{ u \in \userSet, i \in \itemSet } \J_{\ui} \cdot \ell( \R_{\ui}, \predUserItem( \theta ) ) + \mathrm{\Omega}( \theta ) ,
+% \end{equation}
+% where the recommendation matrix is\footnote{Typically, one also includes user- and item- bias terms in the recommendation matrix. We omit these for brevity.}
+% \begin{equation}
+% \label{eqn:Factorization}
+% \RHat(\theta) = \A^T \B
+% \end{equation}
+% for $\theta = \{ \A, \B \}$, 
+% and $\mathrm{\Omega}( \theta )$ is the \emph{regulariser}, which is typically
+% $$\mathrm{\Omega}( \theta ) = \frac{\lambda}{2} \cdot ( ||\A||_F^2 + ||\B||_F^2 )$$
+% for some $\lambda > 0$.
+% The matrices $\A \in \Real^{\K \times \numUsers}, \B \in \Real^{\K \times \numItems}$ are the \emph{latent representations} of users and items respectively, with $\K \in \mathbb{N}_+$ being the \emph{latent dimension} of the Factorization.
 
-An alternative is to set $\J_{ui} = 1$ uniformly. This treats all absent purchases as indications of a negative preference. 
-While this appears problematic, the resulting approach been shown to perform well in recommendation (as opposed to rating prediction) tasks, and is termed PureSVD in \citep{Cremonesi:2010}.
-%While this prevents trivial solutions, it intuitively may lead to suppressing items that the user would enjoy, but is just unaware of.
-One appealing property of this choice of $\J$ is that the parameters $\A, \B$ can be found using the singular value decomposition (SVD) of $\R$. 
-% Let's not give competing methods too much credit, also does SVD scale to Netflix?  -Scott
-%, for which efficient routines are available.
+% In standard collaborative filtering applications with explicit negative feedback, one typically sets \citep{Koren:2009} $\J_{\ui} = \indicator{ \R_{\ui} > 0 },$
+% so that one only considers (user, item) pairs with known preference information.
+% In implicit feedback problems, this is not appropriate, as one will simply learn on the known positive preferences, and thus predict $\predUserItem = 1$ uninformatively.
+
+% An alternative is to set $\J_{ui} = 1$ uniformly. This treats all absent purchases as indications of a negative preference. 
+% While this appears problematic, the resulting approach been shown to perform well in recommendation (as opposed to rating prediction) tasks, and is termed PureSVD in \citep{Cremonesi:2010}.
+% %While this prevents trivial solutions, it intuitively may lead to suppressing items that the user would enjoy, but is just unaware of.
+% One appealing property of this choice of $\J$ is that the parameters $\A, \B$ can be found using the singular value decomposition (SVD) of $\R$. 
+% % Let's not give competing methods too much credit, also does SVD scale to Netflix?  -Scott
+% %, for which efficient routines are available.
 
 
 %
-% \subsubsection{Weighted matrix factorisation}
+% \subsubsection{Weighted matrix Factorization}
 
-As an intermediate between the two extreme weighting schemes above, the WRMF method \citep{Pan:2008} sets $\J_{\ui}$ to be
+where, $\J_{\ui}$ is defined as
 \begin{equation}
 \label{eqn:wrmf-weight}
 \J_{\ui} =  \indicator{ \R_{\ui} = 0 } + \alpha \cdot \indicator{ \R_{\ui} > 0 } 
 \end{equation}
-where $\alpha$ assigns an importance weight to the observed ratings. 
+where $\alpha$ assigns an importance weight to the observed interaction. 
 % This effectively replaces the unknown preferences with \emph{noisy negative preferences}, since by not placing them on an equal footing with the known positive preferences, we allow for the fact that some of these preferences may actually be positives.
 % More sophisticated weighting schemes have also been explored.
 % In scenarios where there are multiple observations for each (user, item) pair, \citet{Hu:2008} considered a logarithmic weighting of these counts.
@@ -157,7 +158,7 @@ Similarly, ~\citep{Sedhain:2016} decomposed OC-CF as learning a linear model per
 % \label{eqn:lrecsquared}
 % \min_{ \W  } || \X - \X \W ||_F^2 + \frac{\lambda}{2} || \W ||_F^2 
 % \end{equation}
-Linear methods are attractive for several reasons. They have superior performance~\cite{Ning:2011, Sedhain:2016} and unlike neighborhood methods, they adapt with the data as the parameters are learned from data itself. Furthermore, the recommendations are easily interpretable. However, the linear methods are computationally expensive as they require solving large number of regression problem for a huge design matrix $R$.
+Linear methods are attractive for several reasons. They have superior performance~\cite{Ning:2011, Sedhain:2016} and unlike neighborhood methods, they adapt with the data as the parameters are learned from data itself. Furthermore, the recommendations are easily interpretable. However, the linear methods are computationally expensive as they require solving a large number of regression subproblems with a huge design matrix $R$. \todob{This is a scaling up paper. Be precise about the computational cost.}
 
 % The nonnegativity constraint encourages interpretability, but \citet{Levy:2013} demonstrated that good performance can be achieved without it.
 
@@ -194,8 +195,8 @@ Linear methods are attractive for several reasons. They have superior performanc
 
 %
 
-\subsection{Randomized Singular Value Decomposition (SVD)}
-Singular Value Decomposition (SVD) is a fundamental matrix factorization algorithm and has been widely used for dimensionality reduction. However, SVD is computationally expensive and is not scalable to large scale datasets. To address the scalability issue, ~\citep{halko2011} proposed a fast randomized approximate SVD algorithm that scales to a large matrix. The randomized SVD procedure is summarized in Algorithm~\ref{algo:RSVD}.
+\subsection{Randomized SVD}
+SVD is a fundamental matrix factorization algorithm and has been widely used in machine learning for dimensionality reduction. However, SVD is computationally expensive and is not scalable to large scale datasets. To address the scalability issue, ~\citep{halko2011} proposed a fast randomized approximate SVD algorithm that scales to a large matrix. The randomized SVD procedure is summarized in Algorithm~\ref{algo:RSVD}.
 
 \begin{algorithm}
   	% \algsetup{linenosize=\tiny}
@@ -227,23 +228,22 @@ Recently, ~\citep{Tang:2013} proposed a two step randomized SVD based algorithm 
 \begin{align*}
 	\R \approx \P_k \Sig_k \Q^T_k
 \end{align*}
-where, $\P_k \in \mathbb{R}^{m \times k}$, $\Q_k \in \mathbb{R}^{n \times k}$ and $\Sig_k \in \mathbb{R}^{k \times k}$. Given the truncated SVD solution, they initialize the item latent factor with SVD solution and solve 
-
+where, $\P_k \in \mathbb{R}^{m \times k}$, $\Q_k \in \mathbb{R}^{n \times k}$ and $\Sig_k \in \mathbb{R}^{k \times k}$. Given the truncated SVD solution, they initialize the item latent factor with SVD solution and solve \todob{Use s.t. instead of where. $\Sigma_k$ instead of $\Sigma$?}
 \begin{align}
 \label{eqn:I-MF-RSVD}
 \begin{split}
 \underset{\A}{\mathrm{argmin}}  \left \| \R - \A^T\B\right \|_F^2 + \lambda \left \|  \A \right \|_F^2   \\
-where,\ \B = \Sig^{\frac{1}{2}} \Q^T_k 
+s.t.\ \B = \Sig^{\frac{1}{2}} \Q^T_k 
 \end{split}
 \end{align}
-In the (\ref{eqn:I-MF-RSVD}), the item latent factors, $\B$, is initialized with SVD solution and fixed. Similarly, instead of fixing $\B$, if we fix $\A$, we get the following objective  
+In the (\ref{eqn:I-MF-RSVD}), the item latent factors, $\B$, is initialized with SVD solution and fixed. Similarly, instead of fixing $\B$, if we fix $\A$, we get the following objective \todob{Use s.t. instead of where. $\Sigma_k$ instead of $\Sigma$?}
 \begin{align}
 \label{eqn:U-MF-RSVD}
 \begin{split}
 % \label{eqn:U-MF-RSVD}
 \underset{\B}{\mathrm{argmin}}  \left \| \R - \A^T\B\right \|_F^2 + \lambda \left \|  \B \right \|_F^2 f\\
-where,\ \A = \P_k \Sig^{\frac{1}{2}}\\
+s.t.\ \A = \P_k \Sig^{\frac{1}{2}}\\
 \end{split}
 \end{align}
 
-We refer (\ref{eqn:U-MF-RSVD}) and (\ref{eqn:I-MF-RSVD}) as U-MF-RSVD and I-MF-RSVD respectively. Furthermore, we emperically show that the performance varies for these variants .
+We refer (\ref{eqn:U-MF-RSVD}) and (\ref{eqn:I-MF-RSVD}) as U-MF-RSVD and I-MF-RSVD respectively. Furthermore, we emperically show that the performance varies significantly between these two models .

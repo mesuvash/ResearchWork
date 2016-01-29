@@ -1,20 +1,21 @@
 
-To compare the efficiency of various algorithm, we choose our largest dataset i.e. \Lowes\ in terms of users and items. 
+To compare the efficiency of various algorithm, we choose \Lowes\ dataset, the largest in terms of number of users and items. 
+%our largest dataset i.e. \Lowes\ in terms of users and items. 
 %To compare the runtime of the various algorithm, we choose \Lowes, the largest dataset in terms of users and items.
 We benchmarked the training time of the algorithms 
 by training the model on  workstation with 128 GB of main memory and Intel(R) Xeon(R) CPU E5-2650 v2 @ 2.60GHz with 32 cores. All of the method exploits multi-core enabled via linear algebra library, whereas SLIM and WRMF attains parallelism via multiprocessing. For a fair comparision, we ran  SLIM and WRMF parallelly to use all available cores.  In table~\ref{tbl:runtime_lowes} we compare the runtime of proposed method with the baseline methods on \Lowes\ dataset. We  made following observation
 \begin{compactitem}
-\item  SLIM is computationally expensive and is slowest among the baselines. Whereas, \LinearLow is 10 fold faster than SLIM. Furthermore, the computational bottleneck for \LinearLow is mainly in the computation of the orthonormal basis via 
-randomized SVD. Since the method heavily depends upon the linear algebra library, we expect significant speedup by using the GPU backend linear algebra library~\citep{Voronin:GPURSVD}. 
+\item  SLIM is computationally expensive and is slowest among the baselines. Whereas, \LinearLow is 10 fold faster than SLIM. Furthermore, the computational bottleneck for \LinearLow is mainly in the SVD computation. Since the method heavily depends upon the linear algebra library, we expect significant speedup by using the GPU backend linear algebra library~\citep{Voronin:GPURSVD}. 
 \item Neighborhood methods are blazingly fast as they involve only sparse linear algebra.
-\item While WRMF is computationally expensive, as it involves computing inverse for individual users and items in each iteration of ALS, other matrix factorization based methods have similar computational footprints as Low-Linear method.
+\item While WRMF is computationally expensive, as it involves computing inverse for individual users and items in each optimization step, other matrix factorization based methods have similar computational footprints as Low-Linear method.
 \end{compactitem}
-
+\todob{Table \ref{tbl:runtime_lowes} is one of the most important results. We need more than one dataset.}
+\todob{Suvash:  Since other datasets are not large in terms of number of items, I think there wont be significant difference in the training time between proposed method and SLIM which may give a wrong impression.}
 \begin{table}[!htb]
 \centering
-\caption{Model training time on the  \Guitar\ Dataset.}
+\caption{Training time on the  \Guitar\ Dataset.}
 \label{tbl:runtime_lowes}
-\begin{tabular}{l|c}
+\begin{tabular}{l|l}
 \hline
  & Training time \\
 \hline

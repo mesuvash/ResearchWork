@@ -5,7 +5,7 @@
 % Despite LRec's superior performance, the memory requirement is quadratic which limits its applicability in a large scale datasets.
 
 % \subsubsection{Via SVD}
-Despite of the superior performance, applicability of Linear methods on real world large scale dataset is constrained by its computational cost. Linear methods involve solving  a large number of regression subproblems on a huge design matrix $\R$ making it extremely challenging on real world applications where the order of user and items ranges in millions.
+Despite of its superior performance, the applicability of Linear methods on real world large scale dataset are constrained by their computational cost. Linear methods involve solving  a large number of regression subproblems on a huge design matrix $\R$ making it extremely challenging on real world applications where the number of users and items is in millions.
 
 In this section, we propose an algorithm to scale linear methods on large scale datasets. First, we define $L_2$ regularized linear model 
 \begin{equation}
@@ -19,15 +19,15 @@ We observe that (\ref{eqn:squaredLinear}) is a  standard multiple linear regress
 \begin{equation}
 \W = (\R^T \R + \lambda \I)^{-1} \R^T \R
 \end{equation}
-However, the  memory requirement, computational cost and  numerical instability in computing the inverse, $(\R^T \R + \lambda \I)^{-1}$ , makes the analytical solution infeasible. Similarly, if we apply gradient based optimization, it becomes computationally expensive as it involves solving $n$ linear regression.
+However, the  memory requirement, computational cost and  numerical instability in computing the inverse, $(\R^T \R + \lambda \I)^{-1}$ , makes the analytical solution infeasible. Similarly, if we apply gradient based optimization, it becomes computationally expensive as it involves solving $n$ linear regression. \todob{This is a scaling up paper. Be precise about the computational cost.}
 % Gradient based optimization doesn't require computation of the inverse. However, it involves solving $n$ linear regression problem which is computationally expensive.
 
-To address the computational and numerical issues, we reformulate the linear model with additional rank constraints 
+To address the computational and numerical issues, we reformulate the linear model with additional rank constraints \todob{Use s.t. instead of where} \todob{Use $\ll$ instead of $< <$.}
 \begin{align}
 \label{eqn:reg-rank}
 \begin{split}
 \underset{rank(\W) \le k}{\mathrm{argmin}}  \left \| \R - \R\W\right \|_F^2 + \lambda \left \|  \W \right \|_F^2 \\
-where,\ k\ <<\ n 
+s.t.,\ k\ <<\ n 
 \end{split}
 \end{align}
 
@@ -62,8 +62,9 @@ For a resonable rank $k$, we can efficiently solve (\ref{eqn:i-reg-rank-low}) wi
 \begin{align*}
 \Y = (\Q_k^T \R^T\R\Q_k +\lambda I)^{-1} \Q_k^T \R^T \R
 \end{align*}
+\todob{This is a scaling up paper. Be precise about the computational cost.}
 
-In other words, the model corresponding to ~\ref{eqn:i-reg-rank-low} projects the user-item matrix rank-k orthogonal basis and then optimises the regularised squared loss objective on the projected representation.
+In other words, equation (~\ref{eqn:i-reg-rank-low}) corresponds to the linear Autoencoder ~\cite{Sedhain:2015} where the input-hidden layer weight is initialized with the rank-k orthogonal basis of the original matrix. 
 
 We refer to (\ref{eqn:i-reg-rank-low}) as I-\LinearLow as it corresponds to item-item model. Similarly, we can define a user-user model, U-\LinearLow, in (\ref{eqn:u-reg-rank-low})
 \begin{align}
@@ -77,7 +78,8 @@ We refer to (\ref{eqn:i-reg-rank-low}) as I-\LinearLow as it corresponds to item
 
 Although low rank multiple-regression can be solved efficiently, it requires computationally expensive dimensionality reduction. However, the recent advances in randomized algorithms for approximate dimensionality reduction~\citep{halko2011} have made dimensionality reduction very efficient on large scale matrices. In this work, we use randomized SVD~\citep{halko2011} for low dimensional projection as summarized in Algorithm~\ref{algo:RSVD}.
 
-As discussed earlier, in a real world recommendation item-item similarities are widely used to recommend similar items. As a by-product of the I-\LinearLow model item-item similarity can be recovered as $Q_kY$. Unlike matrix factorization model, notion of the similarity is directly embedded in the model definition.
+As discussed earlier, recommending similar items is very prevalent in real-world recommender systems.
+In I-\LinearLow model, item-item similarity can be recovered as $Q_kY$. 
 
 \begin{equation*}
 \end{equation*}

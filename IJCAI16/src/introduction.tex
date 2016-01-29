@@ -14,14 +14,14 @@ purchase indicates a positive preference for an item. However,
 the lack of a purchase does not necessarily indicate
 a negative preference; it may just be that the user is unaware
 of an item. Such scenarios are also referred to as one-class collaborative
-filtering(OC-CF)
+filtering (OC-CF).
 
 % While there is a rich literature on OC-CF (discussed subsequently),
 % to our knowledge, all existing methods lack one
 % or more desiderata. For example, methods that do not employ
 % learning (such as neighbourhood approaches) cannot
 % ensure full exploitation of available data. On the other hand,
-% amongst methods that employ learning (such as matrix factorisation),
+% amongst methods that employ learning (such as matrix Factorization),
 % it is common to employ learning objectives that
 % are non-convex, which limits the range of methods for effi-
 % cient global optimisation (if even possible); further, parallel
@@ -38,7 +38,7 @@ or more desiderata.
 %For example, methods that do not employ
 %learning (such as neighbourhood approaches) cannot
 %ensure optimal exploitation of the available data. On the other hand,
-%amongst methods that employ learning (such as matrix factorisation),
+%amongst methods that employ learning (such as matrix Factorization),
 %it is common to employ learning objectives that
 %are non-convex, which limits the range of methods for 
 %efficient global optimisation (if even possible) for OC-CF problems.
@@ -47,7 +47,7 @@ or more desiderata.
 %problems.
 Neighborhood-based methods are scalable, incorporates similarity metric in the model and gives explainable recommendations. 
 However, the relevance of their recommendation is weaker compared to the linear counterparts. 
-Matrix Factorization models are scalable but are also not competitive in terms of relevance. Also, the recommendations are not explainable and there is no notion of similarity in the model. On the other hand, Linear recommenders are state-of-the-art in terms of relevance. Furthermore, the model explicitly learns a similarity metric. Also, like neighborhood models, recommendations from linear model are easily explainable. However, current linear methods are computationally expensive which limits their applicability in large scale real world problems. Table~\ref{tbl:comparison} summarises the strengths and weaknesses of existing OC-CF methods.
+Matrix Factorization models are scalable but are also not competitive in terms of relevance. Also, the recommendations are not explainable and there is no notion of similarity in the model. On the other hand, Linear recommenders are state-of-the-art in terms of relevance. Furthermore, the model explicitly learns a similarity metric. Also, like neighborhood models, recommendations from linear model are easily explainable. However, current linear methods are computationally expensive which limits their applicability in large scale real world problems. Table~\ref{tbl:comparison} summarizes the strengths and weaknesses of existing OC-CF methods.
 % computational cost of the linear models limits its applicability in real world recommendation. 
 %This motivates us to address the scalability of the linear models which we will discuss in the following section.
 
