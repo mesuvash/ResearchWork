@@ -63,7 +63,7 @@ For a resonable rank $k$, we can efficiently solve (\ref{eqn:i-reg-rank-low}) wi
 \Y = (\Q_k^T \R^T\R\Q_k +\lambda I)^{-1} \Q_k^T \R^T \R
 \end{align*}
 
-In other words, the model corresponding to ~\ref{eqn:i-reg-rank-low} projects the user-item matrix rank-k orthogonal basis and then optimises the regularised squared loss objective on the projected representation.
+In other words, equation (~\ref{eqn:i-reg-rank-low}) corresponds to the linear Autoencoder ~\cite{Sedhain:2015} where the input-hidden layer weight is initialized with the rank-k orthogonal basis of the original matrix. 
 
 We refer to (\ref{eqn:i-reg-rank-low}) as I-\LinearLow as it corresponds to item-item model. Similarly, we can define a user-user model, U-\LinearLow, in (\ref{eqn:u-reg-rank-low})
 \begin{align}
