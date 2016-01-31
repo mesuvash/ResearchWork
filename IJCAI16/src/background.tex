@@ -58,7 +58,7 @@ In (item-based) neighbourhood methods, we produce a recommendation matrix of the
 where $\Sim \in \Real^{\numItems \times \numItems}$ is some \emph{item-similarity matrix}.
 % That is, for a user $\u$, one scores an item $\i$ as the \emph{sum of $\i$'s similarity to all other items that $\u$ enjoys}.
 %Given an item $i$, the nonzero entries of $\Sim_{i:}$ are known as the \emph{neighbours} of the item.
-Typically, one uses a predefined matrix $\Sim$ that relies on $\R$. A popular example is cosine similarity \citep{Sarwar:2001, Linden:2003}, \todob{Norms below are broken.}
+Typically, one uses a predefined matrix $\Sim$ that relies on $\R$. A popular example is cosine similarity \citep{Sarwar:2001, Linden:2003}, 
 $$ \Sim_{\i' \i} = \frac{ \R_{:\i}^T \R_{:\i'} }{|| \R_{:\i} ||_2 || \R_{:\i'} ||_2}. $$
 % Other examples are the Pearson correlation, Jaccard coefficient and conditional probability \citep{Deshpande:2004}. 
 It is typical to sparsify $\Sim$ so that its columns only keeps top-k similar items. 
@@ -228,7 +228,7 @@ Recently, ~\citep{Tang:2013} proposed a two step randomized SVD based algorithm 
 \begin{align*}
 	\R \approx \P_k \Sig_k \Q^T_k
 \end{align*}
-where, $\P_k \in \mathbb{R}^{m \times k}$, $\Q_k \in \mathbb{R}^{n \times k}$ and $\Sig_k \in \mathbb{R}^{k \times k}$. Given the truncated SVD solution, they initialize the item latent factor with SVD solution and solve \todob{Use s.t. instead of where. $\Sigma_k$ instead of $\Sigma$?}
+where, $\P_k \in \mathbb{R}^{m \times k}$, $\Q_k \in \mathbb{R}^{n \times k}$ and $\Sig_k \in \mathbb{R}^{k \times k}$. Given the truncated SVD solution, they initialize the item latent factor with SVD solution and solve 
 \begin{align}
 \label{eqn:I-MF-RSVD}
 \begin{split}
