@@ -78,7 +78,7 @@ Matrix Factorization methods are the \emph{de facto} approach to collaborative f
 Weighted matrix factorization (WRMF) for one class collaborative filtering~\cite{Hu:2008, Pan:2009} optimises
 \begin{equation}
 \label{eqn:wrmf}
-\min_{ \theta } \sum_{ u \in \userSet, i \in \itemSet } \J_{\ui} \cdot ( \R_{\ui} - A_u^T B_i )^2 + \frac{\lambda}{2} \cdot ( ||\A||_F^2 + ||\B||_F^2 )
+\min_{ \theta } \sum_{ u \in \userSet, i \in \itemSet } \J_{\ui} \cdot ( \R_{\ui} - \A_u^T \B_i )^2 + \frac{\lambda}{2} \cdot ( ||\A||_F^2 + ||\B||_F^2 )
 \end{equation}
 where 
 $\J \in \Real_+^{\numUsers \times \numItems}$ is some pre-defined weighting matrix  and 
