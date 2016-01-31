@@ -27,13 +27,14 @@ From the original rating matrix $\tilde\R \in \{ 0, 1, \ldots, 5 \}^{\numUsers \
 
 \Lowes\ \& \Guitar \ are anonymized dataset provided by XXX\footnote{{\scriptsize anonymised for the blind review and will be revealed later}}, a major provider of third party recommendation services. \Guitar \ dataset consists of $\sim$27,000 users, $\sim$14,000 items and $\sim$120,000 item purchases. Similarity, \Lowes \ dataset consists of $\sim$264,000 users, $\sim$57,000 items and $\sim$1 billion item purchases. 
 
-For a qualitative analysis of the item-item similarities learned by I-\LinearLow model, we use \Fotolia\ dataset\footnote{\scriptsize Dataset sharing agreement with the provider restricts us from reporting the statistics and quantitative results. Hence, we wont be reporting the quantitative results on this dataset}.
+For a qualitative analysis of the item-item similarities learned by I-\LinearLow model, we use \Fotolia\ dataset\footnote{\scriptsize Dataset sharing agreement with the provider restricts us from reporting the statistics and quantitative results. Hence, we wont be reporting the quantitative results on this dataset}. This dataset consists clicks of users on various image categories. We choose this dataset mainly because the items are easy to comprehend.
 %However, This dataset consist of interaction between user and various image categories.
-We choose this dataset for qualitative analysis mainly because the items i.e photo categories are easy to comprehend.
+% The choice of this dataset for qualitative analysis is mainly due to the 
+% We choose this dataset for qualitative analysis mainly because the items i.e photo categories are easy to comprehend.
 
 \subsection{Evaluation Protocol}
 We split the datasets into random $90\%$-$10\%$ train-test set and hold out $10\%$ of the training set for hyperparamater tuning. We report the mean test split performance, along with standard errors corresponding to 95\% confidence intervals.
-To evaluate the performance of the various recommenders, we report Precision@k and Recall@k for $k \in \{ 3, 5, 10, 20 \}$ (averaged across all test fold users), and mean average precision (mAP@20).
+To evaluate the performance of the various recommenders, we report \textsf{precision@k} and \textsf{recall@k} for $k \in \{ 3, 5, 10, 20 \}$ (averaged across all test fold users), and mean average precision (mAP@20).
 
 
 \subsection{Methods compared}

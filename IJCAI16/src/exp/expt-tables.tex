@@ -2,11 +2,11 @@ Tables \ref{tbl:guitar-results} -- \ref{tbl:ml10m-results} summarize the results
 We make the following observations:
 \begin{compactitem}
 
-\item \LinearLow is generally competitive with SLIM and outperforms the other baselines on all four datasets. Unlike other methods, \LinearLow performance is not very sensitive to the choice of user or item based method. In figure~\ref{fig:dimensionPerformance}, we observe that the performance of the \LinearLow method improves with the number of the projection dimensions. 
+\item \LinearLow is generally competitive with SLIM and outperforms the other baselines on all four datasets. Unlike other methods, performance of \LinearLow is not very sensitive to the choice of user or item based method. In figure~\ref{fig:dimensionPerformance}, we observe that the performance of the \LinearLow method improves with the number of the projection dimensions. 
 
 \item Amongst the matrix Factorization methods, Randomized SVD method~\citep{Tang:2013} consistently performs the best in all dataset. This is possibly due to the fact that SVD provides a good initialization and the optimization finds optimal solution for the given initialization. Whereas, matrix factorization optimizes nonconvex bilinear objective with random initialization which may lead to the inferior solution. Furthermore, we observe that the performance of MF-RSVD varies significantly based on whether we initialize user or item latent factors.
 
-\item We observe that the neighborhood models yield inferior results compared to the Linear models. Also, the performance varies with the user and item based models. While they perform comparatively competitive in \Lowes\ and \Guitar\ dataset, they perform poorly in \LastFM\ and \MLens\ dataset. Hence, neighborhood methods are not consistent in terms of performance.
+\item We observe that the neighborhood models yield inferior results compared to the Linear models. Also, the performance varies with the user and item based models. While they perform comparatively competitive in \Lowes\ and \Guitar\ dataset, they perform poorly in \LastFM\ and \MLens\ dataset. Hence, we conclude that neighborhood methods are not consistent in their performance.
 
 \end{compactitem}
 
@@ -18,7 +18,8 @@ We make the following observations:
 
 \end{figure}
 
-\begin{table*} \centering
+\begin{table*} [!htb]
+\centering
 \caption{Results on the \Guitar\ Dataset.Reported numbers are the mean and standard errors across test folds.}
 \label{tbl:guitar-results}
 \sisetup{round-mode=places,round-precision=4}
@@ -54,8 +55,8 @@ We make the following observations:
 
 \end{table*}
 
+\begin{table*}[!htb]
 
-\begin{table*}
 \centering
 \caption{Results on the \Lowes\ Dataset. Reported numbers are the mean and standard errors across test folds.}
 \label{tbl:lowes-results}
@@ -91,8 +92,8 @@ We make the following observations:
 
 \end{table*}
 
+\begin{table*}[!htb]
 
-\begin{table*}
 \centering
 \caption{Results on the \LastFM\ dataset. Reported numbers are the mean and standard errors across test folds.}
 \label{tbl:lfm-results}
@@ -124,18 +125,14 @@ We make the following observations:
 
 		SLIM & \textbf{\num{0.631921}} $\pm$ \textbf{\num{0.00688652}} & \textbf{\num{0.600204}} $\pm$ \textbf{\num{0.00547024}} & \textbf{\num{0.538391}} $\pm$ \textbf{\num{0.00483142}} & \num{0.463855} $\pm$ \num{0.00564272}& \textbf{\num{0.0222616}} $\pm$ \textbf{\num{0.000640118}} & \textbf{\num{0.0345738}} $\pm$ \textbf{\num{0.000432309}} & \textbf{\num{0.0592139}} $\pm$ \textbf{\num{0.000665128}} & \textbf{\num{0.0971651}} $\pm$ \textbf{\num{0.00172048}} & \textbf{\num{0.358657}} $\pm$ \textbf{\num{0.00648519}}\\
 		\hline
-
 	\end{tabular}
 }
-
 \end{table*}
 
-
-\begin{table*}
+\begin{table*}[!htb]
 \centering
 \caption{Results on the \MLens \ dataset. Reported numbers are the mean and standard errors across test folds.}
 \label{tbl:ml10m-results}
-
 \sisetup{round-mode=places,round-precision=4}
 \setlength{\arrayrulewidth}{.2em}
 \resizebox{\textwidth}{!}{%
@@ -163,13 +160,11 @@ We make the following observations:
 
 \end{table*}
 
+\begin{table*}[!htb]
 
-In Table~\ref{tbl:similarity-evaluation}, we show top-3 similar items for a small subset of items learned by I-\LinearLow  model on \Fotolia dataset.
-%for a small subset of items for  qualitatively evaluate the item-item similarity learned by the I-\LinearLow model on \Fotolia dataset. 
- We see that  I-\LinearLow learns very meaningful and explainable similarities making it very applicable in similar items recommendation.
-
-\begin{table*}[!t]
 	\centering
+	\caption{Top 3 similar items learned by I-\LinearLow model.}
+	\label{tbl:similarity-evaluation}
 	% \setlength{\arrayrulewidth}{.2em}
 	\resizebox{0.8\textwidth}{!}{%
 		\begin{tabular}{cccccc}
@@ -182,6 +177,8 @@ In Table~\ref{tbl:similarity-evaluation}, we show top-3 similar items for a smal
 		\bottomrule
 		\end{tabular}
 	}
-	\caption{Top 3 similar items learned by I-\LinearLow\  model.}
-	\label{tbl:similarity-evaluation}
 \end{table*}
+
+
+Since similarity metric is an important aspect of personalization, we evaluate item-item similarities learned by I-\LinearLow  model on the \Fotolia dataset. 
+In Table~\ref{tbl:similarity-evaluation}, we show top-3 similar items for a small subset of items learned by I-\LinearLow model. We observe that  I-\LinearLow learns meaningful and explainable similarities making it very applicable in recommending similar items.

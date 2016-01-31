@@ -1,5 +1,5 @@
 
-To compare the efficiency of various algorithm, we choose \Lowes\ dataset, the largest in terms of number of users and items. 
+To compare the training efficiency of various algorithm, we choose \Lowes\ dataset, the largest in terms of number of users and items. 
 %our largest dataset i.e. \Lowes\ in terms of users and items. 
 %To compare the runtime of the various algorithm, we choose \Lowes, the largest dataset in terms of users and items.
 We benchmarked the training time of the algorithms 
@@ -13,21 +13,23 @@ by training the model on  workstation with 128 GB of main memory and Intel(R) Xe
 \todos{Suvash:  Since other datasets are not large in terms of number of items, I think there wont be significant difference in the training time between proposed method and SLIM which may give a wrong impression.}
 \begin{table}[!htb]
 \centering
+\resizebox{0.25\textwidth}{!}{%
+	\begin{tabular}{l|l}
+	\hline
+	 & Training time \\
+	\hline
+	I-KNN & 2.5 sec \\ 
+	U-KNN & 46.9 sec \\
+	PureSVD & 3 min \\
+	WRMF & 27 min 3 sec \\
+	U-MF-SVD &  3 min 10 sec \\
+	I-MF-SVD & 3 min 8 sec \\ 
+	U-LRec-Low & 3 min 27 sec \\
+	I-Lrec-Low & 3 min 32 sec \\
+	SLIM  & 32 min 37 sec  \\
+	\hline
+	\end{tabular}
+}
 \caption{Training time on the  \Guitar\ Dataset.}
 \label{tbl:runtime_lowes}
-\begin{tabular}{l|l}
-\hline
- & Training time \\
-\hline
-I-KNN & 2.5 sec \\ 
-U-KNN & 46.9 sec \\
-PureSVD & 3 min \\
-WRMF & 27 min 3 sec \\
-U-MF-SVD &  3 min 10 sec \\
-I-MF-SVD & 3 min 8 sec \\ 
-U-LRec-Low & 3 min 27 sec \\
-I-Lrec-Low & 3 min 32 sec \\
-SLIM  & 32 min 37 sec  \\
-\hline
-\end{tabular}
 \end{table}
