@@ -8,15 +8,13 @@ The results demonstrated that while \LinearLow offers the same quality of recomm
 faster than SLIM.  SLIM is computationally expensive and is the slowest among the baselines. 
 Neighborhood methods are computationally cheap as they only involve sparse linear algebra, however as demonstrated previously, their recommendation
 quality is not consistent and lacking behind the other methods. 
+For factorization approaches, those that use randomized SVD has similar computational footprints as \LinearLow while
+WRMF is much computationally expensive, as it involves computing inverse [OF WHAT?] for individual users and items in each optimization step.
 
 
 
-[Future work] Furthermore, we note that the computational bottleneck for \LinearLow is mainly in the SVD computation. Since the method heavily depends upon the linear algebra library, we expect significant speedup by using a GPU backend linear algebra library~\citep{Voronin:GPURSVD}. 
-
-We  make following observation
-\begin{compactitem}
-\item While WRMF is computationally expensive, as it involves computing inverse for individual users and items in each optimization step, other matrix factorization based methods have similar computational footprints as Low-Linear method.
-\end{compactitem}
+%\begin{compactitem}
+%\end{compactitem}
 % \todob{Table \ref{tbl:runtime_lowes} is one of the most important results. We need more than one dataset.}
 % \todos{Suvash:  Since other datasets are not large in terms of number of items, I think there wont be significant difference in the training time between proposed method and SLIM which may give a wrong impression.}
 
