@@ -1,7 +1,27 @@
-In this section, we qualitatively analyze the item-item similarities learned by I-\LinearLow model. For this purpose, we use \Fotolia dataset\footnote{\scriptsize The dataset sharing agreement with the provider restricts us from reporting the statistics and quantitative results. Hence, we do not report summary statistics and quantitative results on this dataset}. This dataset consists of user interactions i.e. clicks on various image categories.
+In this section, we qualitatively analyze the item-item similarities learned by I-\LinearLow model. We use \Fotolia dataset\footnote{\scriptsize The dataset sharing agreement with the provider restricts us from reporting the statistics and quantitative results. Hence, we do not report summary statistics and quantitative results on this dataset} to assess the quality of learned similarites. This dataset consists of user interactions i.e. clicks on various image categories.
 % users clicks on various image categories. 
-We choose this dataset because unlike other datsets, items in \Fotolia dataset are easy to comprehend.
+We choose this dataset mainly because the items are easier to interpret compared to other datasets.
 % Since the similarity metric is an important aspect of personalization, we evaluate the item-item similarities learned by I-\LinearLow  model on the \Fotolia dataset. 
 
-In Table~\ref{tbl:similarity-evaluation}, we show top-3 similar items for a small subset of items learned by I-\LinearLow model. We observe that  I-\LinearLow learns meaningful and explainable similarities making it very applicable in recommending similar items.
+In Table~\ref{tbl:similarity-evaluation}, we show top-5 similar items for a small subset of items learned by I-\LinearLow model. We observe that  I-\LinearLow learns meaningful and explainable similarities making it very applicable in recommending similar items. 
 
+\begin{table*}[!htb]
+
+	\centering
+	\caption{Top-5 similar items learned by I-\LinearLow model.}
+	\label{tbl:similarity-evaluation}
+	% \setlength{\arrayrulewidth}{.2em}
+	\resizebox{0.85\textwidth}{!}{%
+		\begin{tabular}{lllllll}
+		\toprule
+		\textbf{Item} & Chemistry & Chilling out & Workers & Unemployment & Divorce and Conflict & Museums\\
+		\toprule
+		\multirow{5}{*}{\textbf{Similar items}} & Test and Analysis & Beach Holidays & Construction & Job Search & Depression & Painting \\
+		& Drug and Pills & Tourism & Teamwork & Tax and Accounting & Getting upset & Statues\\
+		& Health Care & Relaxing & Manufacturing & Breaking the law and Illegal Activity & Crying & Artistic monuments\\
+		& Scientists & Hiking & Service industry & Money & Loneliness & Paris\\
+		& Medical Equipments& Consumer service & Beaches& Workers&  rage & Italy\\
+		\bottomrule
+		\end{tabular}
+	}
+\end{table*}
