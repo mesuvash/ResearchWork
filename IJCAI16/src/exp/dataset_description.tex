@@ -1,4 +1,4 @@
-We now report experimental results and compare the recommendation performance of the proposed method to competing methods on a number of datasets. We used two proprietary and two publicly available dataset for evaluating the performance. In all of our dataset, we remove the users and items with less than 3 purchases. Table \ref{tbl:datasets} summarizes statistics of the datasets.
+We used two proprietary and two publicly available dataset for evaluating the performance. In all of our datasets, we remove users and items with less than 3 purchases. Table \ref{tbl:datasets} summarizes statistics of the datasets.
 
 \begin{table}
 	\centering
@@ -22,12 +22,12 @@ We now report experimental results and compare the recommendation performance of
 Following the ``Who Rated What'' KDD Cup 2007 challenge \citep{Bennett:2007}, we created a binarised version of the dataset suitable for evaluating implicit feedback methods.
 From the original rating matrix $\tilde\R \in \{ 0, 1, \ldots, 5 \}^{\numUsers \times \numItems}$, we created a preference matrix $\R$ with $R_{\ui} = \indicator{\tilde{\R}_{\ui} \geq 4}$.
 
-\LastFM. The LastFM dataset\footnote{{\scriptsize \url{http://ocelma.net/MusicRecommendationDataset/index.html}}} \citep{Celma:2008} contains the play counts of $\sim$1000 users on $\sim$170,000 artists. As per \MLens, we binarised the raw play counts.
+\LastFM. The LastFM dataset\footnote{{\scriptsize \url{http://ocelma.net/MusicRecommendationDataset/index.html}}} \citep{Celma:2008} contains the play counts of $\sim$1000 users on $\sim$170,000 artists. As per \MLens we binarised the raw play counts.
 
 
 \Lowes\ \& \Guitar \ are anonymized dataset provided by XXX\footnote{{\scriptsize anonymised for the blind review and will be revealed later}}, a major provider of third party recommendation services. \Guitar \ dataset consists of $\sim$27,000 users, $\sim$14,000 items and $\sim$120,000 item purchases. Similarity, \Lowes \ dataset consists of $\sim$264,000 users, $\sim$57,000 items and $\sim$1 billion item purchases. 
 
-For a qualitative analysis of the item-item similarities learned by I-\LinearLow model, we use \Fotolia\ dataset\footnote{\scriptsize Dataset sharing agreement with the provider restricts us from reporting the statistics and quantitative results. Hence, we wont be reporting the quantitative results on this dataset}. This dataset consists clicks of users on various image categories. We choose this dataset mainly because the items are easy to comprehend.
+% For a qualitative analysis of the item-item similarities learned by I-\LinearLow model, we use \Fotolia\ dataset\footnote{\scriptsize The dataset sharing agreement with the provider restricts us from reporting the statistics and quantitative results. Hence, we do not report summary statistics and quantative results on this dataset}. This dataset consists clicks of users on various image categories. We choose this dataset mainly because the items are easy to comprehend.
 %However, This dataset consist of interaction between user and various image categories.
 % The choice of this dataset for qualitative analysis is mainly due to the 
 % We choose this dataset for qualitative analysis mainly because the items i.e photo categories are easy to comprehend.
@@ -51,4 +51,4 @@ We compared the proposed method to a number of baselines:
 	\item MF-RSVD of \citet{Tang:2013}.  We ran this method with user and item based initialization, U-MF-RSVD  and I-MF-RSVD, as discussed in (\ref{eqn:U-MF-RSVD}) and (\ref{eqn:I-MF-RSVD}) respectively.
 	\item SLIM, as per (\ref{eqn:slim}). For computational convenience, we used the SGDReg variant \citep{Levy:2013}, which is identical to SLIM  except that the nonnegativity constraint is removed. We did not evaluate SLIM with nonnegativity directly as~\citet{Levy:2013} reports superior performance to SLIM, and is considerably faster to train.
 \end{compactitem}
-Note that we do not compare against ~\citep{Sedhain:2016} due to its memory complexity on a large scale dataset. For instance, on \Lowes \ dataset LRec requires $\sim$260 GB of memory. 
+We do not compare against ~\citep{Sedhain:2016} due to its memory complexity on a large scale dataset. For instance on the \Lowes \ dataset, LRec requires $\sim$260 GB of memory. 
