@@ -75,9 +75,8 @@ The latter can be solved analytically to give
 \Y = (\Q_k^T \R^T\R\Q_k +\lambda I)^{-1} \Q_k^T \R^T \R
 \end{align*}
 Note that this inversion involves a $k \times k$ matrix, and hence it is tractable.
-
-%Eq.~(\ref{eqn:i-reg-rank-low}) corresponds to the linear Autoencoder~\cite{Sedhain:2015} where the input-hidden layer weight is initialized with the rank-k orthogonal basis of the matrix $\R$. 
-We refer to (\ref{eqn:i-reg-rank-low}) as I-\LinearLow as it corresponds to item-item model. Similarly, we can define a user-user model, U-\LinearLow
+Eq.~(\ref{eqn:i-reg-rank-low}) corresponds to the linear Autoencoder~\cite{Sedhain:2015} where the input-hidden layer weight is initialized with the rank-k orthogonal basis of the matrix $\R$. 
+We refer to (\ref{eqn:i-reg-rank-low}) as I-\LinearLow as it corresponds to item-item model. Similarly, we can define a user-user model, U-\LinearLow, in (\ref{eqn:u-reg-rank-low})
 \begin{align}
 \label{eqn:u-reg-rank-low}
 % \begin{split}
@@ -86,13 +85,6 @@ We refer to (\ref{eqn:i-reg-rank-low}) as I-\LinearLow as it corresponds to item
 % \because  \left \|  P_kY \right \|_F^2 = \left \|  Y \right \|_F^2
 % \end{split}
 \end{align}
-
-
-%Although low rank multiple-regression can be solved efficiently, it requires computationally expensive dimensionality reduction. However, the recent advances in randomized algorithms for approximate dimensionality reduction~\citep{halko2011} have made dimensionality reduction very efficient on large scale matrices. In this work, we use randomized SVD~\citep{halko2011} for low dimensional projection as summarized in Algorithm~\ref{algo:RSVD}.
-
-As we discussed earlier, recommending similar items is very prevalent in real-world recommender systems.
-In I-\LinearLow model, the item-item similarity is explicitly given by the matrix $\W = \Q_k \Y $. 
-
 
 \begin{algorithm}
         % \algsetup{linenosize=\tiny}
@@ -119,4 +111,9 @@ In I-\LinearLow model, the item-item similarity is explicitly given by the matri
         \end{algorithmic}
 \end{algorithm}
 
+
+%Although low rank multiple-regression can be solved efficiently, it requires computationally expensive dimensionality reduction. However, the recent advances in randomized algorithms for approximate dimensionality reduction~\citep{halko2011} have made dimensionality reduction very efficient on large scale matrices. In this work, we use randomized SVD~\citep{halko2011} for low dimensional projection as summarized in Algorithm~\ref{algo:RSVD}.
+
+As we discussed earlier, recommending similar items is very prevalent in real-world recommender systems.
+In I-\LinearLow model, the item-item similarity is explicitly given by the matrix $\W = \Q_k \Y $. 
 

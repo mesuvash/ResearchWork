@@ -41,8 +41,7 @@ We call $\RHat$ the \emph{recommendation matrix}.
 % %However, if a user has not purchased an item, \ie $\R_{\ui} = 0$, this does not necessarily indicate a negative preference, as the user may simply be unaware of the item.
 % While we may assume that a user purchasing an item is an indication of positive preference, a user not purchasing an item does not necessarily indicate a negative preference: the user may simply be unaware of the item.
 % Henceforth, we say that $(\u, \i)$ pairs with $\R_{\ui} = 1$ denote ``known positive preference'', while pairs with $\R_{\ui} = 0$ denote ``unknown preference''.
-
-We now review some approaches to OC-CF.
+In the rest of this section we review some existing approaches to OC-CF.
 %
 \subsection{Neighbourhood methods}
 \label{sec:knn}
@@ -78,13 +77,13 @@ Matrix Factorization methods are the \emph{de facto} approach to collaborative f
 Weighted matrix factorization (WRMF) for one class collaborative filtering~\cite{Hu:2008, Pan:2009} optimises
 \begin{equation}
 \label{eqn:wrmf}
-\min_{ \theta } \sum_{ u \in \userSet, i \in \itemSet } \J_{\ui} \cdot ( \R_{\ui} - \A_u^T \B_i )^2 + \frac{\lambda}{2} \cdot ( ||\A||_F^2 + ||\B||_F^2 )
+\min_{ \A,\B  } \sum_{ u \in \userSet, i \in \itemSet } \J_{\ui} ( \R_{\ui} - \A_u^T \B_i )^2 + \frac{\lambda}{2}  ( ||\A||_F^2 + ||\B||_F^2 )
 \end{equation}
 where 
 $\J \in \Real_+^{\numUsers \times \numItems}$ is some pre-defined weighting matrix  and 
 \begin{equation}
 \label{eqn:wrmf-weight}
-\J_{\ui} =  \indicator{ \R_{\ui} = 0 } + \alpha \cdot \indicator{ \R_{\ui} > 0 } 
+\J_{\ui} =  \indicator{ \R_{\ui} = 0 } + \alpha \indicator{ \R_{\ui} > 0 } 
 \end{equation}
 where $\alpha$ assigns an importance weight to the observed interaction.
 
@@ -93,7 +92,7 @@ where $\alpha$ assigns an importance weight to the observed interaction.
 % Then, matrix Factorization methods optimise
 % \begin{equation}
 % \label{eqn:wrmf}
-% \min_{ \theta } \sum_{ u \in \userSet, i \in \itemSet } \J_{\ui} \cdot \ell( \R_{\ui}, \predUserItem( \theta ) ) + \mathrm{\Omega}( \theta ) ,
+% \min_{ \theta } \sum_{ u \in \userSet, i \in \itemSet } \J_{\ui}  \ell( \R_{\ui}, \predUserItem( \theta ) ) + \mathrm{\Omega}( \theta ) ,
 % \end{equation}
 % where the recommendation matrix is\footnote{Typically, one also includes user- and item- bias terms in the recommendation matrix. We omit these for brevity.}
 % \begin{equation}
@@ -102,7 +101,7 @@ where $\alpha$ assigns an importance weight to the observed interaction.
 % \end{equation}
 % for $\theta = \{ \A, \B \}$, 
 % and $\mathrm{\Omega}( \theta )$ is the \emph{regulariser}, which is typically
-% $$\mathrm{\Omega}( \theta ) = \frac{\lambda}{2} \cdot ( ||\A||_F^2 + ||\B||_F^2 )$$
+% $$\mathrm{\Omega}( \theta ) = \frac{\lambda}{2}  ( ||\A||_F^2 + ||\B||_F^2 )$$
 % for some $\lambda > 0$.
 % The matrices $\A \in \Real^{\K \times \numUsers}, \B \in \Real^{\K \times \numItems}$ are the \emph{latent representations} of users and items respectively, with $\K \in \mathbb{N}_+$ being the \emph{latent dimension} of the Factorization.
 
@@ -159,7 +158,7 @@ In a related linear model for OC-CF~\citep{Sedhain:2016}, the authors report ver
 % \min_{ \W  } || \X - \X \W ||_F^2 + \frac{\lambda}{2} || \W ||_F^2 
 % \end{equation}
 
-Linear methods are attractive for several reasons. They have superior performance, and unlike neighborhood methods, they adapt with the data as the parameters are learned from data itself. Furthermore, the recommendations are easily interpretable. However, the linear methods are computationally expensive as they require solving a large number of regression subproblems with a huge design matrix $\R$. \todob{This is a scaling up paper. Be precise about the computational cost.}
+Linear methods are attractive for several reasons. They have superior performance, and unlike neighborhood methods, they adapt with the data as the parameters are learned from data itself. Furthermore, the recommendations are easily interpretable. However, linear methods can be computationally expensive as they require solving a large number of regression subproblems with a big design matrix $\R$. This can scale quadratically with the order of $\R$, or worse.
 
 % The nonnegativity constraint encourages interpretability, but \citet{Levy:2013} demonstrated that good performance can be achieved without it.
 
@@ -197,53 +196,25 @@ Linear methods are attractive for several reasons. They have superior performanc
 %
 
 \subsection{Randomized SVD}
-SVD is the archetypal matrix factorization algorithm and has been widely used in machine learning for dimensionality reduction. However, SVD is computationally expensive and not scalable to large scale datasets. It has been recently shown that SVD can be significantly scaled up, at a negligible cost in performance, by randomization~\citep{halko2011}. The \textsl{randomized SVD} algorithm is summarized in Algorithm~\ref{algo:RSVD}.
+SVD is the archetypal matrix factorization algorithm and has been widely used in machine learning for dimensionality reduction. However, SVD is computationally expensive and not scalable to large scale datasets. It has been recently shown that SVD can be significantly scaled up, at a negligible cost in performance, by randomization~\citep{halko2011}. We will describe the randomized SVD algorithm in the next section, in the context of the OC-CF problem.
 
-\todon{Some matrices are bold and others not. Please cite the precise entry in the paper of Halko where this algorithm is described.}
-
-\begin{algorithm}
-  	% \algsetup{linenosize=\tiny}
-  	\small
-	\caption{Given $R \in \mathbb{R}^{m \times n}$, compute approximate rank-k SVD; R $\approx$ $P_k \Sig_k Q_k$}
-	\label{algo:RSVD}
-	\begin{algorithmic}[1]
-
-	\Procedure{RSVD}{R, k}
-	\State Draw $n\times k$ Gaussian random matrix $\Omega$
-	\State Construct $n\times k$ sample matrix $A = R\Omega$
-	\State Construct $m\times k$ orthonormal matrix $Z$, such that $A  = ZX$
-	\State Constuct $k\times n$ matrix $B = Z^TR$
-	\State Compute the SVD of B, B =  $\hat{P_k} \Sig_k Q_k$
-	\State  $R \Rightarrow ZB \Rightarrow Z \hat{P_k} \Sig_k Q_k \Rightarrow  P_k \Sig_k Q_k, where\ P_k = Z \hat{P_k}$
-	% \State \begin{eqnarray*}
-	% 		R & = & ZB\\
-	% 		& = &  Z\hat{P_k}Σ_kQ_k\\
-	% 		& = & P_kΣ_kQ_k\\
-	% 		&   & where,\ P_k = Z\hat{P_k}\\
-	% 		\end{eqnarray*}
-	\State return $P_k \Sig_k Q_k$
-	\EndProcedure
-	\end{algorithmic}
-\end{algorithm}
-
-
-\todon{It is not good practice to start sentences with [REF]. Please reformulate like the SVD randomization [4] above.}
-Recently, ~\citep{Tang:2013} proposed a two step randomized SVD based algorithm to scale matrix factorization. First, they compute the rank-k SVD of the matrix $\R$,
+Randomized SVD has been applied to matrix factorization \citep{Tang:2013} 
+(but not in the OC-CF setting that we are considering). 
+The authors compute the rank-k randomized SVD of the matrix $\R$,
 \begin{align*}
 	\R \approx \P_k \Sig_k \Q^T_k
 \end{align*}
-where, $\P_k \in \mathbb{R}^{m \times k}$, $\Q_k \in \mathbb{R}^{n \times k}$ and $\Sig_k \in \mathbb{R}^{k \times k}$. Given the truncated SVD solution, they initialize the item latent factor with SVD solution and solve 
+where, $\P_k \in \mathbb{R}^{m \times k}$, $\Q_k \in \mathbb{R}^{n \times k}$ and $\Sig_k \in \mathbb{R}^{k \times k}$. Given the truncated SVD solution, they initialize the item latent factor with the SVD solution and solve 
 \begin{align}
 \label{eqn:I-MF-RSVD}
 \underset{\A}{\mathrm{argmin}} & \left \| \R - \A^T\B\right \|_F^2 + \lambda \left \|  \A \right \|_F^2   \\
 s.t.\ & \B = \Sig_k^{\frac{1}{2}} \Q^T_k 
 \end{align}
-In the (\ref{eqn:I-MF-RSVD}), the item latent factors, $\B$, is initialized with SVD solution and fixed. Similarly, instead of fixing $\B$, if we fix $\A$, we get the following objective 
+Similarly, if the matrix $\A$ is fixed instead of the matrix $\B$, the objective becomes
 \begin{align}
 \label{eqn:U-MF-RSVD}
 % \label{eqn:U-MF-RSVD}
 \underset{\B}{\mathrm{argmin}} & \left \| \R - \A^T\B\right \|_F^2 + \lambda \left \|  \B \right \|_F^2 \\
-s.t.\ & \A = \P_k \Sig_k^{\frac{1}{2}}\\
+s.t.\ & \A = \P_k \Sig_k^{\frac{1}{2}}
 \end{align}
-We refer to (\ref{eqn:U-MF-RSVD}) and (\ref{eqn:I-MF-RSVD}) as U-MF-RSVD and I-MF-RSVD respectively. As we will see in the results, the performance of these two models can vary significantly .
-\todon{Use simpler acronyms ? Like R-SVD-1 and R-SVD-2.}
+We refer to (\ref{eqn:U-MF-RSVD}) and (\ref{eqn:I-MF-RSVD}) as U-MF-RSVD and I-MF-RSVD respectively. As we will see in the results, the performance of these two models can vary significantly.

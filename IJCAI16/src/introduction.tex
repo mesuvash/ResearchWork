@@ -51,13 +51,20 @@ Matrix Factorization models are scalable but are also not competitive in terms o
 % computational cost of the linear models limits its applicability in real world recommendation. 
 %This motivates us to address the scalability of the linear models which we will discuss in the following section.
 
-This paper addresses the computational bottleneck of linear model, enabling it to scale up to large OC-CF problem while retaining essentially
-the same performance. Our method, \LinearLow (Fast Low Rank Linear Model), employ two ingredients that are known in the literature: 
-the formulation of OC-CF as a regularised linear multi-regression problem, and the use of randomized SVD for fast dimensionality reduction. 
-However, the combination of these two ideas, to the best of our knowledge, is novel. 
-Extensive experiments using a number of real-world datasets demonstrate that \LinearLow provides competitive performance with a significant reduction of the computational cost compared to the state-of-the-art Linear models. 
-Due to its scalabiity and performance, 
-\LinearLow has all the desirable properties of a practical recommender system and compared favourably to other methods.
+
+In this paper we address the computational bottleneck of linear models, enabling them to scale up to large OC-CF problems without compromising performance. Our method, \LinearLow (Fast Low Rank Linear Model), formulates OC-CF as a regularised linear regression problem with a randomized SVD for fast dimensionality reduction. 
+Although regularized regression and randomized SVD are not new ideas,  their combined use in the context of OC-CF is,  to the best of our knowledge, novel. 
+Through extensive experiments on known benchmarks and real-world datasets, we demonstrate that \LinearLow achieves state-of-the-art performance as 
+compared to other methods, with a significant reduction in computational cost.  Due to its scalability and performance, 
+\LinearLow has all the desirable properties of a practical recommender system.
+
+%This paper addresses the computational bottleneck of linear model, enabling it to scale up to large OC-CF problem while retaining essentially
+%the same performance. Our method, \LinearLow (Fast Low Rank Linear Model), employ two ingredients that are known in the literature: 
+%the formulation of OC-CF as a regularised linear multi-regression problem, and the use of randomized SVD for fast dimensionality reduction. 
+%However, the combination of these two ideas, to the best of our knowledge, is novel. 
+%Extensive experiments using a number of real-world datasets demonstrate that \LinearLow provides competitive performance with a significant reduction of the computational cost compared to the state-of-the-art Linear models. 
+%Due to its scalabiity and performance, 
+%\LinearLow has all the desirable properties of a practical recommender system and compared favourably to other methods.
 %By proposing an algorithm that uses fast randomized SVD dimensionality reduction to scale linear models on large-scale datasets. 
 %First, we view linear model as a standard multiple regression problem. Then we  perform fast randomized dimensionality reduction on the design matrix allowing us to solve the extremely efficiently in a closed form. 
 \begin{table*}[!t]
