@@ -2,19 +2,19 @@ Personalised recommendation system is a core component
 in many modern e-commerce services. Collaborative
 filtering (CF) is the de-facto standard approach to making recommendation,
 based on information in a database
-of item preferences from a population of users. Most work on CF has considered 
+of item preferences from a population of users~\citep{Goldberg:1992}. Most work on CF has considered 
 the explicit feedback
 setting, where users express both positive and negative preferences
 for items in terms of ratings or likes/dislikes. In
-contrast, in the implicit feedback setting, we do not have
+contrast, in the one-class collaborative filtering setting(OC-CF)~\citep{Pan:2008}, we do not have
 explicit negative preference information. For example, consider
 recommending items to users of an e-commerce website
 based on their purchase history. One can assume that a
 purchase indicates a positive preference for an item. However,
 the lack of a purchase does not necessarily indicate
 a negative preference; it may just be that the user is unaware
-of an item. Such scenarios are also referred to as one-class collaborative
-filtering (OC-CF).
+of an item. 
+%Such scenarios are also referred to as one-class collaborativefiltering (OC-CF).
 
 % While there is a rich literature on OC-CF (discussed subsequently),
 % to our knowledge, all existing methods lack one
@@ -30,7 +30,7 @@ filtering (OC-CF).
 
 
 In designing a real world recommender systems there are various factors to be 
-considered. First and foremost, a recommender system should  produce good recommendation which can be quantified in terms of \textsl{relevance}. The relevance of a recommender system is measured using evaluation metrics such as \textsf{precision@k}, \textsf{recall@k} etc. Second, recommender systems should be highly \textsl{scalable}. In modern day applications, it is very common to have millions of users and items. A model should be able to handle the data as the number of user and item grows to this scale. \textsl{Similarity metric} is another important aspect of personalization. For instance, item-item similarity allows us to recommend similar items to the users. Recommending similar items is very prevalent in a real-world recommender systems. Hence, it is highly desirable to have a recommendation algorithm where the similarity is directly expressed and incorporated in the model. Also, \textsl{interpretability} of the recommendation is very critical in persuading users. By explaining the recommendations, the system becomes more transparent, build users' trust in the system and convince users in consuming the recommended items. Lack of interpretability weakens the ability to persuade users in decision making~\citep{explainabiltyVIG2009}.
+considered. First and foremost, a recommender system should  produce good recommendation which can be quantified in terms of \textsl{relevance}. The relevance of a recommender system is measured using evaluation metrics such as \textsf{precision@k}, \textsf{recall@k} etc. Second, recommender systems should be highly \textsl{scalable}. In modern day applications, it is very common to have millions of users and items and billions of recorded interactions. A model should be able to handle the data as the number of user and item grows to this scale. \textsl{Similarity metric} is another important aspect of personalization. For instance, item-item similarity allows us to recommend similar items to the users. Recommending similar items is very prevalent in a real-world recommender systems. Hence, it is highly desirable to have a recommendation algorithm where the similarity is directly expressed and incorporated in the model. Also, \textsl{interpretability} of the recommendation is very critical in persuading users. By explaining the recommendations, the system becomes more transparent, build users' trust in the system and convince users in consuming the recommended items. Lack of interpretability weakens the ability to persuade users in decision making~\citep{explainabiltyVIG2009}.
 
 While there is a rich literature on OC-CF (discussed subsequently),
 to our knowledge, all existing methods lack one
@@ -45,9 +45,10 @@ or more desiderata.
 %While linear models have been shown to perform well on OC-CF problems, they are
 %computationally expensive as they require solving a large number of regression
 %problems.
-Neighborhood-based methods are scalable, incorporates similarity metric in the model and gives explainable recommendations. 
+Neighborhood-based methods~\citep{Sarwar:2001, Linden:2003} are scalable, incorporates similarity metric in the model and gives explainable recommendations. 
 However, the relevance of their recommendation is weaker compared to the linear counterparts. 
-Matrix Factorization models are scalable but are also not competitive in terms of relevance. Also, the recommendations are not explainable and there is no notion of similarity in the model. On the other hand, Linear recommenders are state-of-the-art in terms of relevance. Furthermore, the model explicitly learns a similarity metric. Also, like neighborhood models, recommendations from linear model are easily explainable. However, current linear methods are computationally expensive which limits their applicability in large scale real world problems. Table~\ref{tbl:comparison} summarizes the strengths and weaknesses of existing OC-CF methods.
+Matrix Factorization models~\citep{Hu:2008} are %scalable but are also 
+not competitive in terms of relevance. Also, the recommendations are not explainable and there is no notion of similarity in the model. On the other hand, Linear recommenders~\cite{Ning:2011, Sedhain:2016} are state-of-the-art in terms of relevance. Furthermore, the model explicitly learns a similarity metric. Also, like neighborhood models, recommendations from linear model are easily explainable. However, current linear methods are computationally expensive which limits their applicability in large scale real world problems. Table~\ref{tbl:comparison} summarizes the strengths and weaknesses of existing OC-CF methods.
 % computational cost of the linear models limits its applicability in real world recommendation. 
 %This motivates us to address the scalability of the linear models which we will discuss in the following section.
 

@@ -6,7 +6,7 @@ We benchmarked the training time of the algorithms
 by training the model on  workstation with 128 GB of main memory and Intel(R) Xeon(R) CPU E5-2650 v2 @ 2.60GHz with 32 cores. All of the methods exploit multi-core enabled via linear algebra library, whereas SLIM and WRMF attains parallelism via multiprocessing. For a fair comparision, we ran  SLIM and WRMF in parallel to use all available cores.  In table~\ref{tbl:runtime_lowes} we compare the runtime of the proposed method with the baseline methods on \Lowes\ dataset. We  make following observation
 \begin{compactitem}
 \item  SLIM is computationally expensive and is slowest among the baselines, whereas \LinearLow is 10 times faster than SLIM. Furthermore, the computational bottleneck for \LinearLow is mainly in the SVD computation. Since the method heavily depends upon the linear algebra library, we expect significant speedup by using a GPU backend linear algebra library~\citep{Voronin:GPURSVD}. 
-\item Neighborhood methods are blazingly fast as they involve only sparse linear algebra.
+\item Neighborhood methods are computationally cheap as they only involve sparse linear algebra.
 \item While WRMF is computationally expensive, as it involves computing inverse for individual users and items in each optimization step, other matrix factorization based methods have similar computational footprints as Low-Linear method.
 \end{compactitem}
 % \todob{Table \ref{tbl:runtime_lowes} is one of the most important results. We need more than one dataset.}
@@ -19,7 +19,7 @@ by training the model on  workstation with 128 GB of main memory and Intel(R) Xe
 \resizebox{0.30\textwidth}{!}{%
 	\begin{tabular}{l|ll}
 	\hline
-	 & \Guitar & \MLens\\
+	 & \Lowes & \MLens\\
 	\hline
 	I-KNN & 2.5 sec & 10.7 sec\\ 
 	U-KNN & 46.9 sec & - \\

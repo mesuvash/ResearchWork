@@ -3,7 +3,7 @@ We now introduce our notation, summarized in table \ref{tbl:glossary}. % summari
 %Let $\userSet = \{ 1, \ldots, \numUsers \}$ denote a set of users, and $\itemSet = \{ 1, \ldots, \numItems \}$ a set of items.
 Let $\userSet$ denote a set of users, and $\itemSet$ a set of items,
 with $\numUsers = | \userSet |$ and $\numItems = | \itemSet |$.
-In one-class collaborative filtering (OC-CF), we have a purchase\footnote{We use the word ``purchase'' simply for the purposes of exposition. The method described in this paper is applicable in other implicit feedback settings, such as modelling users' play counts of songs.} 
+In one-class collaborative filtering (OC-CF), we have a purchase\footnote{We use the word ``purchase'' simply for the purposes of exposition.} 
 matrix $\R \in \{ 0, 1 \}^{\numUsers \times \numItems}$. %, where $\numItems$ is the number of items and $\numUsers$ the number of users.
 We use $\R_{\ui}$ to refer to the purchase status for the user $\u$ and item $\i$.
 We use $\R_{:\i}$ to denote the indicator vector of each users' purchase of an item, and similarly $\R_{\u:}$ to denote the vector of a user's preference for each item $i$.
@@ -208,13 +208,13 @@ where, $\P_k \in \mathbb{R}^{m \times k}$, $\Q_k \in \mathbb{R}^{n \times k}$ an
 \begin{align}
 \label{eqn:I-MF-RSVD}
 \underset{\A}{\mathrm{argmin}} & \left \| \R - \A^T\B\right \|_F^2 + \lambda \left \|  \A \right \|_F^2   \\
-s.t.\ & \B = \Sig_k^{\frac{1}{2}} \Q^T_k 
+s.t.\ & \B = \Sig_k^{\frac{1}{2}} \Q^T_k \nonumber
 \end{align}
 Similarly, if the matrix $\A$ is fixed instead of the matrix $\B$, the objective becomes
 \begin{align}
 \label{eqn:U-MF-RSVD}
 % \label{eqn:U-MF-RSVD}
 \underset{\B}{\mathrm{argmin}} & \left \| \R - \A^T\B\right \|_F^2 + \lambda \left \|  \B \right \|_F^2 \\
-s.t.\ & \A = \P_k \Sig_k^{\frac{1}{2}}
+s.t.\ & \A = \P_k \Sig_k^{\frac{1}{2}} \nonumber
 \end{align}
 We refer to (\ref{eqn:U-MF-RSVD}) and (\ref{eqn:I-MF-RSVD}) as U-MF-RSVD and I-MF-RSVD respectively. As we will see in the results, the performance of these two models can vary significantly.
