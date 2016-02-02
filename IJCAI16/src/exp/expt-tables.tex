@@ -2,9 +2,13 @@ Tables \ref{tbl:guitar-results} -- \ref{tbl:ml10m-results} summarize the results
 We make the following observations:
 \begin{compactitem}
 
-\item \LinearLow is generally competitive with SLIM and outperforms the other baselines on all four datasets. Unlike other methods, performance of \LinearLow is not very sensitive to the choice of user or item based method. In figure~\ref{fig:dimensionPerformance}, we observe that the performance of the \LinearLow method improves with the number of the projection dimensions. 
+\item \LinearLow is very competitive with SLIM and consistently outperforms other baselines on all four datasets. Unlike other methods, the performance of \LinearLow is not very sensitive to the choice of user or item based method. 
+%In our experiments 
+In Figure~\ref{fig:dimensionPerformance}, we observe that the performance of \LinearLow improves steadily  with the dimensionality of projection dimension, but with diminishing returns. However, WRMF performance improves initially with the number of dimensions and then starts to decrease possibly due to overfitting. 
 
-\item Amongst the matrix Factorization methods, Randomized SVD method~\citep{Tang:2013} consistently performs the best in all dataset. This is possibly due to the fact that SVD provides a good initialization and the optimization finds optimal solution for the given initialization. Whereas, matrix factorization optimizes nonconvex bilinear objective with random initialization which may lead to the inferior solution. Furthermore, we observe that the performance of MF-RSVD varies significantly based on whether we initialize user or item latent factors.
+ % beyond with the number of projection dimension whereas \WRMF figure~\ref{fig:dimensionPerformance}, we observe that the performance of the \LinearLow method improves with the number of the projection dimensions. 
+
+\item Amongst the matrix factorization methods, Randomized SVD method~\citep{Tang:2013} consistently performs the best in all dataset. This is possibly due to the fact that SVD provides a good initialization and the optimization finds optimal solution for the given initialization, whereas matrix factorization optimizes a nonconvex bilinear objective with random initialization which may lead to an inferior solution. In Table~\ref{tbl:guitar-results} -- \ref{tbl:lfm-results}, we observe that the performance of MF-RSVD varies significantly based on whether we initialize user or item latent factors.
 
 \item We observe that the neighborhood models yield inferior results compared to the Linear models. Also, the performance varies with the user and item based models. While they perform comparatively competitive in \Lowes\ and \Guitar\ dataset, they perform poorly in \LastFM\ and \MLens\ dataset. Hence, we conclude that neighborhood methods are not consistent in their performance.
 
@@ -12,20 +16,20 @@ We make the following observations:
 
 \begin{figure}[!ht]
   \centering
-    \includegraphics[width=0.5\textwidth]{imgs/mapvsdim}
-  \caption{Performance of the U-\LinearLow and I-\LinearLow with the number of dimensions.}
+    \includegraphics[width=0.5\textwidth]{imgs/wrmf_lowlinear_vs_dim_larger_font}
+  \caption{Variation of performance of I-\LinearLow and WRMF with the number of dimensions.}
   \label{fig:dimensionPerformance}
 
 \end{figure}
 
 \begin{table*} [!htb]
 \centering
-\caption{Results on the \Guitar\ Dataset.Reported numbers are the mean and standard errors across test folds.}
+\caption{Results on the \Guitar\ dataset.Reported numbers are the mean and standard errors across test folds.}
 \label{tbl:guitar-results}
 \sisetup{round-mode=places,round-precision=4}
 \setlength{\arrayrulewidth}{.2em}
 \resizebox{\textwidth}{!}{%
-	\begin{tabular}{l|cccc|cccc|c}
+	\begin{tabular}{l|llll|llll|l}
 
 		\hline
 		& prec@3 & prec@5 & prec@10 & prec@20 & recall@3 & recall@5 & recall@10 & recall@20 & mAP@20 \\
@@ -60,12 +64,12 @@ We make the following observations:
 \begin{table*}[!htb]
 
 \centering
-\caption{Results on the \Lowes\ Dataset. Reported numbers are the mean and standard errors across test folds.}
+\caption{Results on the \Lowes\ dataset. Reported numbers are the mean and standard errors across test folds.}
 \label{tbl:lowes-results}
 \sisetup{round-mode=places,round-precision=4}
 \setlength{\arrayrulewidth}{.2em}
 \resizebox{\textwidth}{!}{%
-	\begin{tabular}{l|cccc|cccc|c}
+	\begin{tabular}{l|llll|llll|l}
 		\hline
 		& prec@3 & prec@5 & prec@10 & prec@20 & recall@3 & recall@5 & recall@10 & recall@20 & mAP@20 \\
 		\hline
@@ -104,7 +108,7 @@ We make the following observations:
 \sisetup{round-mode=places,round-precision=4}
 \setlength{\arrayrulewidth}{.2em}
 \resizebox{\textwidth}{!}{%
-	\begin{tabular}{l|cccc|cccc|c}
+	\begin{tabular}{l|llll|llll|l}
 		\hline
 		& prec@3 & prec@5 & prec@10 & prec@20 & recall@3 & recall@5 & recall@10 & recall@20 & mAP@20 \\
 		\hline
@@ -143,7 +147,7 @@ We make the following observations:
 \sisetup{round-mode=places,round-precision=4}
 \setlength{\arrayrulewidth}{.2em}
 \resizebox{\textwidth}{!}{%
-	\begin{tabular}{l|cccc|cccc|c}
+	\begin{tabular}{l|llll|llll|l}
 		\hline
 		& prec@3 & prec@5 & prec@10 & prec@20 & recall@3 & recall@5 & recall@10 & recall@20 & mAP@20 \\
 		\hline
@@ -176,7 +180,7 @@ We make the following observations:
 	\label{tbl:similarity-evaluation}
 	% \setlength{\arrayrulewidth}{.2em}
 	\resizebox{0.85\textwidth}{!}{%
-		\begin{tabular}{cccccc}
+		\begin{tabular}{llllll}
 		\toprule
 		\textbf{Item} & Chemistry & Chilling out & Workers & Unemployment & Divorce and Conflict\\
 		\toprule
@@ -189,5 +193,9 @@ We make the following observations:
 \end{table*}
 
 
-Since similarity metric is an important aspect of personalization, we evaluate item-item similarities learned by I-\LinearLow  model on the \Fotolia dataset. 
-In Table~\ref{tbl:similarity-evaluation}, we show top-3 similar items for a small subset of items learned by I-\LinearLow model. We observe that  I-\LinearLow learns meaningful and explainable similarities making it very applicable in recommending similar items.
+
+
+% Data for I-Linear-Flow & WRMF vs dimension 
+% x = [10, 50, 100, 500, 1000, 3000]
+% wrmf = [0.035, 0.045, 0.048, 0.067, 0.070, 0.061]
+% I_LowLinear = [ 0.032, 0.048, 0.058, 0.096, 0.106, 0.115]
