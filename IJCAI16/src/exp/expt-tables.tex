@@ -1,21 +1,22 @@
-Tables \ref{tbl:guitar-results} -- \ref{tbl:ml10m-results} summarize the results of the various methods.
-We make the following observations:
+Tables \ref{tbl:guitar-results} -- \ref{tbl:ml10m-results} summarize the results of our methods and the various baselines.
+The results demonstrate that in terms of the quality of recommendation, the linear methods (\LinearLow and SLIM) always outperform other methods
+in all four datasets. \LinearLow and SLIM perform equally well and there is little separation between them in terms of the quality of 
+the recommendation. However, as we will show in section~\ref{section:scalability}, \LinearLow is much more efficient than SLIM.
+Also, unlike other methods, the performance of \LinearLow is not very sensitive to the choice of user or item based formulation.
+%Furthermore, it consistently outperforms other baselines on all four datasets.
+%\LinearLow is very competitive with SLIM and has much less computational footprint which we will discuss in 
+%\LinearLow is very competitive with SLIM and consistently outperforms other baselines on all four datasets. 
+From these tables, we make the following additional observations:
 \begin{compactitem}
 
-\item \LinearLow is very competitive with SLIM and has much less computational footprint which we will discuss in section~\ref{section:scalability}. Furthermore, it consistently outperforms other baselines on all four datasets.
-%\LinearLow is very competitive with SLIM and consistently outperforms other baselines on all four datasets. 
-Unlike other methods, the performance of \LinearLow is not very sensitive to the choice of user or item based method. Furthermore, in Figure~\ref{fig:dimensionPerformance}, we compare the performance of \LinearLow model, namely I-Linear-Flow, and WRMF with the number of the dimensions. We observe that the performance of \LinearLow improves steadily with the dimensionality of projection, but with diminishing returns. However, performance of WRMF improves initially with the number of dimensions and then starts to decrease possibly due to overfitting. 
 %In our experiments 
  % beyond with the number of projection dimension whereas \WRMF figure~\ref{fig:dimensionPerformance}, we observe that the performance of the \LinearLow method improves with the number of the projection dimensions. 
-
-\item Amongst the matrix factorization methods, Randomized SVD method~\citep{Tang:2013} consistently performs the best in all dataset. This is possibly due to the fact that SVD provides a good initialization and the optimization finds optimal solution for the given initialization, whereas matrix factorization optimizes a highly nonconvex bilinear objective and is sensitive to the initialization and hyperparameters. In Table~\ref{tbl:guitar-results} -- \ref{tbl:lfm-results}, we observe that the performance of MF-RSVD varies significantly based on whether we initialize user or item latent factors.
-
+\item Among the matrix factorization methods, those that use Randomized SVD~\citep{Tang:2013} consistently performs the best in all dataset. This is possibly due to the fact that SVD provides a good initialization and the optimization finds optimal solution for the given initialization, whereas matrix factorization optimizes a highly nonconvex bilinear objective and is sensitive to the initialization and hyperparameters. In Table~\ref{tbl:guitar-results} -- \ref{tbl:lfm-results}, we observe that the performance of MF-RSVD varies significantly based on whether we initialize user or item latent factors. Also, the factorization methods do not directly provide item-to-item or user-to-user similarity measures, hence are not applicable
+when a recommendation of similar items or users is needed.
 \item We observe that the neighborhood models yield inferior results compared to the Linear models. Also, the performance varies with the user and item based models. While they perform comparatively competitive in \Lowes\ and \Guitar\ dataset, they perform poorly in \LastFM\ and \MLens\ dataset. Hence, we conclude that neighborhood methods are not consistent in their performance.
-
-
-
-
 \end{compactitem}
+
+[TODO: DO WE STILL KEEP THIS?]Furthermore, in Figure~\ref{fig:dimensionPerformance}, we compare the performance of \LinearLow model, namely I-Linear-Flow, and WRMF with the number of the dimensions. We observe that the performance of \LinearLow improves steadily with the dimensionality of projection, but with diminishing returns. However, performance of WRMF improves initially with the number of dimensions and then starts to decrease possibly due to overfitting. 
 
 \begin{figure}[!ht]
   \centering
@@ -131,7 +132,7 @@ Unlike other methods, the performance of \LinearLow is not very sensitive to the
 		
 		\hline
 
-		SLIM & \textbf{\num{0.631921}} $\pm$ \textbf{\num{0.00688652}} & \textbf{\num{0.600204}} $\pm$ \textbf{\num{0.00547024}} & \textbf{\num{0.538391}} $\pm$ \textbf{\num{0.00483142}} & \num{0.463855} $\pm$ \num{0.00564272}& \textbf{\num{0.0222616}} $\pm$ \textbf{\num{0.000640118}} & \textbf{\num{0.0345738}} $\pm$ \textbf{\num{0.000432309}} & \textbf{\num{0.0592139}} $\pm$ \textbf{\num{0.000665128}} & \textbf{\num{0.0971651}} $\pm$ \textbf{\num{0.00172048}} & \textbf{\num{0.358657}} $\pm$ \textbf{\num{0.00648519}}\\
+		SLIM & \textbf{\num{0.631921}} $\pm$ \textbf{\num{0.00688652}} & \textbf{\num{0.600204}} $\pm$ \textbf{\num{0.00547024}} & \textbf{\num{0.538391}} $\pm$ \textbf{\num{0.00483142}} & \num{0.463855} $\pm$ \num{0.00564272}& \textbf{\num{0.0222616}} $\pm$ \textbf{\num{0.000640118}} & \textbf{\num{0.0345738}} $\pm$ \textbf{\num{0.000432309}} & \textbf{\num{0.0592139}} $\pm$ \textbf{\num{0.000665128}} & \textbf{\num{0.0971651}} $\pm$ \textbf{\num{0.00172048}} & \num{0.358657} $\pm$ \num{0.00648519}\\
 
 		U-\LinearLow & \num{0.622872} $\pm$ \num{0.00808055}&\num{0.591173} $\pm$ \num{0.00669141}&\num{0.533685} $\pm$ \num{0.00267285}&\num{0.462653} $\pm$ \num{0.00200248}&\num{0.0205295} $\pm$ \num{0.00088446}&\num{0.031471} $\pm$ \num{0.00136713}&\num{0.0540013} $\pm$ \num{0.000374292}&\num{0.0881041} $\pm$ \num{0.00104606}&\num{0.356342} $\pm$ \num{0.0024981} \\
 

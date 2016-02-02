@@ -1,4 +1,5 @@
-We used two proprietary and two publicly available dataset for evaluating the performance. In all of our datasets, we remove users and items with less than 3 purchases. Table \ref{tbl:datasets} summarizes statistics of the datasets.
+For quantitative evaluation, we used two publicly available datasets and two proprietary datasets. In all of our datasets, we remove users with fewer
+that 3 corresponding items and vice-versa. Table \ref{tbl:datasets} summarizes statistics of the 4 datasets and they are desscribed in details below.
 
 \begin{table}
 	\centering
@@ -20,12 +21,12 @@ We used two proprietary and two publicly available dataset for evaluating the pe
 
 \MLens. The MovieLens 10M dataset\footnote{\scriptsize \url{http://grouplens.org/datasets/movielens/}} is a standard benchmark for collaborative filtering tasks.
 Following the ``Who Rated What'' KDD Cup 2007 challenge \citep{Bennett:2007}, we created a binarised version of the dataset suitable for evaluating implicit feedback methods.
-From the original rating matrix $\tilde\R \in \{ 0, 1, \ldots, 5 \}^{\numUsers \times \numItems}$, we created a preference matrix $\R$ with $R_{\ui} = \indicator{\tilde{\R}_{\ui} \geq 4}$.
+From the original rating matrix $\tilde\R \in \{ 0, 1, \ldots, 5 \}^{\numUsers \times \numItems}$, we created a binarised preference matrix $\R$ with $R_{\ui} = \indicator{\tilde{\R}_{\ui} \geq 4}$.
 
 \LastFM. The LastFM dataset\footnote{{\scriptsize \url{http://ocelma.net/MusicRecommendationDataset/index.html}}} \citep{Celma:2008} contains the play counts of $\sim$1000 users on $\sim$170,000 artists. As per \MLens we binarised the raw play counts.
 
 
-\Guitar \& \Lowes  are anonymized dataset provided by XXX\footnote{{\scriptsize anonymised for the blind review and will be revealed later}}, a major provider of third party recommendation services. \Guitar \ dataset consists of $\sim$27,000 users, $\sim$14,000 items and $\sim$120,000 item purchases. Similarity, \Lowes \ dataset consists of $\sim$264,000 users, $\sim$57,000 items and $\sim$1 billion item purchases. 
+\Guitar \& \Lowes  are real but anonymized purchase datasets from two popular retailers in the US. The data is provided by Company-X\footnote{{\scriptsize anonymised for the blind review and will be revealed later}}, a major provider of third party recommendation services. \Guitar \ dataset consists of $\sim$27,000 users, $\sim$14,000 items and $\sim$120,000 item purchases. Similarly, \Lowes \ dataset consists of $\sim$264,000 users, $\sim$57,000 items and $\sim$1 billion item purchases. 
 
 % For a qualitative analysis of the item-item similarities learned by I-\LinearLow model, we use \Fotolia\ dataset\footnote{\scriptsize The dataset sharing agreement with the provider restricts us from reporting the statistics and quantitative results. Hence, we do not report summary statistics and quantative results on this dataset}. This dataset consists clicks of users on various image categories. We choose this dataset mainly because the items are easy to comprehend.
 %However, This dataset consist of interaction between user and various image categories.
@@ -44,11 +45,11 @@ We compared the proposed method to a number of baselines:
 
 	\item User- and item-based nearest neighbour (U-KNN and I-KNN), as per \S\ref{sec:knn}, using  cosine similarity and Jaccard coefficient to define the similarity matrix $\Sim$. For each dataset, we picked the best performing of the two metrics.
 
-	\item PureSVD of \citet{Cremonesi:2010}. Instead of exact SVD, we use randomized SVD.
+	\item PureSVD of \citet{Cremonesi:2010}. Instead of exact SVD, we use randomized SVD for efficiency.
 	
-	\item Weighted matrix Factorization (WRMF) as defined in (\ref{eqn:wrmf}).
+	\item Weighted matrix Factorization (WRMF) as defined in Eq. (\ref{eqn:wrmf}).
 
-	\item MF-RSVD of \citet{Tang:2013}.  We ran this method with user and item based initialization, U-MF-RSVD  and I-MF-RSVD, as discussed in (\ref{eqn:U-MF-RSVD}) and (\ref{eqn:I-MF-RSVD}) respectively.
-	\item SLIM, as per (\ref{eqn:slim}). For computational convenience, we used the SGDReg variant \citep{Levy:2013}, which is identical to SLIM  except that the nonnegativity constraint is removed. We did not evaluate SLIM with nonnegativity directly as~\citet{Levy:2013} reports superior performance to SLIM, and is considerably faster to train.
+	\item MF-RSVD of \citet{Tang:2013}.  We ran this method with user and item based initialization, U-MF-RSVD  and I-MF-RSVD, as discussed in Eq. (\ref{eqn:U-MF-RSVD}) and (\ref{eqn:I-MF-RSVD}) respectively.
+	\item SLIM, as per Eq. (\ref{eqn:slim}). For computational convenience, we used the SGDReg variant \citep{Levy:2013}, which is identical to SLIM  except that the nonnegativity constraint is removed. We did not evaluate SLIM with nonnegativity directly as~\citet{Levy:2013} reports superior performance to SLIM, and is considerably faster to train.
 \end{compactitem}
-We do not compare against ~\citep{Sedhain:2016} due to its memory complexity on a large scale dataset. For instance on the \Lowes \ dataset, LRec requires $\sim$260 GB of memory. 
+We do not compare against LRec~\citep{Sedhain:2016} due to its memory complexity on a large scale dataset. For instance on the \Lowes \ dataset, LRec requires $\sim$260 GB of memory. 
