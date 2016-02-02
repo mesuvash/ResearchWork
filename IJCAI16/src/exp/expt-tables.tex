@@ -2,11 +2,11 @@ Tables \ref{tbl:guitar-results} -- \ref{tbl:ml10m-results} summarize the results
 We make the following observations:
 \begin{compactitem}
 
-\item \LinearLow is generally competitive with SLIM and outperforms the other baselines on all four datasets. Unlike other methods, \LinearLow performance is not very sensitive to the choice of user or item based method. In figure~\ref{fig:dimensionPerformance}, we observe that the performance of the \LinearLow method improves with the number of the projection dimensions. 
+\item \LinearLow is generally competitive with SLIM and outperforms the other baselines on all four datasets. Unlike other methods, performance of \LinearLow is not very sensitive to the choice of user or item based method. In figure~\ref{fig:dimensionPerformance}, we observe that the performance of the \LinearLow method improves with the number of the projection dimensions. 
 
 \item Amongst the matrix Factorization methods, Randomized SVD method~\citep{Tang:2013} consistently performs the best in all dataset. This is possibly due to the fact that SVD provides a good initialization and the optimization finds optimal solution for the given initialization. Whereas, matrix factorization optimizes nonconvex bilinear objective with random initialization which may lead to the inferior solution. Furthermore, we observe that the performance of MF-RSVD varies significantly based on whether we initialize user or item latent factors.
 
-\item We observe that the neighborhood models yield inferior results compared to the Linear models. Also, the performance varies with the user and item based models. While they perform comparatively competitive in \Lowes\ and \Guitar\ dataset, they perform poorly in \LastFM\ and \MLens\ dataset. Hence, neighborhood methods are not consistent in terms of performance.
+\item We observe that the neighborhood models yield inferior results compared to the Linear models. Also, the performance varies with the user and item based models. While they perform comparatively competitive in \Lowes\ and \Guitar\ dataset, they perform poorly in \LastFM\ and \MLens\ dataset. Hence, we conclude that neighborhood methods are not consistent in their performance.
 
 \end{compactitem}
 
@@ -18,7 +18,8 @@ We make the following observations:
 
 \end{figure}
 
-\begin{table*} \centering
+\begin{table*} [!htb]
+\centering
 \caption{Results on the \Guitar\ Dataset.Reported numbers are the mean and standard errors across test folds.}
 \label{tbl:guitar-results}
 \sisetup{round-mode=places,round-precision=4}
@@ -43,19 +44,21 @@ We make the following observations:
 
 		 I-MF-RSVD &  \num{0.048024} $\pm$ \num{0.00101945}&\num{0.0360405} $\pm$ \num{0.000795975}&\num{0.0233964} $\pm$ \num{0.00040994}&\num{0.0143542} $\pm$ \num{0.000205676}&\num{0.0975785} $\pm$ \num{0.00295556}&\num{0.12106} $\pm$ \num{0.00333514}&\num{0.15495} $\pm$ \num{0.00377634}&\num{0.188591} $\pm$ \num{0.00370206}&\num{0.088872} $\pm$ \num{0.00298146}\\
 		 \hline
+		 SLIM & \textbf{\num{0.05193}} $\pm$ \textbf{\num{0.000993329}} &\num{0.0394536} $\pm$ \num{0.000446818}&\num{0.0258101} $\pm$ \num{0.000370669}&\num{0.0159822} $\pm$ \num{0.000179519}& \textbf{\num{0.106891}} $\pm$ \textbf{\num{0.00336095}} & \num{0.134075} $\pm$ \num{0.00263189}&\num{0.172917} $\pm$ \num{0.00393006}&\num{0.211739} $\pm$ \num{0.00334752}& \textbf{\num{0.0976171}} $\pm$ \textbf{\num{0.00285635}}\\
+
 		U-\LinearLow &  \num{0.0517661} $\pm$ \num{0.0013236}&\num{0.039076} $\pm$ \num{0.000453008}&\num{0.0259077} $\pm$ \num{0.000359636}&\num{0.0160148} $\pm$ \num{0.000156205}&\num{0.106044} $\pm$ \num{0.00354247}&\num{0.134986} $\pm$ \num{0.00321575}&\num{0.171069} $\pm$ \num{0.00256121}&\num{0.21182} $\pm$ \num{0.00287904}&\num{0.0970373} $\pm$ \num{0.00295675}\\
 
 		I-\LinearLow &  \num{0.0519634} $\pm$ \num{0.00118221}& \textbf{\num{0.0398248}} $\pm$ \textbf{\num{0.000395405}}&\textbf{\num{0.0261965}} $\pm$ \textbf{\num{0.00029752}}&\textbf{\num{0.0162194}} $\pm$ \textbf{\num{0.000176304}} &\num{0.106225} $\pm$ \num{0.00318998}&\textbf{\num{0.136158}} $\pm$ \textbf{\num{0.00263693}}& \textbf{\num{0.175846}} $\pm$ \textbf{\num{0.00259154}}&\textbf{\num{0.21445}} $\pm$ \textbf{\num{0.00329417}}&\num{0.0971399} $\pm$ \num{0.00278328} \\
 
-		SLIM & \textbf{\num{0.05193}} $\pm$ \textbf{\num{0.000993329}} &\num{0.0394536} $\pm$ \num{0.000446818}&\num{0.0258101} $\pm$ \num{0.000370669}&\num{0.0159822} $\pm$ \num{0.000179519}& \textbf{\num{0.106891}} $\pm$ \textbf{\num{0.00336095}} & \num{0.134075} $\pm$ \num{0.00263189}&\num{0.172917} $\pm$ \num{0.00393006}&\num{0.211739} $\pm$ \num{0.00334752}& \textbf{\num{0.0976171}} $\pm$ \textbf{\num{0.00285635}}\\
+
 		\hline
 	\end{tabular}
 }
 
 \end{table*}
 
+\begin{table*}[!htb]
 
-\begin{table*}
 \centering
 \caption{Results on the \Lowes\ Dataset. Reported numbers are the mean and standard errors across test folds.}
 \label{tbl:lowes-results}
@@ -80,19 +83,21 @@ We make the following observations:
 		I-MF-RSVD & \num{0.0879546} $\pm$ \num{0.000309565}&\num{0.0652340} $\pm$ \num{0.000125627}&\num{0.0408385} $\pm$ \num{6.59647e-05}&\num{0.024174} $\pm$ \num{3.46969e-05}&\num{0.17195} $\pm$ \num{0.000819305}&\num{0.219902} $\pm$ \num{0.000784415}&\num{0.268505} $\pm$ \num{0.000951328}&\num{0.320267} $\pm$ \num{0.00109792}&\num{0.158156} $\pm$ \num{0.000535714}\\
 
 		\hline
+
+		SLIM & \textbf{\num{0.0893233}} $\pm$ \textbf{\num{0.000368188}} & \textbf{\num{0.067148}} $\pm$ \textbf{\num{0.000265703}} & \textbf{\num{0.0432961}} $\pm$ \textbf{\num{9.56e-05}} & \textbf{\num{0.0264457}} $\pm$ \textbf{\num{4.35806e-05}} & \textbf{\num{0.179554}} $\pm$ \textbf{\num{0.00102426}} & \textbf{\num{0.221297}} $\pm$ \textbf{\num{0.00131012}} & \textbf{\num{0.27899}} $\pm$ \textbf{\num{0.00123667}} & \textbf{\num{0.333619}} $\pm$ \textbf{\num{0.000853983}} &\textbf{\num{0.165406}} $\pm$ \textbf{\num{0.000567257}}\\
+
 		U-\LinearLow & \num{0.0887046} $\pm$ \num{0.000360732}&\num{0.0665582} $\pm$ \num{0.000216048}&\num{0.0430431} $\pm$ \num{8.65977e-05}&\num{0.0258449} $\pm$ \num{4.08943e-05}&\num{0.176274} $\pm$ \num{0.00116389}&\num{0.221449} $\pm$ \num{0.00103377}&\num{0.273932} $\pm$ \num{0.00128104}&\num{0.328884} $\pm$ \num{0.000962716}&\num{0.161136} $\pm$ \num{0.000796471} \\
 
 		I-\LinearLow & \num{0.088546} $\pm$ \num{0.000313667}&\num{0.0655582} $\pm$ \num{0.000184367}&\num{0.0428563} $\pm$ \num{8.65977e-05}&\num{0.0256449} $\pm$ \num{4.08943e-05}&\num{0.178274} $\pm$ \num{0.00116389}&\num{0.22019} $\pm$ \num{0.00115512}&\num{0.271932} $\pm$ \num{0.00098104}&\num{0.325884} $\pm$ \num{0.000962716}&\num{0.1598136} $\pm$ \num{0.00060563}\\
 
-		SLIM & \textbf{\num{0.0893233}} $\pm$ \textbf{\num{0.000368188}} & \textbf{\num{0.067148}} $\pm$ \textbf{\num{0.000265703}} & \textbf{\num{0.0432961}} $\pm$ \textbf{\num{9.56e-05}} & \textbf{\num{0.0264457}} $\pm$ \textbf{\num{4.35806e-05}} & \textbf{\num{0.179554}} $\pm$ \textbf{\num{0.00102426}} & \textbf{\num{0.221297}} $\pm$ \textbf{\num{0.00131012}} & \textbf{\num{0.27899}} $\pm$ \textbf{\num{0.00123667}} & \textbf{\num{0.333619}} $\pm$ \textbf{\num{0.000853983}} &\textbf{\num{0.165406}} $\pm$ \textbf{\num{0.000567257}}\\
 		\hline
 	\end{tabular}
 }
 
 \end{table*}
 
+\begin{table*}[!htb]
 
-\begin{table*}
 \centering
 \caption{Results on the \LastFM\ dataset. Reported numbers are the mean and standard errors across test folds.}
 \label{tbl:lfm-results}
@@ -118,24 +123,23 @@ We make the following observations:
 		I-MF-RSVD & \num{0.577999} $\pm$ \num{0.00634419}&\num{0.544735} $\pm$ \num{0.00495392}&\num{0.490102} $\pm$ \num{0.00113919}&\num{0.423595} $\pm$ \num{0.00294237}&\num{0.0189928} $\pm$ \num{0.000802407}&\num{0.0291943} $\pm$ \num{0.000617191}&\num{0.0496356} $\pm$ \num{0.00111173}&\num{0.0810641} $\pm$ \num{0.000883613}&\num{0.31458} $\pm$ \num{0.00199473}\\
 		
 		\hline
+
+		SLIM & \textbf{\num{0.631921}} $\pm$ \textbf{\num{0.00688652}} & \textbf{\num{0.600204}} $\pm$ \textbf{\num{0.00547024}} & \textbf{\num{0.538391}} $\pm$ \textbf{\num{0.00483142}} & \num{0.463855} $\pm$ \num{0.00564272}& \textbf{\num{0.0222616}} $\pm$ \textbf{\num{0.000640118}} & \textbf{\num{0.0345738}} $\pm$ \textbf{\num{0.000432309}} & \textbf{\num{0.0592139}} $\pm$ \textbf{\num{0.000665128}} & \textbf{\num{0.0971651}} $\pm$ \textbf{\num{0.00172048}} & \textbf{\num{0.358657}} $\pm$ \textbf{\num{0.00648519}}\\
+
 		U-\LinearLow & \num{0.622872} $\pm$ \num{0.00808055}&\num{0.591173} $\pm$ \num{0.00669141}&\num{0.533685} $\pm$ \num{0.00267285}&\num{0.462653} $\pm$ \num{0.00200248}&\num{0.0205295} $\pm$ \num{0.00088446}&\num{0.031471} $\pm$ \num{0.00136713}&\num{0.0540013} $\pm$ \num{0.000374292}&\num{0.0881041} $\pm$ \num{0.00104606}&\num{0.356342} $\pm$ \num{0.0024981} \\
 
 		I-\LinearLow & \num{0.622936} $\pm$ \num{0.0103349}&\num{0.591295} $\pm$ \num{0.00457034}&\num{0.533744} $\pm$ \num{0.00213843}& \textbf{\num{0.465254}} $\pm$ \textbf{\num{0.00230385}} & \num{0.0202518} $\pm$ \num{0.00113334}&\num{0.0309846} $\pm$ \num{0.0010114}&\num{0.0529278} $\pm$ \num{0.000586952}&\num{0.0874401} $\pm$ \num{0.00151923}&\textbf{\num{0.361476}} $\pm$ \textbf{\num{0.00135615}} \\
 
-		SLIM & \textbf{\num{0.631921}} $\pm$ \textbf{\num{0.00688652}} & \textbf{\num{0.600204}} $\pm$ \textbf{\num{0.00547024}} & \textbf{\num{0.538391}} $\pm$ \textbf{\num{0.00483142}} & \num{0.463855} $\pm$ \num{0.00564272}& \textbf{\num{0.0222616}} $\pm$ \textbf{\num{0.000640118}} & \textbf{\num{0.0345738}} $\pm$ \textbf{\num{0.000432309}} & \textbf{\num{0.0592139}} $\pm$ \textbf{\num{0.000665128}} & \textbf{\num{0.0971651}} $\pm$ \textbf{\num{0.00172048}} & \textbf{\num{0.358657}} $\pm$ \textbf{\num{0.00648519}}\\
-		\hline
 
+		\hline
 	\end{tabular}
 }
-
 \end{table*}
 
-
-\begin{table*}
+\begin{table*}[!htb]
 \centering
 \caption{Results on the \MLens \ dataset. Reported numbers are the mean and standard errors across test folds.}
 \label{tbl:ml10m-results}
-
 \sisetup{round-mode=places,round-precision=4}
 \setlength{\arrayrulewidth}{.2em}
 \resizebox{\textwidth}{!}{%
@@ -151,11 +155,13 @@ We make the following observations:
 		U-MF-RSVD & \num{0.222923} $\pm$ \num{0.000720948}&\num{0.189479} $\pm$ \num{0.000693553}&\num{0.145598} $\pm$ \num{0.000755357}&\num{0.1069} $\pm$ \num{0.000389999}&\num{0.127299} $\pm$ \num{0.000347369}&\num{0.175504} $\pm$ \num{0.000534452}&\num{0.259163} $\pm$ \num{0.00140552}&\num{0.365583} $\pm$ \num{0.0018449}&\num{0.158626} $\pm$ \num{0.000496512}\\
 		I-MF-RSVD &\num{0.223153} $\pm$ \num{0.000891741}&\num{0.190154} $\pm$ \num{0.000992553}&\num{0.146148} $\pm$ \num{0.0004936}&\num{0.102704} $\pm$ \num{0.000366158}&\num{0.124622} $\pm$ \num{0.000675105}&\num{0.174479} $\pm$ \num{0.00103911}&\num{0.260198} $\pm$ \num{0.000789582}&\num{0.367512} $\pm$ \num{0.00172003}&\num{0.159046} $\pm$ \num{0.000668585}\\
 		\hline
+		SLIM & \num{0.220762} $\pm$ \num{0.0011295}&\num{0.188849} $\pm$ \num{0.00108041}&\num{0.146434} $\pm$ \num{0.000411703}&\num{0.107985} $\pm$ \num{0.000422922}&\num{0.125832} $\pm$ \num{0.000297234}&\num{0.174751} $\pm$ \num{0.00123935}&\num{0.261108} $\pm$ \num{0.000859885}&\num{0.36903} $\pm$ \num{0.00160871}&\num{0.157878} $\pm$ \num{0.000725628}\\
+
 		U-\LinearLow & \textbf{\num{0.226995}} $\pm$ \textbf{\num{0.00118303} }& \textbf{\num{0.192692}} $\pm$ \textbf{\num{0.000863619}} & \textbf{\num{0.147724}} $\pm$ \textbf{\num{0.000644332}} & \textbf{\num{0.108314}} $\pm$ \textbf{\num{0.000379042}} & \textbf{\num{0.129017}} $\pm$ \textbf{\num{0.00043998} }& \textbf{\num{0.177729}} $\pm$ \textbf{\num{0.000842416}} & \textbf{\num{0.262384}} $\pm$ \textbf{\num{0.00131329} }& \textbf{\num{0.370079}} $\pm$ \textbf{\num{0.00160711} }& \textbf{\num{0.160144}} $\pm$ \textbf{\num{0.000564101}}\\
 
 		I-\LinearLow&\num{0.224153} $\pm$ \num{0.000891741}&\num{0.190854} $\pm$ \num{0.000992553}&\num{0.146848} $\pm$ \num{0.0004936}&\num{0.107704} $\pm$ \num{0.000366158}&\num{0.127622} $\pm$ \num{0.000675105}&\num{0.176479} $\pm$ \num{0.00103911}&\num{0.260898} $\pm$ \num{0.000789582}&\num{0.367572} $\pm$ \num{0.00172003}&\num{0.159246} $\pm$ \num{0.000668585}\\
 		
-		SLIM & \num{0.220762} $\pm$ \num{0.0011295}&\num{0.188849} $\pm$ \num{0.00108041}&\num{0.146434} $\pm$ \num{0.000411703}&\num{0.107985} $\pm$ \num{0.000422922}&\num{0.125832} $\pm$ \num{0.000297234}&\num{0.174751} $\pm$ \num{0.00123935}&\num{0.261108} $\pm$ \num{0.000859885}&\num{0.36903} $\pm$ \num{0.00160871}&\num{0.157878} $\pm$ \num{0.000725628}\\
+
 		\hline
 		% \hline
 	\end{tabular}
@@ -163,15 +169,13 @@ We make the following observations:
 
 \end{table*}
 
+\begin{table*}[!htb]
 
-In Table~\ref{tbl:similarity-evaluation}, we show top-3 similar items for a small subset of items learned by I-\LinearLow  model on \Fotolia dataset.
-%for a small subset of items for  qualitatively evaluate the item-item similarity learned by the I-\LinearLow model on \Fotolia dataset. 
- We see that  I-\LinearLow learns very meaningful and explainable similarities making it very applicable in similar items recommendation.
-
-\begin{table*}[!t]
 	\centering
+	\caption{Top-3 similar items learned by I-\LinearLow model.}
+	\label{tbl:similarity-evaluation}
 	% \setlength{\arrayrulewidth}{.2em}
-	\resizebox{0.8\textwidth}{!}{%
+	\resizebox{0.85\textwidth}{!}{%
 		\begin{tabular}{cccccc}
 		\toprule
 		\textbf{Item} & Chemistry & Chilling out & Workers & Unemployment & Divorce and Conflict\\
@@ -182,6 +186,8 @@ In Table~\ref{tbl:similarity-evaluation}, we show top-3 similar items for a smal
 		\bottomrule
 		\end{tabular}
 	}
-	\caption{Top 3 similar items learned by I-\LinearLow\  model.}
-	\label{tbl:similarity-evaluation}
 \end{table*}
+
+
+Since similarity metric is an important aspect of personalization, we evaluate item-item similarities learned by I-\LinearLow  model on the \Fotolia dataset. 
+In Table~\ref{tbl:similarity-evaluation}, we show top-3 similar items for a small subset of items learned by I-\LinearLow model. We observe that  I-\LinearLow learns meaningful and explainable similarities making it very applicable in recommending similar items.

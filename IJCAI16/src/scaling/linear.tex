@@ -22,12 +22,12 @@ We observe that (\ref{eqn:squaredLinear}) is a  standard multiple linear regress
 However, the  memory requirement, computational cost and  numerical instability in computing the inverse, $(\R^T \R + \lambda \I)^{-1}$ , makes the analytical solution infeasible. Similarly, if we apply gradient based optimization, it becomes computationally expensive as it involves solving $n$ linear regression. \todob{This is a scaling up paper. Be precise about the computational cost.}
 % Gradient based optimization doesn't require computation of the inverse. However, it involves solving $n$ linear regression problem which is computationally expensive.
 
-To address the computational and numerical issues, we reformulate the linear model with additional rank constraints \todob{Use s.t. instead of where} \todob{Use $\ll$ instead of $< <$.}
+To address the computational and numerical issues, we reformulate the linear model with additional rank constraints 
 \begin{align}
 \label{eqn:reg-rank}
 \begin{split}
 \underset{rank(\W) \le k}{\mathrm{argmin}}  \left \| \R - \R\W\right \|_F^2 + \lambda \left \|  \W \right \|_F^2 \\
-s.t.,\ k\ <<\ n 
+s.t.,\ k\ \ll \ n 
 \end{split}
 \end{align}
 

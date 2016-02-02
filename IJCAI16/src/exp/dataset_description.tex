@@ -10,7 +10,7 @@ We now report experimental results and compare the recommendation performance of
 	\toprule	
 	\textbf{Dataset} & $\numUsers$ & $\numItems$ & $ | \R_{\ui} > 0 | $ \\
 	\toprule
-	\MLens  & 69,557 & 9,309 & 2,909,119 \\
+	\MLens  & 69,613 & 9,405 & 5,004,150 \\
 	\LastFM & 992 & 88,428 & 800,274\\
 	\Guitar & 26,928 & 14,399 & 120,268 \\
 	\Lowes & 264,054 & 57,214 & 1,398,332 \\
@@ -20,20 +20,21 @@ We now report experimental results and compare the recommendation performance of
 
 \MLens. The MovieLens 10M dataset\footnote{\scriptsize \url{http://grouplens.org/datasets/movielens/}} is a standard benchmark for collaborative filtering tasks.
 Following the ``Who Rated What'' KDD Cup 2007 challenge \citep{Bennett:2007}, we created a binarised version of the dataset suitable for evaluating implicit feedback methods.
-From the original rating matrix $\tilde\R \in \{ 0, 1, \ldots, 5 \}^{\numUsers \times \numItems}$, we created a preference matrix $\R$ with $R_{\ui} = \indicator{\tilde{\R}_{\ui} \geq 4}$. \todob{Note that we report $\indicator{\R_{\ui} > 0}$ in Table \ref{tbl:datasets}. Not $\indicator{\R_{\ui} \geq 4}$.} \todob{I updated the notation now $\R_{ui}$ is binary matrix constructed from $\tilde{\R}_{\ui}$}
+From the original rating matrix $\tilde\R \in \{ 0, 1, \ldots, 5 \}^{\numUsers \times \numItems}$, we created a preference matrix $\R$ with $R_{\ui} = \indicator{\tilde{\R}_{\ui} \geq 4}$.
 
 \LastFM. The LastFM dataset\footnote{{\scriptsize \url{http://ocelma.net/MusicRecommendationDataset/index.html}}} \citep{Celma:2008} contains the play counts of $\sim$1000 users on $\sim$170,000 artists. As per \MLens, we binarised the raw play counts.
 
 
 \Lowes\ \& \Guitar \ are anonymized dataset provided by XXX\footnote{{\scriptsize anonymised for the blind review and will be revealed later}}, a major provider of third party recommendation services. \Guitar \ dataset consists of $\sim$27,000 users, $\sim$14,000 items and $\sim$120,000 item purchases. Similarity, \Lowes \ dataset consists of $\sim$264,000 users, $\sim$57,000 items and $\sim$1 billion item purchases. 
 
-For a qualitative analysis of the item-item similarities learned by I-\LinearLow model, we use \Fotolia\ dataset\footnote{\scriptsize Dataset sharing agreement with the provider restricts us from reporting the statistics and quantitative results. Hence, we wont be reporting the quantitative results on this dataset}.
+For a qualitative analysis of the item-item similarities learned by I-\LinearLow model, we use \Fotolia\ dataset\footnote{\scriptsize Dataset sharing agreement with the provider restricts us from reporting the statistics and quantitative results. Hence, we wont be reporting the quantitative results on this dataset}. This dataset consists clicks of users on various image categories. We choose this dataset mainly because the items are easy to comprehend.
 %However, This dataset consist of interaction between user and various image categories.
-We choose this dataset for qualitative analysis mainly because the items i.e photo categories are easy to comprehend.
+% The choice of this dataset for qualitative analysis is mainly due to the 
+% We choose this dataset for qualitative analysis mainly because the items i.e photo categories are easy to comprehend.
 
 \subsection{Evaluation Protocol}
 We split the datasets into random $90\%$-$10\%$ train-test set and hold out $10\%$ of the training set for hyperparamater tuning. We report the mean test split performance, along with standard errors corresponding to 95\% confidence intervals.
-To evaluate the performance of the various recommenders, we report Precision@k and Recall@k for $k \in \{ 3, 5, 10, 20 \}$ (averaged across all test fold users), and mean average precision (mAP@20).
+To evaluate the performance of the various recommenders, we report \textsf{precision@k} and \textsf{recall@k} for $k \in \{ 3, 5, 10, 20 \}$ (averaged across all test fold users), and mean average precision (mAP@20).
 
 
 \subsection{Methods compared}

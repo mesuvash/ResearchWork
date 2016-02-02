@@ -1,11 +1,9 @@
-% !TEX root = ../implicit-logistic-kdd15.tex
 
 We now introduce our notation, summarized in table \ref{tbl:glossary}. % summarizes the commonly used symbols.
 %Let $\userSet = \{ 1, \ldots, \numUsers \}$ denote a set of users, and $\itemSet = \{ 1, \ldots, \numItems \}$ a set of items.
 Let $\userSet$ denote a set of users, and $\itemSet$ a set of items,
 with $\numUsers = | \userSet |$ and $\numItems = | \itemSet |$.
-In one-class collaborative filtering (OC-CF), we have a purchase 
-\footnote{We use the word ``purchase'' simply for the purposes of exposition. The method described in this paper is applicable in other implicit feedback settings, such as modelling users' play counts of songs.} 
+In one-class collaborative filtering (OC-CF), we have a purchase\footnote{We use the word ``purchase'' simply for the purposes of exposition. The method described in this paper is applicable in other implicit feedback settings, such as modelling users' play counts of songs.} 
 matrix $\R \in \{ 0, 1 \}^{\numUsers \times \numItems}$. %, where $\numItems$ is the number of items and $\numUsers$ the number of users.
 We use $\R_{\ui}$ to refer to the purchase status for the user $\u$ and item $\i$.
 We use $\R_{:\i}$ to denote the indicator vector of each users' purchase of an item, and similarly $\R_{\u:}$ to denote the vector of a user's preference for each item $i$.
@@ -58,7 +56,7 @@ In (item-based) neighbourhood methods, we produce a recommendation matrix of the
 where $\Sim \in \Real^{\numItems \times \numItems}$ is some \emph{item-similarity matrix}.
 % That is, for a user $\u$, one scores an item $\i$ as the \emph{sum of $\i$'s similarity to all other items that $\u$ enjoys}.
 %Given an item $i$, the nonzero entries of $\Sim_{i:}$ are known as the \emph{neighbours} of the item.
-Typically, one uses a predefined matrix $\Sim$ that relies on $\R$. A popular example is cosine similarity \citep{Sarwar:2001, Linden:2003}, \todob{Norms below are broken.}
+Typically, one uses a predefined matrix $\Sim$ that relies on $\R$. A popular example is cosine similarity \citep{Sarwar:2001, Linden:2003}, 
 $$ \Sim_{\i' \i} = \frac{ \R_{:\i}^T \R_{:\i'} }{|| \R_{:\i} ||_2 || \R_{:\i'} ||_2}. $$
 % Other examples are the Pearson correlation, Jaccard coefficient and conditional probability \citep{Deshpande:2004}. 
 It is typical to sparsify $\Sim$ so that its columns only keeps top-k similar items. 
@@ -76,13 +74,20 @@ However, they are unable to adapt to the characteristics of the data as they rel
 \subsection{Matrix Factorization}
 % \subsubsection{Matrix Factorization}
 
-Matrix Factorization methods are the \emph{de facto} approach to collaborative filtering with explicit feedback. The basic idea is to embed users and items into some shared latent space, with the aim of inferring complex preference profiles for both users and items. ~\cite{Hu:2008, Pan:2009} proposed a weighted matrix factorization (WRMF) model for one class collaborative filtering setting.
-
-Formally, let $\J \in \Real_+^{\numUsers \times \numItems}$ be some pre-defined weighting matrix to be defined shortly. Then, WRMF optimise
+Matrix Factorization methods are the \emph{de facto} approach to collaborative filtering with explicit feedback. The basic idea is to embed users and items into some shared latent space, with the aim of inferring complex preference profiles for both users and items. 
+Weighted matrix factorization (WRMF) for one class collaborative filtering~\cite{Hu:2008, Pan:2009} optimises
 \begin{equation}
 \label{eqn:wrmf}
-\min_{ \theta } \sum_{ u \in \userSet, i \in \itemSet } \J_{\ui} \cdot ( \R_{\ui} - A_u^T B_i )^2 + \frac{\lambda}{2} \cdot ( ||\A||_F^2 + ||\B||_F^2 )
+\min_{ \theta } \sum_{ u \in \userSet, i \in \itemSet } \J_{\ui} \cdot ( \R_{\ui} - \A_u^T \B_i )^2 + \frac{\lambda}{2} \cdot ( ||\A||_F^2 + ||\B||_F^2 )
 \end{equation}
+where 
+$\J \in \Real_+^{\numUsers \times \numItems}$ is some pre-defined weighting matrix  and 
+\begin{equation}
+\label{eqn:wrmf-weight}
+\J_{\ui} =  \indicator{ \R_{\ui} = 0 } + \alpha \cdot \indicator{ \R_{\ui} > 0 } 
+\end{equation}
+where $\alpha$ assigns an importance weight to the observed interaction.
+
 
 % Let $\ell \colon \Real \times \Real \to \Real_+$ be some loss function, typically squared loss $\ell( y, \hat{y} ) = (y - \hat{y})^2$.
 % Then, matrix Factorization methods optimise
@@ -116,12 +121,7 @@ Formally, let $\J \in \Real_+^{\numUsers \times \numItems}$ be some pre-defined 
 %
 % \subsubsection{Weighted matrix Factorization}
 
-where, $\J_{\ui}$ is defined as
-\begin{equation}
-\label{eqn:wrmf-weight}
-\J_{\ui} =  \indicator{ \R_{\ui} = 0 } + \alpha \cdot \indicator{ \R_{\ui} > 0 } 
-\end{equation}
-where $\alpha$ assigns an importance weight to the observed interaction. 
+ 
 % This effectively replaces the unknown preferences with \emph{noisy negative preferences}, since by not placing them on an equal footing with the known positive preferences, we allow for the fact that some of these preferences may actually be positives.
 % More sophisticated weighting schemes have also been explored.
 % In scenarios where there are multiple observations for each (user, item) pair, \citet{Hu:2008} considered a logarithmic weighting of these counts.
@@ -131,7 +131,7 @@ where $\alpha$ assigns an importance weight to the observed interaction.
 
 \subsection{Linear Recommenders}
 
-An alternative to neighborhood models, Linear methods~\cite{Ning:2011, Sedhain:2016} learns the similarity metric from the data. SLIM~\citep{Ning:2011} views the recommendation as learning item-item similarity and learns an item-similarity matrix $\W \in \Real^{\numItems \times \numItems}$ via
+Linear methods~\cite{Ning:2011, Sedhain:2016} learn the similarity metric from the data. SLIM~\citep{Ning:2011} views the recommendation as learning item-item similarity and learns an item-similarity matrix $\W \in \Real^{\numItems \times \numItems}$ via
 \begin{equation}
 \label{eqn:slim}
 \min_{ \W \in \C } || \R - \R \W ||_F^2 + \frac{\lambda}{2} || \W ||_F^2 + \mu || \W ||_1,
@@ -142,8 +142,8 @@ where $\lambda, \mu > 0$ are appropriate constants, and
 \C = \{ \W \in \Real^{\numItems \times \numItems} \colon \text{diag}( \W ) = 0, \W \geq 0 \}.
 \end{equation}
 Here, $|| \cdot ||_1$ denotes the elementwise $\ell_1$ norm of $\W$ so as to encourage sparsity, and the constraint $\text{diag}( \W ) = 0$ prevents a trivial solution of $\W = \id_{\numItems \times \numItems}$. SLIM is equivalent to an item-based neighbourhood approach where the similarity matrix $\Sim = \W$ is \emph{learned} from the data.
-
-Similarly, ~\citep{Sedhain:2016} decomposed OC-CF as learning a linear model per user for personalized recommendation. Despite its superior performance, proposed method is computationally expensive and memory exhaustive restricting its applicability in real world problem.
+%
+In a related linear model for OC-CF~\citep{Sedhain:2016}, the authors report very good performance, but the proposed method is computationallly expensive, which restricts its applicability in real world problems.
 % LRec solves
 % \begin{equation}
 % \label{eqn:lrec}
@@ -158,7 +158,8 @@ Similarly, ~\citep{Sedhain:2016} decomposed OC-CF as learning a linear model per
 % \label{eqn:lrecsquared}
 % \min_{ \W  } || \X - \X \W ||_F^2 + \frac{\lambda}{2} || \W ||_F^2 
 % \end{equation}
-Linear methods are attractive for several reasons. They have superior performance~\cite{Ning:2011, Sedhain:2016} and unlike neighborhood methods, they adapt with the data as the parameters are learned from data itself. Furthermore, the recommendations are easily interpretable. However, the linear methods are computationally expensive as they require solving a large number of regression subproblems with a huge design matrix $R$. \todob{This is a scaling up paper. Be precise about the computational cost.}
+
+Linear methods are attractive for several reasons. They have superior performance, and unlike neighborhood methods, they adapt with the data as the parameters are learned from data itself. Furthermore, the recommendations are easily interpretable. However, the linear methods are computationally expensive as they require solving a large number of regression subproblems with a huge design matrix $\R$. \todob{This is a scaling up paper. Be precise about the computational cost.}
 
 % The nonnegativity constraint encourages interpretability, but \citet{Levy:2013} demonstrated that good performance can be achieved without it.
 
@@ -196,7 +197,9 @@ Linear methods are attractive for several reasons. They have superior performanc
 %
 
 \subsection{Randomized SVD}
-SVD is a fundamental matrix factorization algorithm and has been widely used in machine learning for dimensionality reduction. However, SVD is computationally expensive and is not scalable to large scale datasets. To address the scalability issue, ~\citep{halko2011} proposed a fast randomized approximate SVD algorithm that scales to a large matrix. The randomized SVD procedure is summarized in Algorithm~\ref{algo:RSVD}.
+SVD is the archetypal matrix factorization algorithm and has been widely used in machine learning for dimensionality reduction. However, SVD is computationally expensive and not scalable to large scale datasets. It has been recently shown that SVD can be significantly scaled up, at a negligible cost in performance, by randomization~\citep{halko2011}. The \textsl{randomized SVD} algorithm is summarized in Algorithm~\ref{algo:RSVD}.
+
+\todon{Some matrices are bold and others not. Please cite the precise entry in the paper of Halko where this algorithm is described.}
 
 \begin{algorithm}
   	% \algsetup{linenosize=\tiny}
@@ -224,26 +227,23 @@ SVD is a fundamental matrix factorization algorithm and has been widely used in 
 \end{algorithm}
 
 
+\todon{It is not good practice to start sentences with [REF]. Please reformulate like the SVD randomization [4] above.}
 Recently, ~\citep{Tang:2013} proposed a two step randomized SVD based algorithm to scale matrix factorization. First, they compute the rank-k SVD of the matrix $\R$,
 \begin{align*}
 	\R \approx \P_k \Sig_k \Q^T_k
 \end{align*}
-where, $\P_k \in \mathbb{R}^{m \times k}$, $\Q_k \in \mathbb{R}^{n \times k}$ and $\Sig_k \in \mathbb{R}^{k \times k}$. Given the truncated SVD solution, they initialize the item latent factor with SVD solution and solve \todob{Use s.t. instead of where. $\Sigma_k$ instead of $\Sigma$?}
+where, $\P_k \in \mathbb{R}^{m \times k}$, $\Q_k \in \mathbb{R}^{n \times k}$ and $\Sig_k \in \mathbb{R}^{k \times k}$. Given the truncated SVD solution, they initialize the item latent factor with SVD solution and solve 
 \begin{align}
 \label{eqn:I-MF-RSVD}
-\begin{split}
-\underset{\A}{\mathrm{argmin}}  \left \| \R - \A^T\B\right \|_F^2 + \lambda \left \|  \A \right \|_F^2   \\
-s.t.\ \B = \Sig^{\frac{1}{2}} \Q^T_k 
-\end{split}
+\underset{\A}{\mathrm{argmin}} & \left \| \R - \A^T\B\right \|_F^2 + \lambda \left \|  \A \right \|_F^2   \\
+s.t.\ & \B = \Sig_k^{\frac{1}{2}} \Q^T_k 
 \end{align}
-In the (\ref{eqn:I-MF-RSVD}), the item latent factors, $\B$, is initialized with SVD solution and fixed. Similarly, instead of fixing $\B$, if we fix $\A$, we get the following objective \todob{Use s.t. instead of where. $\Sigma_k$ instead of $\Sigma$?}
+In the (\ref{eqn:I-MF-RSVD}), the item latent factors, $\B$, is initialized with SVD solution and fixed. Similarly, instead of fixing $\B$, if we fix $\A$, we get the following objective 
 \begin{align}
 \label{eqn:U-MF-RSVD}
-\begin{split}
 % \label{eqn:U-MF-RSVD}
-\underset{\B}{\mathrm{argmin}}  \left \| \R - \A^T\B\right \|_F^2 + \lambda \left \|  \B \right \|_F^2 f\\
-s.t.\ \A = \P_k \Sig^{\frac{1}{2}}\\
-\end{split}
+\underset{\B}{\mathrm{argmin}} & \left \| \R - \A^T\B\right \|_F^2 + \lambda \left \|  \B \right \|_F^2 \\
+s.t.\ & \A = \P_k \Sig_k^{\frac{1}{2}}\\
 \end{align}
-
-We refer (\ref{eqn:U-MF-RSVD}) and (\ref{eqn:I-MF-RSVD}) as U-MF-RSVD and I-MF-RSVD respectively. Furthermore, we emperically show that the performance varies significantly between these two models .
+We refer to (\ref{eqn:U-MF-RSVD}) and (\ref{eqn:I-MF-RSVD}) as U-MF-RSVD and I-MF-RSVD respectively. As we will see in the results, the performance of these two models can vary significantly .
+\todon{Use simpler acronyms ? Like R-SVD-1 and R-SVD-2.}
