@@ -2,10 +2,10 @@ Personalised recommendation system is a core component
 in many modern e-commerce services. Collaborative
 filtering (CF) is the de-facto standard approach for making recommendations
 based on information in a database
-of item preferences from a population of users~\citep{Goldberg:1992}. Most of the work on CF has considered 
+of item preferences from a population of users~\citep{Goldberg:1992, sarwar2001item}. Most of the work on CF has considered 
 the explicit feedback
 setting, where users express both positive and negative preferences
-for items in terms of ratings or likes/dislikes. In
+for items in terms of ratings or likes/dislikes~\citep{koren2009matrix}. In
 contrast, in the one-class collaborative filtering setting(OC-CF)~\citep{Pan:2008}, we do not have
 explicit negative preference information. For example, consider
 recommending items to users of an e-commerce website
@@ -28,7 +28,7 @@ of the item.
 % training of such models is challenging, due to strong coupling
 % between parameters.
 In this paper, we present a novel scalable OC-CF algorithm suited for large scale real systems. 
-In designing a real world recommender systems there are various factors to be 
+In designing a real world recommender system there are various factors to be 
 considered. First and foremost, a recommender system should  produce good recommendation which can be quantified in terms of \textsl{relevance}. The relevance of a recommender system is measured using evaluation metrics such as \textsf{precision@k}, \textsf{recall@k} etc. Second, recommender systems should be highly \textsl{scalable}. In modern day applications, it is very common to have millions of users and items and billions of recorded interactions. A model should be able to handle the data in a computationally efficient manner as the number of users and items grow to this scale. \textsl{Similarity metric} is another important aspect of personalization. For instance, item-item similarity allows us to recommend similar items to the users. Recommending similar items is very prevalent in a real-world recommender systems. Hence, it is highly desirable to have a recommendation algorithm where the similarity is directly expressed and incorporated in the model. Also, \textsl{interpretability} of the recommendation is very critical in persuading users. By explaining the recommendations, the system becomes more transparent, builds users' trust in the system and convinces them in consuming the recommended items. Lack of interpretability weakens the ability to persuade the users in decision making~\citep{explainabiltyVIG2009}.
 
 While there is a rich literature on OC-CF (discussed subsequently),
