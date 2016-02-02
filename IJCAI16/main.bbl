@@ -1,0 +1,104 @@
+\begin{thebibliography}{10}
+
+\bibitem{Bennett:2007}
+J.~Bennett, C.~Elkan, B.~Liu, P.~Smyth, and D.~Tikk.
+\newblock {KDD} cup and workshop 2007.
+\newblock {\em SIGKDD Explorations Newsletter}, 9(2):51--52, Dec. 2007.
+
+\bibitem{Celma:2008}
+{\`O}.~Celma.
+\newblock {\em Music Recommendation and Discovery in the Long Tail}.
+\newblock PhD thesis, Universitat Pompeu Fabra, Barcelona, 2008.
+
+\bibitem{Cremonesi:2010}
+P.~Cremonesi, Y.~Koren, and R.~Turrin.
+\newblock Performance of recommender algorithms on top-$n$ recommendation
+  tasks.
+\newblock In {\em ACM Conference on Recommender Systems (RecSys)}, RecSys '10,
+  pages 39--46, New York, NY, USA, 2010. ACM.
+
+\bibitem{Goldberg:1992}
+D.~Goldberg, D.~Nichols, B.~M. Oki, and D.~Terry.
+\newblock Using collaborative filtering to weave an information tapestry.
+\newblock {\em Communications of the ACM}, 35(12):61--70, Dec. 1992.
+
+\bibitem{halko2011}
+N.~Halko, P.-G. Martinsson, and J.~A. Tropp.
+\newblock Finding structure with randomness: Probabilistic algorithms for
+  constructing approximate matrix decompositions.
+\newblock {\em SIAM review}, 53(2):217--288, 2011.
+
+\bibitem{Hu:2008}
+Y.~Hu, Y.~Koren, and C.~Volinsky.
+\newblock Collaborative filtering for implicit feedback datasets.
+\newblock In {\em ICDM '08}, pages 263--272, Washington, DC, USA, 2008. IEEE
+  Computer Society.
+
+\bibitem{Koren:2008b}
+Y.~Koren.
+\newblock Factorization meets the neighborhood: {A} multifaceted collaborative
+  filtering model.
+\newblock In {\em KDD '08}, pages 426--434, New York, NY, USA, 2008. ACM.
+
+\bibitem{Levy:2013}
+M.~Levy and K.~Jack.
+\newblock Efficient top-$n$ recommendation by linear regression.
+\newblock In {\em RecSys Large Scale Recommender Systems Workshop}, 2013.
+
+\bibitem{Linden:2003}
+G.~Linden, B.~Smith, and J.~York.
+\newblock Amazon.com recommendations: Item-to-item collaborative filtering.
+\newblock {\em IEEE Internet Computing}, 7(1):76--80, Jan. 2003.
+
+\bibitem{Ning:2011}
+X.~Ning and G.~Karypis.
+\newblock {SLIM}: Sparse linear methods for top-$n$ recommender systems.
+\newblock In {\em {IEEE International Conference on Data Mining (ICDM)}}. IEEE,
+  2011.
+
+\bibitem{Pan:2009}
+R.~Pan and M.~Scholz.
+\newblock Mind the gaps: Weighting the unknown in large-scale one-class
+  collaborative filtering.
+\newblock In {\em KDD '09}, pages 667--676, New York, NY, USA, 2009. ACM.
+
+\bibitem{Pan:2008}
+R.~Pan, Y.~Zhou, B.~Cao, N.~N. Liu, R.~Lukose, M.~Scholz, and Q.~Yang.
+\newblock One-class collaborative filtering.
+\newblock In {\em IEEE International Conference on Data Mining (ICDM)}, pages
+  502--511, Washington, DC, USA, 2008. IEEE Computer Society.
+
+\bibitem{Sarwar:2001}
+B.~Sarwar, G.~Karypis, J.~Konstan, and J.~Riedl.
+\newblock Item-based collaborative filtering recommendation algorithms.
+\newblock In {\em WWW '01}, pages 285--295, New York, NY, USA, 2001. ACM.
+
+\bibitem{Sedhain:2016}
+S.~Sedhain, A.~Menon, S.~Sanner, and D.~Braziunas.
+\newblock On the effectiveness of linear models for one-class collaborative
+  filtering.
+\newblock {\em Proceedings of the 30th Conference on Artificial Intelligence
+  (AAAI-16)}, 2016.
+
+\bibitem{Tang:2013}
+L.~Tang and P.~Harrington.
+\newblock Scaling matrix factorization for recommendation with randomness.
+\newblock In {\em Proceedings of the 22nd international conference on World
+  Wide Web companion}, pages 39--40. International World Wide Web Conferences
+  Steering Committee, 2013.
+
+\bibitem{explainabiltyVIG2009}
+J.~Vig, S.~Sen, and J.~Riedl.
+\newblock Tagsplanations: Explaining recommendations using tags.
+\newblock In {\em Proceedings of the 14th International Conference on
+  Intelligent User Interfaces}, IUI '09, pages 47--56, New York, NY, USA, 2009.
+  ACM.
+
+\bibitem{Voronin:GPURSVD}
+S.~Voronin and P.-G. Martinsson.
+\newblock Rsvdpack: Subroutines for computing partial singular value
+  decompositions via randomized sampling on single core, multi core, and gpu
+  architectures.
+\newblock {\em arXiv preprint arXiv:1502.05366}, 2015.
+
+\end{thebibliography}
