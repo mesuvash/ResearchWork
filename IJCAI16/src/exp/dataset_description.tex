@@ -43,7 +43,7 @@ To evaluate the performance of the various recommenders, we report \textsf{preci
 We compared the proposed method to a number of baselines:
 \begin{compactitem}
 
-	\item User- and item-based nearest neighbour (U-KNN and I-KNN), as per \S\ref{sec:knn}, using  cosine similarity and Jaccard coefficient to define the similarity matrix $\Sim$. For each dataset, we picked the best performing of the two metrics.
+	\item User- and item-based nearest neighbour (U-KNN and I-KNN). For each dataset, we use Jaccard and Cosine similarity metric and  picked the best performing one.
 
 	\item PureSVD of \citet{Cremonesi:2010}. Instead of exact SVD, we use randomized SVD for efficiency.
 	
