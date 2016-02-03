@@ -78,7 +78,7 @@ Note that this inversion involves a $k \times k$ matrix, and hence it is tractab
 
 %Eq.~(\ref{eqn:i-reg-rank-low}) corresponds to the linear Autoencoder~\cite{Sedhain:2015} where the input-hidden layer weight is initialized with the rank-k orthogonal basis of the matrix $\R$. 
 
-The choice of $\W = \Q_k \Y$ is motivated by the following observation. When $\lambda = 0$, the solution to our problem is $\W = \Q_k \Q_k^T$. This is also the solution to the new formulation of our problem for $\Y = \Q_k^T$. When $\lambda$ is close to zero, we believe that sufficiently good solutions lie close to the span of $\Q_k$. Therefore, we choose $\W = \Q_k \Y$. We demonstrate that this choice performs well empirically in the experimental section. Furthermore, \LinearLow can be seen as a autoencoder  collaborative filtering model ~\cite{Sedhain:2015} with linear activation and $\Q_k$ as input-hidden weights.
+The choice of $\W = \Q_k \Y$ is motivated by the following observation. When $\lambda = 0$, the solution to our problem is $\W = \Q_k \Q_k^T$. This is also the solution to the new formulation of our problem for $\Y = \Q_k^T$. When $\lambda$ is close to zero, we believe that sufficiently good solutions lie close to the span of $\Q_k$. Therefore, we choose $\W = \Q_k \Y$. We demonstrate that this choice performs well empirically in the experimental section. Furthermore, \LinearLow can be seen as an autoencoder collaborative filtering model ~\cite{Sedhain:2015} with linear activation and $\Q_k$ as input-hidden weights.
  
 We refer to (\ref{eqn:i-reg-rank-low}) as I-\LinearLow as it corresponds to item-item model. Similarly, we can define a user-user model, U-\LinearLow
 \begin{align}

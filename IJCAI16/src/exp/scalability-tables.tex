@@ -2,9 +2,32 @@ To compare the training efficiency of the various algorithms, we choose \Lowes a
 %our largest dataset i.e. \Lowes\ in terms of users and items. 
 %To compare the runtime of the various algorithm, we choose \Lowes, the largest dataset in terms of users and items.
 We benchmarked the training time of the algorithms 
-by training the model on  workstation with 128 GB of main memory and Intel(R) Xeon(R) CPU E5-2650 v2 @ 2.60GHz with 32 cores. All of the methods exploit multi-core enabled via linear algebra library, whereas SLIM and WRMF attains parallelism via multiprocessing. For a fair comparison, we ran  SLIM and WRMF in parallel to use all available cores.  In table~\ref{tbl:runtime_lowes} we compare the runtime of the proposed method with the baseline methods. 
+by training the model on  workstation with 128 GB of main memory and Intel(R) Xeon(R) CPU E5-2650 v2 @ 2.60GHz with 32 cores. All of the methods exploit multi-core enabled via linear algebra library, whereas SLIM and WRMF attains parallelism via multiprocessing. For a fair comparison, we ran  SLIM and WRMF in parallel to use all available cores.  In Table~\ref{tbl:runtime_lowes} we compare the runtime of the proposed method with the baseline methods. 
 
-The results demonstrated that while \LinearLow offers the same quality of recommendation as SLIM, its training time is an order-of-magnitude 
+\begin{table}[!htb]
+\caption{Training time on the  \Lowes  and \MLens Dataset.}
+\label{tbl:runtime_lowes}
+\centering
+\resizebox{0.35\textwidth}{!}{%
+	\begin{tabular}{l|ll}
+	\hline
+	 & \Lowes & \MLens\\
+	\hline
+	I-KNN & 2.5 sec & 10.7 sec\\ 
+	U-KNN & 46.9 sec & - \\
+	PureSVD & 3 min & 1 min 27 sec\\
+	WRMF & 27 min 3 sec & 12 min 38 sec \\
+	U-MF-SVD &  3 min 10 sec & 1 min 38 sec\\
+	I-MF-SVD & 3 min 8 sec & 1 min 39 sec \\ 
+	U-LRec-Low & 3 min 27 sec & 1 min 44 sec\\
+	I-Lrec-Low & 3 min 32 sec & 1 min 42 sec \\
+	SLIM  & 32 min 37 sec  & 7 min 40 sec\\
+	\hline
+	\end{tabular}
+}
+\end{table}
+
+The results demonstrate that while \LinearLow offers the same quality of recommendation as SLIM, its training time is an order-of-magnitude 
 faster than SLIM.  SLIM is computationally expensive and is the slowest among the baselines. 
 Neighborhood methods are computationally cheap as they only involve sparse linear algebra, however as demonstrated previously, their recommendation
 quality is not consistent and lacking behind the other methods. 

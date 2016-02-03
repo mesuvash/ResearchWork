@@ -19,11 +19,11 @@ that 3 corresponding items and vice-versa. Table \ref{tbl:datasets} summarizes s
 	\end{tabular}
 \end{table}
 
-\MLens. The MovieLens 10M dataset\footnote{\scriptsize \url{http://grouplens.org/datasets/movielens/}} is a standard benchmark for collaborative filtering tasks.
+\MLens The MovieLens 10M dataset\footnote{\scriptsize \url{http://grouplens.org/datasets/movielens/}} is a standard benchmark for collaborative filtering tasks.
 Following the ``Who Rated What'' KDD Cup 2007 challenge \citep{Bennett:2007}, we created a binarized version of the dataset suitable for evaluating implicit feedback methods.
 From the original rating matrix $\tilde\R \in \{ 0, 1, \ldots, 5 \}^{\numUsers \times \numItems}$, we created a binarized preference matrix $\R$ with $R_{\ui} = \indicator{\tilde{\R}_{\ui} \geq 4}$.
 
-\LastFM. The LastFM dataset\footnote{{\scriptsize \url{http://ocelma.net/MusicRecommendationDataset/index.html}}} \citep{Celma:2008} contains the play counts of $\sim$1000 users on $\sim$170,000 artists. As per \MLens we binarized the raw play counts.
+\LastFM The LastFM dataset\footnote{{\scriptsize \url{http://ocelma.net/MusicRecommendationDataset/index.html}}} \citep{Celma:2008} contains the play counts of $\sim$1000 users on $\sim$170,000 artists. As per \MLens we binarized the raw play counts.
 
 
 \Guitar \& \Lowes  are real but anonymized purchase datasets from two popular retailers in the US. The data is provided by Company-X\footnote{{\scriptsize anonymised for the blind review and will be revealed later}}, a major provider of third party recommendation services. \Guitar \ dataset consists of $\sim$27,000 users, $\sim$14,000 items and $\sim$120,000 item purchases. Similarly, \Lowes \ dataset consists of $\sim$264,000 users, $\sim$57,000 items and $\sim$1 billion item purchases. 
