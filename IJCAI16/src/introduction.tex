@@ -64,8 +64,8 @@ or more desiderata.
 %problems.
 Neighborhood-based methods~\citep{Sarwar:2001, Linden:2003} are scalable, incorporate similarity metric in the model and give explainable recommendations. 
 However, the relevance of their recommendation is weaker as compared to other methods. 
-Matrix Factorization models~\citep{Hu:2008} are %scalable but are also 
-not competitive in terms of relevance. Also, the recommendations are not explainable and there is no notion of similarity in the model. On the other hand, Linear recommenders~\cite{Ning:2011, Sedhain:2016} are the state-of-the-art in terms of relevance. Furthermore, the model explicitly learns a similarity metric. Also, like neighborhood models, recommendations from linear model are easily explainable. However, current linear methods are computationally expensive which limits their applicability to large scale real world problems. 
+Matrix Factorization models~\citep{Hu:2008} optimize non-convex objective whose solution is sensitive to initialization and hyperparameter. Matrix factorization models are  %scalable but are also 
+not competitive in terms of top-k ranking performance. Also, the recommendations are not explainable and there is no notion of similarity in the model. On the other hand, Linear recommenders~\cite{Ning:2011, Sedhain:2016} are the state-of-the-art in terms of relevance. Furthermore, the model explicitly learns a similarity metric. Also, like neighborhood models, recommendations from linear model are easily explainable. However, current linear methods are computationally expensive which limits their applicability to large scale real world problems. 
 % computational cost of the linear models limits its applicability in real world recommendation. 
 %This motivates us to address the scalability of the linear models which we will discuss in the following section.
 
