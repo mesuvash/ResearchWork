@@ -59,7 +59,7 @@ Then we reparametrize the matrix $\W$ as
 \begin{equation}
 \W = \Q_k \Y
 \end{equation}
-for some matrix $\Y$. Note that through this parametrization the rank of $\W$ is automatically controlled, and the optimization problem (\ref{eqn:reg-rank}) reads
+for some matrix $\Y$. Note that through this parametrization the rank of $\W$ is automatically controlled, no optimality is lost when $\lambda=0$, and the optimization problem (\ref{eqn:reg-rank}) reads
 \begin{align}
 \label{eqn:i-reg-rank-low}
 \underset{\Y} {\mathrm{argmin}}  \left \| \R - \R \Q_k \Y \right \|_F^2 + \lambda \left \|  \Q_k \Y \right \|_F^2 
