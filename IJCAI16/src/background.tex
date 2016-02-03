@@ -96,7 +96,7 @@ WRMS uses Alternating Least Squares(ALS) method for optimization. The solution f
 	\B_i = (\A^T \J^i \A + \lambda I)^-1 \A^T \J^i \R_{i:} 
 	\end{split}
 \end{align}
-where, $\J^u \in \mathbb{R}^{n \times n}$ and $\J^i \in \mathbb{R}^{m \times m}$ are diagonal matrix such that $ \J^u_{ij} = \J_{ui}$ and  $\J^i_{uu} = \J_{ui}$. The WRMF solution in each iteration of ALS involves the computation of inverse for each users and items as shown in (~\ref{eqn:ALS_A}). This makes WRMF computationally expensive compared to unweighted matrix factorization.
+where, $\J^u \in \mathbb{R}^{n \times n}$ and $\J^i \in \mathbb{R}^{m \times m}$ are diagonal matrix such that $ \J^u_{ij} = \J_{ui}$ and  $\J^i_{uu} = \J_{ui}$. In each iteration of ALS, due to the weighting, we need to compute inverse for each user and item as shown in (~\ref{eqn:ALS_A}). This makes WRMF computationally expensive compared to unweighted matrix factorization.
 
 
 \subsection{Linear Recommenders}
