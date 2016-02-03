@@ -13,7 +13,7 @@ compared to the other datasets.
 % users clicks on various image categories. 
 % Since the similarity metric is an important aspect of personalization, we evaluate the item-item similarities learned by I-\LinearLow  model on the \Fotolia dataset. 
 
-In Table~\ref{tbl:similarity-evaluation}, we show some examples of top-5 similar items learned by I-\LinearLow model. We observe that the model 
+In Table~\ref{tbl:similarity-evaluation}, we show some examples~\footnote{Download https://drive.google.com/file/d/0B-0mTXCErInJd1RUSXl3YlE4TVE/view?usp=sharing and view it in a browser for an interactive exploration of learned item-item similarities.} of top-5 similar items learned by I-\LinearLow model. We observe that the model 
 discovers very meaningful and explainable similarities, hence making it very applicable in similar item recommendations.  
 \begin{table*}
 	\centering
@@ -28,15 +28,25 @@ discovers very meaningful and explainable similarities, hence making it very app
 		\hline
 		\multirow{5}{*}{\textbf{Similar items}} & Test and Analysis & Beach Holidays & Construction & Job Search & Depression & Painting \\
 		& Drug and Pills & Tourism & Teamwork & Tax and Accounting & Getting upset & Statues\\
-		& Health Care & Relaxing & Manufacturing & Breaking the law and Illegal Activity & Crying & Artistic monuments\\
+		& Health Care & Relaxing & Manufacturing & Breaking the law & Crying & Artistic monuments\\
 		& Scientists & Hiking & Service industry & Money & Loneliness & Paris\\
-		& Medical Equipments& Consumer service & Beaches& Workers&  rage & Italy\\
+		& Medical Equipments& Consumer service & Beaches& Workers&  Rage & Italy\\
+		\hline
+		\end{tabular}
+		}
+		\resizebox{0.85\textwidth}{!}{%
+
+		\begin{tabular}{lllllllll}
+		% \hline
+		\hline
+		\textbf{Item} & Dance & Vinegar & Pearls & Graduation& Aging & Homelessness & Lizards\\
+		\hline
+		\multirow{5}{*}{\textbf{Similar items}} & Exercise & Olive Oil & Wealth & High School & Patients & Depression & Dragons\\
+		& Running And Jumping & Spice & Wedding & School & Grand Parenting & Loneliness& Snakes\\
+		& Disco And Clubs & Salads & Accessories & Exams & Disability & Crying & Other\\
+		& Circus And Performing & Garlic & Gold & Job Search & Health Care& Getting Upset& Butterflies\\
+		& Gymnastics & other & Make Up& E-Learning& Doctors & Risk And Danger & Owls\\
 		\hline
 		\end{tabular}
 	}
 \end{table*}
-
-
-
-
-		
