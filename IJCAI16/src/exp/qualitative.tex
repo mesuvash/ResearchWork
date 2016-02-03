@@ -1,11 +1,21 @@
-In this section, we qualitatively analyze the item-item similarities learned by I-\LinearLow model. We use \Fotolia dataset\footnote{\scriptsize The dataset sharing agreement with the provider restricts us from reporting the statistics and quantitative results. Hence, we do not report summary statistics and quantitative results on this dataset} to assess the  similarites learned by the model. This dataset consists of user interactions i.e. clicks on various image categories.
+In this section, we provide a qualitative evaluation of the item-item similarities learned by our I-\LinearLow model. 
+We use \Fotolia, a dataset from a major stock image market site\footnote{\scriptsize The dataset sharing agreement with the provider restricts us from reporting the statistics and quantitative results. Hence, we do not report summary statistics and quantitative results on this dataset}.  
+The data provides whether a given user has clicked on a particular image category, and from these our model can infer the similarity measure between
+the image categories. Note that the similarity is inferred solely based on the click patterns, without doing any analysis of the textual content of
+the category names.
+We choose this dataset for the qualitative evaluation mainly because the items are category names and are much easier to interpret
+compared to the other datasets.
+
+
+
+
+
 % users clicks on various image categories. 
-We choose this dataset mainly because the items are easier to interpret compared to other datasets.
 % Since the similarity metric is an important aspect of personalization, we evaluate the item-item similarities learned by I-\LinearLow  model on the \Fotolia dataset. 
 
-In Table~\ref{tbl:similarity-evaluation}, we show few examples of top-5 similar items learned by I-\LinearLow model. We observe that  the model learns meaningful and explainable similarities, hence making it very applicable in similar item recommendations.  
+In Table~\ref{tbl:similarity-evaluation}, we show some examples of top-5 similar items learned by I-\LinearLow model. We observe that the model 
+discovers very meaningful and explainable similarities, hence making it very applicable in similar item recommendations.  
 \begin{table*}
-
 	\centering
 	\caption{Top-5 similar items learned by I-\LinearLow model.}
 	\label{tbl:similarity-evaluation}
