@@ -25,6 +25,29 @@ when a recommendation of similar items or users is needed.
 %  \label{fig:dimensionPerformance}
 %
 %\end{figure}
+\begin{table}[!htb]
+\caption{Training time on the  \Lowes  and \MLens Dataset.}
+\label{tbl:runtime_lowes}
+\centering
+\resizebox{0.30\textwidth}{!}{%
+	\begin{tabular}{l|ll}
+	\hline
+	 & \Lowes & \MLens\\
+	\hline
+	I-KNN & 2.5 sec & 10.7 sec\\ 
+	U-KNN & 46.9 sec & - \\
+	PureSVD & 3 min & 1 min 27 sec\\
+	WRMF & 27 min 3 sec & 12 min 38 sec \\
+	U-MF-SVD &  3 min 10 sec & 1 min 38 sec\\
+	I-MF-SVD & 3 min 8 sec & 1 min 39 sec \\ 
+	U-LRec-Low & 3 min 27 sec & 1 min 44 sec\\
+	I-Lrec-Low & 3 min 32 sec & 1 min 42 sec \\
+	SLIM  & 32 min 37 sec  & 7 min 40 sec\\
+	\hline
+	\end{tabular}
+}
+
+\end{table}
 
 \begin{table*} [!htb]
 \centering
