@@ -74,7 +74,7 @@ However, they are unable to adapt to the characteristics of the data as they rel
 % \subsubsection{Matrix Factorization}
 
 Matrix Factorization methods are the \emph{de facto} approach to collaborative filtering with explicit feedback. The basic idea is to embed users and items into some shared latent space, with the aim of inferring complex preference profiles for both users and items. 
-Weighted matrix factorization (WRMF) for one class collaborative filtering~\cite{Hu:2008, Pan:2009} optimises
+Weighted matrix factorization (WRMF) for one class collaborative filtering~\cite{Hu:2008, Pan:2009} optimizes
 \begin{equation}
 \label{eqn:wrmf}
 \min_{ \A,\B  } \sum_{ u \in \userSet, i \in \itemSet } \J_{\ui} ( \R_{\ui} - \A_u^T \B_i )^2 + \frac{\lambda}{2}  ( ||\A||_F^2 + ||\B||_F^2 )
@@ -113,7 +113,7 @@ where $\lambda, \mu > 0$ are appropriate constants, and
 \end{equation}
 Here, $|| \cdot ||_1$ denotes the elementwise $\ell_1$ norm of $\W$ so as to encourage sparsity, and the constraint $\text{diag}( \W ) = 0$ prevents a trivial solution of $\W = \id_{\numItems \times \numItems}$. SLIM is equivalent to an item-based neighbourhood approach where the similarity matrix $\Sim = \W$ is \emph{learned} from the data.
 %
-In a related linear model for OC-CF~\citep{Sedhain:2016}, the authors report very good performance, but the proposed method is computationallly expensive, which restricts its applicability in real world problems.
+In a related linear model for OC-CF~\citep{Sedhain:2016}, the authors report very good performance, but the proposed method is computationally expensive, which restricts its applicability in real world problems.
 % LRec solves
 % \begin{equation}
 % \label{eqn:lrec}

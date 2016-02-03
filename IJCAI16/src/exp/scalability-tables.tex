@@ -2,7 +2,7 @@ To compare the training efficiency of the various algorithms, we choose \Lowes a
 %our largest dataset i.e. \Lowes\ in terms of users and items. 
 %To compare the runtime of the various algorithm, we choose \Lowes, the largest dataset in terms of users and items.
 We benchmarked the training time of the algorithms 
-by training the model on  workstation with 128 GB of main memory and Intel(R) Xeon(R) CPU E5-2650 v2 @ 2.60GHz with 32 cores. All of the methods exploit multi-core enabled via linear algebra library, whereas SLIM and WRMF attains parallelism via multiprocessing. For a fair comparision, we ran  SLIM and WRMF in parallel to use all available cores.  In table~\ref{tbl:runtime_lowes} we compare the runtime of the proposed method with the baseline methods. 
+by training the model on  workstation with 128 GB of main memory and Intel(R) Xeon(R) CPU E5-2650 v2 @ 2.60GHz with 32 cores. All of the methods exploit multi-core enabled via linear algebra library, whereas SLIM and WRMF attains parallelism via multiprocessing. For a fair comparison, we ran  SLIM and WRMF in parallel to use all available cores.  In table~\ref{tbl:runtime_lowes} we compare the runtime of the proposed method with the baseline methods. 
 
 The results demonstrated that while \LinearLow offers the same quality of recommendation as SLIM, its training time is an order-of-magnitude 
 faster than SLIM.  SLIM is computationally expensive and is the slowest among the baselines. 
