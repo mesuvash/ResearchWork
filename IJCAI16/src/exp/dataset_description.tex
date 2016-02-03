@@ -35,7 +35,7 @@ From the original rating matrix $\tilde\R \in \{ 0, 1, \ldots, 5 \}^{\numUsers \
 
 \subsection{Evaluation Protocol}
 We split the datasets into random $90\%$-$10\%$ train-test set and hold out $10\%$ of the training set for hyperparamater tuning. We report the mean test split performance, along with standard errors corresponding to 95\% confidence intervals.
-To evaluate the performance of the various recommenders, we report \textsf{precision@k} and \textsf{recall@k} for $k \in \{ 3, 5, 10, 20 \}$ (averaged across all test fold users), and mean average precision (mAP@20).
+To evaluate the performance of the various recommenders, we report \textsf{precision@k} and \textsf{recall@k} for $k \in \{ 3, 5, 10, 20 \}$ (averaged over test users), and mean average precision (mAP@20).
 
 
 \subsection{Methods compared}
@@ -52,4 +52,4 @@ We compared the proposed method to a number of baselines:
 	\item MF-RSVD of \citet{Tang:2013}.  We ran this method with user and item based initialization, U-MF-RSVD  and I-MF-RSVD, as discussed in Eq. (\ref{eqn:U-MF-RSVD}) and (\ref{eqn:I-MF-RSVD}) respectively.
 	\item SLIM, as per Eq. (\ref{eqn:slim}). For computational convenience, we used the SGDReg variant \citep{Levy:2013}, which is identical to SLIM  except that the nonnegativity constraint is removed. We did not evaluate SLIM with nonnegativity directly as~\citet{Levy:2013} reports superior performance to SLIM, and is considerably faster to train.
 \end{compactitem}
-We do not compare against LRec~\citep{Sedhain:2016} due to its memory complexity on a large scale dataset. For instance on the \Lowes \ dataset, LRec requires $\sim$260 GB of memory. 
+We do not compare against LRec~\citep{Sedhain:2016} due to its memory complexity on a large dataset. For instance on the \Lowes dataset, LRec requires $\sim$260GB of memory. 
