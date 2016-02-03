@@ -86,46 +86,17 @@ $\J \in \Real_+^{\numUsers \times \numItems}$ is some pre-defined weighting matr
 \J_{\ui} =  \indicator{ \R_{\ui} = 0 } + \alpha \indicator{ \R_{\ui} > 0 } 
 \end{equation}
 where $\alpha$ assigns an importance weight to the observed interaction.
-
-
-% Let $\ell \colon \Real \times \Real \to \Real_+$ be some loss function, typically squared loss $\ell( y, \hat{y} ) = (y - \hat{y})^2$.
-% Then, matrix Factorization methods optimise
-% \begin{equation}
-% \label{eqn:wrmf}
-% \min_{ \theta } \sum_{ u \in \userSet, i \in \itemSet } \J_{\ui}  \ell( \R_{\ui}, \predUserItem( \theta ) ) + \mathrm{\Omega}( \theta ) ,
-% \end{equation}
-% where the recommendation matrix is\footnote{Typically, one also includes user- and item- bias terms in the recommendation matrix. We omit these for brevity.}
-% \begin{equation}
-% \label{eqn:Factorization}
-% \RHat(\theta) = \A^T \B
-% \end{equation}
-% for $\theta = \{ \A, \B \}$, 
-% and $\mathrm{\Omega}( \theta )$ is the \emph{regulariser}, which is typically
-% $$\mathrm{\Omega}( \theta ) = \frac{\lambda}{2}  ( ||\A||_F^2 + ||\B||_F^2 )$$
-% for some $\lambda > 0$.
-% The matrices $\A \in \Real^{\K \times \numUsers}, \B \in \Real^{\K \times \numItems}$ are the \emph{latent representations} of users and items respectively, with $\K \in \mathbb{N}_+$ being the \emph{latent dimension} of the Factorization.
-
-% In standard collaborative filtering applications with explicit negative feedback, one typically sets \citep{Koren:2009} $\J_{\ui} = \indicator{ \R_{\ui} > 0 },$
-% so that one only considers (user, item) pairs with known preference information.
-% In implicit feedback problems, this is not appropriate, as one will simply learn on the known positive preferences, and thus predict $\predUserItem = 1$ uninformatively.
-
-% An alternative is to set $\J_{ui} = 1$ uniformly. This treats all absent purchases as indications of a negative preference. 
-% While this appears problematic, the resulting approach been shown to perform well in recommendation (as opposed to rating prediction) tasks, and is termed PureSVD in \citep{Cremonesi:2010}.
-% %While this prevents trivial solutions, it intuitively may lead to suppressing items that the user would enjoy, but is just unaware of.
-% One appealing property of this choice of $\J$ is that the parameters $\A, \B$ can be found using the singular value decomposition (SVD) of $\R$. 
-% % Let's not give competing methods too much credit, also does SVD scale to Netflix?  -Scott
-% %, for which efficient routines are available.
-
-
-%
-% \subsubsection{Weighted matrix Factorization}
-
- 
-% This effectively replaces the unknown preferences with \emph{noisy negative preferences}, since by not placing them on an equal footing with the known positive preferences, we allow for the fact that some of these preferences may actually be positives.
-% More sophisticated weighting schemes have also been explored.
-% In scenarios where there are multiple observations for each (user, item) pair, \citet{Hu:2008} considered a logarithmic weighting of these counts.
-% The LogisticMF approach of \citet{Johnson:2014} uses a similar weighting strategy in the context of song play counts, with logistic rather than squared loss.
-% \citet{Lin:2014} proposed to choose $\J$ based on the popularity of items, so that the lack of a stated preference for a highly popular item is seen as a stronger indication of a negative preference than for a less popular item.
+WRMS uses Alternating Least Squares(ALS) method for optimization. The solution for $A$ and $B$ in each step of ALS is given by (~\ref{eqn:ALS_A})
+%For instance, equation(~\ref{eqn:ALS_A}) gives ALS solution of $A$ at the given iteration.
+% shown in~\ref{ and vice-versa for $B$
+\begin{align}
+	\label{eqn:ALS_A}
+	\begin{split}
+	\A_u = (\B^T \J^u \B + \lambda I)^-1 \B^T \J^u \R_{u:} \\
+	\B_i = (\A^T \J^i \A + \lambda I)^-1 \A^T \J^i \R_{i:} 
+	\end{split}
+\end{align}
+where, $\J^u \in \mathbb{R}^{n \times n}$ and $\J^i \in \mathbb{R}^{m \times m}$ are diagonal matrix such that $ \J^u_{ij} = \J_{ui}$ and  $\J^i_{uu} = \J_{ui}$. The WRMF solution in each iteration of ALS involves the computation of inverse for each users and items as shown in (~\ref{eqn:ALS_A}). This makes WRMF computationally expensive compared to unweighted matrix factorization.
 
 
 \subsection{Linear Recommenders}

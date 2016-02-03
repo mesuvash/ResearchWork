@@ -97,7 +97,7 @@ In I-\LinearLow model, the item-item similarity is explicitly given by the matri
 \begin{algorithm}
         % \algsetup{linenosize=\tiny}
         \small
-        \caption{Given $R \in \mathbb{R}^{m \times n}$, compute approximate rank-k SVD; R $\approx$ $P_k \Sig_k Q_k$}
+        \caption{Given $R \in \mathbb{R}^{m \times n}$, compute approximate rank-k SVD; R $\approx$ $P_k \Sigma_k Q_k$}
         \label{algo:RSVD}
         \begin{algorithmic}[1]
 
@@ -106,15 +106,15 @@ In I-\LinearLow model, the item-item similarity is explicitly given by the matri
         \State Construct $n\times k$ sample matrix $A = R\Omega$
         \State Construct $m\times k$ orthonormal matrix $Z$, such that $A  = ZX$
         \State Constuct $k\times n$ matrix $B = Z^TR$
-        \State Compute the SVD of B, B =  $\hat{P_k} \Sig_k Q_k$
-        \State  $R \Rightarrow ZB \Rightarrow Z \hat{P_k} \Sig_k Q_k \Rightarrow  P_k \Sig_k Q_k, where\ P_k = Z \hat{P_k}$
+        \State Compute the SVD of B, B =  $\hat{P_k} \Sigma_k Q_k$
+        \State  $R \Rightarrow ZB \Rightarrow Z \hat{P_k} \Sigma_k Q_k \Rightarrow  P_k \Sigma_k Q_k, where\ P_k = Z \hat{P_k}$
         % \State \begin{eqnarray*}
         %               R & = & ZB\\
         %               & = &  Z\hat{P_k}Σ_kQ_k\\
         %               & = & P_kΣ_kQ_k\\
         %               &   & where,\ P_k = Z\hat{P_k}\\
         %               \end{eqnarray*}
-        \State return $P_k \Sig_k Q_k$
+        \State return $P_k \Sigma_k Q_k$
         \EndProcedure
         \end{algorithmic}
 \end{algorithm}
