@@ -27,9 +27,27 @@ of the item.
 % cient global optimisation (if even possible); further, parallel
 % training of such models is challenging, due to strong coupling
 % between parameters.
-In this paper, we present a novel scalable OC-CF algorithm suited for large scale real systems. 
+In this paper, we present a novel scalable OC-CF algorithm suited for large scale real world systems. 
 In designing a real world recommender system there are various factors to be 
 considered~\citep{adomavicius2005toward, ricci2011introduction}. First and foremost, a recommender system should  produce good recommendation which can be quantified in terms of \textsl{relevance}. The relevance of a recommender system is measured using evaluation metrics such as \textsf{precision@k}, \textsf{recall@k} etc. Second, the recommender systems should be highly \textsl{scalable}. In modern day applications, it is very common to have millions of users and items and billions of recorded interactions. A model should be able to handle the data in a computationally efficient manner as the number of users and items grow to this scale. \textsl{Similarity metric} is another important aspect of personalization. Prior work has shown that the similarity metric helps users to find items they are interested in and that just being accurate is not enough~\citep{mcnee2006being}.  Recommending similar items is very prevalent in  real-world recommender systems. For instance, Amazon.com shows product suggestions to customers based on the items they are browsing~\citep{linden2003amazon}. Hence, it is highly desirable to have a recommendation algorithm where the similarity is directly expressed and incorporated in the model. Also, \textsl{interpretability} of the recommendation is very critical in persuading users. By explaining the recommendations, the system becomes more transparent, builds users' trust in the system and convinces them in consuming the recommended items. For example, the ``why this was recommended" feature on Netflix.com explains the users the recommendations by showing them the similar movies that they liked in the past. Lack of interpretability weakens the ability to persuade the users in their decision making~\citep{explainabiltyVIG2009}.
+
+\begin{table*}[!t]
+	\centering
+
+		\begin{tabular}{llccc}
+		\toprule
+		\toprule	
+		\textbf{Method} & \textbf{Relevance} & \textbf{Scalability} & \textbf{Similarity} & \textbf{Interpretability} \\
+		\toprule
+		Neighborhood & \cross & \tick & \tick & \tick \\
+		MF & \cross & \tick$^*$  & \cross & \cross \\
+		Linear & \tick & \cross & \tick & \tick \\
+		\LinearLow & \tick & \tick & \tick & \tick \\
+		\bottomrule
+		\end{tabular}
+	\caption{Comparison of recommendation methods for OC-CF. The $^*$ for MF is added because weighted MF, WRMF, is relatively expensive.}
+	\label{tbl:comparison}
+\end{table*}
 
 While there is a rich literature on OC-CF (discussed subsequently),
 to our knowledge, all existing methods lack one
@@ -50,23 +68,7 @@ Matrix Factorization models~\citep{Hu:2008} are %scalable but are also
 not competitive in terms of relevance. Also, the recommendations are not explainable and there is no notion of similarity in the model. On the other hand, Linear recommenders~\cite{Ning:2011, Sedhain:2016} are the state-of-the-art in terms of relevance. Furthermore, the model explicitly learns a similarity metric. Also, like neighborhood models, recommendations from linear model are easily explainable. However, current linear methods are computationally expensive which limits their applicability to large scale real world problems. 
 % computational cost of the linear models limits its applicability in real world recommendation. 
 %This motivates us to address the scalability of the linear models which we will discuss in the following section.
-\begin{table*}[!ht]
-	\centering
 
-		\begin{tabular}{llccc}
-		\toprule
-		\toprule	
-		\textbf{Method} & \textbf{Relevance} & \textbf{Scalability} & \textbf{Similarity} & \textbf{Interpretability} \\
-		\toprule
-		Neighborhood & \cross & \tick & \tick & \tick \\
-		MF & \cross & \tick$^*$  & \cross & \cross \\
-		Linear & \tick & \cross & \tick & \tick \\
-		\LinearLow & \tick & \tick & \tick & \tick \\
-		\bottomrule
-		\end{tabular}
-	\caption{Comparison of recommendation methods for OC-CF. The $^*$ for MF is added because weighted MF, WRMF, is relatively expensive.}
-	\label{tbl:comparison}
-\end{table*}
 
 In this paper we address the computational bottleneck of linear models, enabling them to scale up to large OC-CF problems without compromising performance. Our method, \LinearLow (Fast Low Rank Linear Model), formulates OC-CF as a regularised linear regression problem with a randomized SVD for fast dimensionality reduction. 
 Although regularized regression and randomized SVD are not new ideas,  their combined use in the context of OC-CF is,  to the best of our knowledge, novel. 
