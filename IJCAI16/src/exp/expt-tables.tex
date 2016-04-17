@@ -1,23 +1,25 @@
+
 Tables \ref{tbl:guitar-results} -- \ref{tbl:ml10m-results} summarize the results of our methods and the various baselines.
 The results demonstrate that in terms of the quality of recommendation, the linear methods (\LinearLow and SLIM) always outperform other methods
-in all four datasets. \LinearLow and SLIM perform equally well and there is little separation between them in terms of the quality of 
+in all four datasets. \LinearLow and SLIM perform equally well and there is little separation between them in terms of the quality of
 the recommendation. However, as we will show in section~\ref{section:scalability}, \LinearLow is much more efficient than SLIM.
 Also, unlike other methods, the performance of \LinearLow is not very sensitive to the choice of user or item based formulation.
 %Furthermore, it consistently outperforms other baselines on all four datasets.
-%\LinearLow is very competitive with SLIM and has much less computational footprint which we will discuss in 
-%\LinearLow is very competitive with SLIM and consistently outperforms other baselines on all four datasets. 
+%\LinearLow is very competitive with SLIM and has much less computational footprint which we will discuss in
+%\LinearLow is very competitive with SLIM and consistently outperforms other baselines on all four datasets.
+
 From these tables, we make the following additional observations:
 \begin{compactitem}
 
-%In our experiments 
- % beyond with the number of projection dimension whereas \WRMF figure~\ref{fig:dimensionPerformance}, we observe that the performance of the \LinearLow method improves with the number of the projection dimensions. 
-\item Among the matrix factorization methods, those that use Randomized SVD~\citep{Tang:2013} consistently performs the best in all dataset. This is possibly due to the fact that SVD provides a good initialization and the optimization finds the optimal solution for the given initialization, whereas matrix factorization optimizes a highly nonconvex bilinear objective and is sensitive to the initialization and hyperparameters. In Table~\ref{tbl:guitar-results} -- \ref{tbl:lfm-results}, we observe that the performance of MF-RSVD varies significantly based on whether we initialize user or item latent factors. Also, the factorization methods do not directly provide item-to-item or user-to-user similarity measures, hence are not applicable
+%In our experiments
+ % beyond with the number of projection dimension whereas \WRMF figure~\ref{fig:dimensionPerformance}, we observe that the performance of the \LinearLow method improves with the number of the projection dimensions.
+\item Among the matrix factorization methods, those that use Randomized SVD~\citep{Tang:2013} consistently performs the best. This is possibly due to the fact that SVD provides a good initialization
+% and the optimization finds the optimal solution for the given initialization,
+whereas matrix factorization optimizes a highly nonconvex bilinear objective and is sensitive to the initialization and hyperparameters. In Table~\ref{tbl:guitar-results} -- \ref{tbl:lfm-results}, we observe that the performance of MF-RSVD varies significantly based on whether we initialize user or item latent factors. Also, the factorization methods do not directly provide item-to-item or user-to-user similarity measures, hence are not applicable
 when a recommendation of similar items or users is needed.
 \item We observe that the neighborhood models yield inferior results compared to the Linear models. Also, the performance varies with the user and item based models. While they perform comparatively competitive in \Lowes\ and \Guitar\ dataset, they perform poorly in \LastFM\ and \MLens\ dataset. Hence, we conclude that neighborhood methods are not consistent in their performance.
 \end{compactitem}
-
-%[TODO: DO WE STILL KEEP THIS?]Furthermore, in Figure~\ref{fig:dimensionPerformance}, we compare the performance of \LinearLow model, namely I-Linear-Flow, and WRMF with the number of the dimensions. We observe that the performance of \LinearLow improves steadily with the dimensionality of projection, but with diminishing returns. However, performance of WRMF improves initially with the number of dimensions and then starts to decrease possibly due to overfitting. 
-
+%[TODO: DO WE STILL KEEP THIS?]Furthermore, in Figure~\ref{fig:dimensionPerformance}, we compare the performance of \LinearLow model, namely I-Linear-Flow, and WRMF with the number of the dimensions. We observe that the performance of \LinearLow improves steadily with the dimensionality of projection, but with diminishing returns. However, performance of WRMF improves initially with the number of dimensions and then starts to decrease possibly due to overfitting.
 %\begin{figure}[!ht]
 %  \centering
 %    \includegraphics[width=0.5\textwidth]{imgs/wrmf_lowlinear_vs_dim_larger_font}
@@ -25,8 +27,6 @@ when a recommendation of similar items or users is needed.
 %  \label{fig:dimensionPerformance}
 %
 %\end{figure}
-
-
 \begin{table*} [!htb]
 \centering
 \caption{Results on the \Guitar\ dataset. Reported numbers are the mean and standard errors across test folds.}
@@ -117,20 +117,20 @@ when a recommendation of similar items or users is needed.
 		\hline
 		& prec@3 & prec@5 & prec@10 & prec@20 & recall@3 & recall@5 & recall@10 & recall@20 & mAP@20 \\
 		\hline
-		
+
 		I-KNN & \num{0.590416} $\pm$ \num{0.00681256}&\num{0.560014} $\pm$ \num{0.00665502}&\num{0.506819} $\pm$ \num{0.005335}&\num{0.439033} $\pm$ \num{0.00544237}&\num{0.0186925} $\pm$ \num{0.000409293}&\num{0.0284457} $\pm$ \num{0.00019801}&\num{0.0496602} $\pm$ \num{0.000725893}&\num{0.0824128} $\pm$ \num{0.00162769}&\num{0.328037} $\pm$ \num{0.00545731}\\
-		
+
 		U-KNN & \num{0.54343} $\pm$ \num{0.0082815}&\num{0.512716} $\pm$ \num{0.00379193}&\num{0.461895} $\pm$ \num{0.00435141}&\num{0.400865} $\pm$ \num{0.00279941}&\num{0.0168885} $\pm$ \num{0.000401477}&\num{0.0260217} $\pm$ \num{0.00109202}&\num{0.0448487} $\pm$ \num{0.00107688}&\num{0.0747077} $\pm$ \num{0.00137005}&\num{0.289443} $\pm$ \num{0.0028557}\\
 		\hline
 		WRMF& \num{0.627733} $\pm$ \num{0.00706182}&\num{0.589904} $\pm$ \num{0.0048549}&\num{0.530787} $\pm$ \num{0.00494584}&\num{0.457678} $\pm$ \num{0.0031882}&\num{0.0198242} $\pm$ \num{0.000626489}&\num{0.0300178} $\pm$ \num{0.00092226}&\num{0.0515797} $\pm$ \num{0.00145554}&\num{0.0842257} $\pm$ \num{0.00128816}&\num{0.356239} $\pm$ \num{0.00356279}\\
-		
+
 		PureSVD& \num{0.399314} $\pm$ \num{0.0121106}&\num{0.368972} $\pm$ \num{0.00820293}&\num{0.332126} $\pm$ \num{0.00686075}&\num{0.288016} $\pm$ \num{0.00694973}&\num{0.0128221} $\pm$ \num{0.000343921}&\num{0.0193537} $\pm$ \num{0.000436219}&\num{0.0338005} $\pm$ \num{0.000558837}&\num{0.0566592} $\pm$ \num{0.00184532}&\num{0.1723} $\pm$ \num{0.0064526}\\
-		
-		
+
+
 		U-MF-RSVD & \num{0.517611} $\pm$ \num{0.00420094}&\num{0.486515} $\pm$ \num{0.00679594}&\num{0.442329} $\pm$ \num{0.00284252}&\num{0.385893} $\pm$ \num{0.00379811}&\num{0.0141313} $\pm$ \num{0.000466199}&\num{0.0216847} $\pm$ \num{0.000816839}&\num{0.0387367} $\pm$ \num{0.000486377}&\num{0.065261} $\pm$ \num{0.00125401}&\num{0.28104} $\pm$ \num{0.00232539} \\
 
 		I-MF-RSVD & \num{0.577999} $\pm$ \num{0.00634419}&\num{0.544735} $\pm$ \num{0.00495392}&\num{0.490102} $\pm$ \num{0.00113919}&\num{0.423595} $\pm$ \num{0.00294237}&\num{0.0189928} $\pm$ \num{0.000802407}&\num{0.0291943} $\pm$ \num{0.000617191}&\num{0.0496356} $\pm$ \num{0.00111173}&\num{0.0810641} $\pm$ \num{0.000883613}&\num{0.31458} $\pm$ \num{0.00199473}\\
-		
+
 		\hline
 
 		SLIM & \textbf{\num{0.631921}} $\pm$ \textbf{\num{0.00688652}} & \textbf{\num{0.600204}} $\pm$ \textbf{\num{0.00547024}} & \textbf{\num{0.538391}} $\pm$ \textbf{\num{0.00483142}} & \num{0.463855} $\pm$ \num{0.00564272}& \textbf{\num{0.0222616}} $\pm$ \textbf{\num{0.000640118}} & \textbf{\num{0.0345738}} $\pm$ \textbf{\num{0.000432309}} & \textbf{\num{0.0592139}} $\pm$ \textbf{\num{0.000665128}} & \textbf{\num{0.0971651}} $\pm$ \textbf{\num{0.00172048}} & \num{0.358657} $\pm$ \num{0.00648519}\\
@@ -169,21 +169,12 @@ when a recommendation of similar items or users is needed.
 		U-\LinearLow & \textbf{\num{0.226995}} $\pm$ \textbf{\num{0.00118303} }& \textbf{\num{0.192692}} $\pm$ \textbf{\num{0.000863619}} & \textbf{\num{0.147724}} $\pm$ \textbf{\num{0.000644332}} & \textbf{\num{0.108314}} $\pm$ \textbf{\num{0.000379042}} & \textbf{\num{0.129017}} $\pm$ \textbf{\num{0.00043998} }& \textbf{\num{0.177729}} $\pm$ \textbf{\num{0.000842416}} & \textbf{\num{0.262384}} $\pm$ \textbf{\num{0.00131329} }& \textbf{\num{0.370079}} $\pm$ \textbf{\num{0.00160711} }& \textbf{\num{0.160144}} $\pm$ \textbf{\num{0.000564101}}\\
 
 		I-\LinearLow&\num{0.224153} $\pm$ \num{0.000891741}&\num{0.190854} $\pm$ \num{0.000992553}&\num{0.146848} $\pm$ \num{0.0004936}&\num{0.107704} $\pm$ \num{0.000366158}&\num{0.127622} $\pm$ \num{0.000675105}&\num{0.176479} $\pm$ \num{0.00103911}&\num{0.260898} $\pm$ \num{0.000789582}&\num{0.367572} $\pm$ \num{0.00172003}&\num{0.159246} $\pm$ \num{0.000668585}\\
-		
-
 		\hline
 		% \hline
 	\end{tabular}
 }
-
 \end{table*}
-
-
-
-
-
-
-% Data for I-Linear-Flow & WRMF vs dimension 
+% Data for I-Linear-Flow & WRMF vs dimension
 % x = [10, 50, 100, 500, 1000, 3000]
 % wrmf = [0.035, 0.045, 0.048, 0.067, 0.070, 0.061]
 % I_LowLinear = [ 0.032, 0.048, 0.058, 0.096, 0.106, 0.115]

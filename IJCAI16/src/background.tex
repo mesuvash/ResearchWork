@@ -3,12 +3,12 @@
 %Let $\userSet = \{ 1, \ldots, \numUsers \}$ denote a set of users, and $\itemSet = \{ 1, \ldots, \numItems \}$ a set of items.
 Let $\userSet$ denote a set of users, and $\itemSet$ a set of items,
 with $\numUsers = | \userSet |$ and $\numItems = | \itemSet |$.
-In OC-CF, we have a purchase\footnote{We use the word ``purchase'' simply for the purposes of exposition.} 
+In OC-CF, we have a purchase\footnote{We use the word ``purchase'' simply for the purposes of exposition.}
 matrix $\R \in \{ 0, 1 \}^{\numUsers \times \numItems}$. %, where $\numItems$ is the number of items and $\numUsers$ the number of users.
 We use $\R_{\ui}$ to refer to the purchase status for the user $\u$ and item $\i$.
 We use $\R_{:\i}$ to denote the indicator vector of each users' purchase of an item, and similarly $\R_{\u:}$ to denote the vector of a user's preference for each item $i$.
 We denote by  $\ratedSet{\u}$ the set of the items purchased by user $\u$. The goal in OC-CF is to learn a recommender, which for our purposes is simply a matrix $\RHat \in \Real^{\numUsers \times \numItems}$. %of the same size as $\R$.
-We call $\RHat$ the \emph{recommendation matrix}. The notations are summarized in table~\ref{tbl:glossary}. 
+We call $\RHat$ the \emph{recommendation matrix}. The notations are summarized in table~\ref{tbl:glossary}.
 %As the entries are real-valued, for each user $u$, we can sort the entries of $\RHat_{\u:}$ to obtain a predicted ranking over items.
 %We will use $\predUserItem$ to denote the predicted score for a given (user, item) pair.
 % We evaluate $\RHat$ assuming we are in the \emph{top-$N$ recommendation} scenario \citep{Deshpande:2004}.
@@ -20,7 +20,7 @@ We call $\RHat$ the \emph{recommendation matrix}. The notations are summarized i
 	\centering
 	\caption{Commonly used symbols.}
 	\label{tbl:glossary}
-	\resizebox{0.5\textwidth}{!}{%
+	\resizebox{0.45\textwidth}{!}{%
 
 	\begin{tabular}{@{}llll@{}}
 	\toprule
@@ -55,13 +55,13 @@ In (item-based) neighbourhood methods, we produce a recommendation matrix of the
 where $\Sim \in \Real^{\numItems \times \numItems}$ is some \emph{item-similarity matrix}.
 % That is, for a user $\u$, one scores an item $\i$ as the \emph{sum of $\i$'s similarity to all other items that $\u$ enjoys}.
 %Given an item $i$, the nonzero entries of $\Sim_{i:}$ are known as the \emph{neighbours} of the item.
-Typically, one uses a predefined matrix $\Sim$ that relies on $\R$. A popular example is cosine similarity \citep{Sarwar:2001, Linden:2003}, 
+Typically, one uses a predefined matrix $\Sim$ that relies on $\R$. A popular example is cosine similarity \citep{Sarwar:2001, Linden:2003},
 $$ \Sim_{\i' \i} = \frac{ \R_{:\i}^T \R_{:\i'} }{|| \R_{:\i} ||_2 || \R_{:\i'} ||_2}. $$
-% Other examples are the Pearson correlation, Jaccard coefficient and conditional probability \citep{Deshpande:2004}. 
-It is typical to sparsify $\Sim$ so that its columns only keeps top-k similar items. 
+% Other examples are the Pearson correlation, Jaccard coefficient and conditional probability \citep{Deshpande:2004}.
+It is typical to sparsify $\Sim$ so that its columns only keep the top-k similar items.
 %the largest entries, \ie to compute the $k$-neighbourhood graph based on $\Sim$.
 Neighbourhood methods are attractive for several reasons.
-They are simple to implement, efficient 
+They are simple to implement, efficient
 %(as the computation of (\ref{eqn:knn}) requires $O( | \ratedSet{\u} | )$ time),
 and interpretable.
 %Further, they may also be applied as-is to OC-CF problems \citep{Linden:2003, Deshpande:2004}, unlike most other popular CF models such as matrix Factorization (to be discussed subsequently).
@@ -73,27 +73,27 @@ However, they are unable to adapt to the characteristics of the data as they rel
 \subsection{Matrix Factorization}
 % \subsubsection{Matrix Factorization}
 
-Matrix Factorization methods are the \emph{de facto} approach to collaborative filtering with explicit feedback. The basic idea is to embed users and items into some shared latent space, with the aim of inferring complex preference profiles for both users and items. 
+Matrix Factorization methods are the \emph{de facto} approach to collaborative filtering with explicit feedback. The basic idea is to embed users and items into some shared latent space, with the aim of inferring complex preference profiles for both users and items.
 Weighted matrix factorization (WRMF) for one class collaborative filtering~\cite{Hu:2008, Pan:2009} optimizes
 \begin{equation}
 \label{eqn:wrmf}
 \min_{ \A,\B  } \sum_{ u \in \userSet, i \in \itemSet } \J_{\ui} ( \R_{\ui} - \A_u^T \B_i )^2 + \frac{\lambda}{2}  ( ||\A||_F^2 + ||\B||_F^2 )
 \end{equation}
-where 
-$\J \in \Real_+^{\numUsers \times \numItems}$ is some pre-defined weighting matrix  and 
+where
+$\J \in \Real_+^{\numUsers \times \numItems}$ is some pre-defined weighting matrix  and
 \begin{equation}
 \label{eqn:wrmf-weight}
-\J_{\ui} =  \indicator{ \R_{\ui} = 0 } + \alpha \indicator{ \R_{\ui} > 0 } 
+\J_{\ui} =  \indicator{ \R_{\ui} = 0 } + \alpha \indicator{ \R_{\ui} > 0 }
 \end{equation}
 where $\alpha$ assigns an importance weight to the observed interaction.
-WRMF uses Alternating Least Squares(ALS) method for optimization. The solution for $A$ and $B$ in each step of ALS is given by (~\ref{eqn:ALS_A})
+WRMF uses Alternating Least Squares(ALS) method for optimization. The solution for $\A$ and $\B$ in each step of ALS is given by (\ref{eqn:ALS_A})
 %For instance, equation(~\ref{eqn:ALS_A}) gives ALS solution of $A$ at the given iteration.
 % shown in~\ref{ and vice-versa for $B$
 \begin{align}
 	\label{eqn:ALS_A}
 	\begin{split}
-	\A_u = (\B^T \J^u \B + \lambda I)^{-1} \B^T \J^u \R_{u:} \\
-	\B_i = (\A^T \J^i \A + \lambda I)^{-1} \A^T \J^i \R_{i:} 
+	\A_u = (\B^T \J^u \B + \lambda \I)^{-1} \B^T \J^u \R_{u:} \\
+	\B_i = (\A^T \J^i \A + \lambda \I)^{-1} \A^T \J^i \R_{i:}
 	\end{split}
 \end{align}
 where, $\J^u \in \mathbb{R}^{n \times n}$ and $\J^i \in \mathbb{R}^{m \times m}$ are diagonal matrix such that $ \J^u_{ij} = \J_{ui}$ and  $\J^i_{uu} = \J_{ui}$. In each iteration of ALS, due to the weighting, we need to compute inverse for each user and item as shown in (\ref{eqn:ALS_A}). This makes WRMF computationally expensive compared to unweighted matrix factorization.
@@ -120,13 +120,13 @@ In a related linear model for OC-CF~\citep{Sedhain:2016}, the authors report ver
 % \min_{ \theta } \sum_{\u \in \userSet} \sum_{\i \in \itemSet} \ell( \y^{(\u)}_{\i}, \X_{\i :} \w^{(\u)} ) + \mathrm{\Omega}(\theta),
 % \end{equation}
 % %where $\ell(y, v) = \log(1 + e^{-yv})$ is the logistic loss,
-% where $X = R^T$; $\ell$ is some convex loss function such as squared or logistic loss; 
-% $\theta = \{ \w^{(\u)}  \}_{\u \in \userSet}$. 
+% where $X = R^T$; $\ell$ is some convex loss function such as squared or logistic loss;
+% $\theta = \{ \w^{(\u)}  \}_{\u \in \userSet}$.
 
-% For squared loss, we minimize the following objective 
+% For squared loss, we minimize the following objective
 % \begin{equation}
 % \label{eqn:lrecsquared}
-% \min_{ \W  } || \X - \X \W ||_F^2 + \frac{\lambda}{2} || \W ||_F^2 
+% \min_{ \W  } || \X - \X \W ||_F^2 + \frac{\lambda}{2} || \W ||_F^2
 % \end{equation}
 
 Linear methods are attractive for several reasons. They have superior performance, and unlike neighborhood methods, they adapt with the data as the parameters are learned from data itself. Furthermore, the recommendations are easily interpretable. However, linear methods can be computationally expensive as they require solving a large number of regression subproblems with a big design matrix $\R$. This can scale quadratically with the order of $\R$, or worse.
@@ -138,7 +138,7 @@ Linear methods are attractive for several reasons. They have superior performanc
 % Thus, SLIM is equivalent to an item-based neighbourhood approach where the similarity matrix $\Sim = \W$ is \emph{learned} from data.
 
 % \subsubsection{LRec}
-% LRec \citep{LRec}  decomposes the OO-CF into learning a linear model per user for personalized recommendation. 
+% LRec \citep{LRec}  decomposes the OO-CF into learning a linear model per user for personalized recommendation.
 % Let's define a matrix $\X \in \Real^{\numItems \times \numUsers}$ by
 % $$\X = \R^T,$$
 % and, for each $\u  \in \userSet$, define a vector $\y^{(\u)} \in \PMOne^{\numItems}$ that is the same as $\R_{\u:}$ except with zeros in $\R_{\u:}$ replaced by -1:
@@ -152,13 +152,13 @@ Linear methods are attractive for several reasons. They have superior performanc
 % \min_{ \theta } \sum_{\u \in \userSet} \sum_{\i \in \itemSet} \ell( \y^{(\u)}_{\i}, \X_{\i :} \w^{(\u)} ) + \mathrm{\Omega}(\theta),
 % \end{equation}
 % %where $\ell(y, v) = \log(1 + e^{-yv})$ is the logistic loss,
-% where $\ell$ is some convex loss function such as squared loss, logistic loss; 
-% $\theta = \{ \w^{(\u)}  \}_{\u \in \userSet}$. 
+% where $\ell$ is some convex loss function such as squared loss, logistic loss;
+% $\theta = \{ \w^{(\u)}  \}_{\u \in \userSet}$.
 
-% For squared loss, we minimize the following objective 
+% For squared loss, we minimize the following objective
 % \begin{equation}
 % \label{eqn:lrecsquared}
-% \min_{ \W  } || \X - \X \W ||_F^2 + \frac{\lambda}{2} || \W ||_F^2 
+% \min_{ \W  } || \X - \X \W ||_F^2 + \frac{\lambda}{2} || \W ||_F^2
 % \end{equation}
 %Each $\w^{(\u)} \in \Real^{\numUsers}$, and so we can equivalently think of $\theta = \{ \W \}$ for some $\W \in \Real^{\numUsers \times \numUsers}$, with $\w^{(\u)} = \W_{:\u}$.
 % LRec employs squared loss and logistic loss
@@ -169,23 +169,21 @@ Linear methods are attractive for several reasons. They have superior performanc
 \subsection{Randomized SVD}
 SVD is the archetypal matrix factorization algorithm and has been widely used in machine learning for dimensionality reduction. However, SVD is computationally expensive and not scalable to large scale datasets. It has been recently shown that SVD can be significantly scaled up, at a negligible cost in performance, by randomization~\citep{halko2011}. We will describe the randomized SVD algorithm in the next section, in the context of the OC-CF problem.
 
-Randomized SVD has been applied to matrix factorization \citep{Tang:2013} 
-(but not in the OC-CF setting that we are considering). 
+Randomized SVD has been applied to matrix factorization \citep{Tang:2013}
+(but not in the OC-CF setting that we are considering).
 The authors compute the rank-k randomized SVD of the matrix $\R$,
-\begin{align*}
-	\R \approx \P_k \Sig_k \Q^T_k
-\end{align*}
-where, $\P_k \in \mathbb{R}^{m \times k}$, $\Q_k \in \mathbb{R}^{n \times k}$ and $\Sig_k \in \mathbb{R}^{k \times k}$. Given the truncated SVD solution, they initialize the item latent factor with the SVD solution and solve 
 \begin{align}
-\label{eqn:I-MF-RSVD}
-\underset{\A}{\mathrm{argmin}} & \left \| \R - \A^T\B\right \|_F^2 + \lambda \left \|  \A \right \|_F^2   \\
-s.t.\ & \B = \Sig_k^{\frac{1}{2}} \Q^T_k \nonumber
+	\label{eqn:truncatedSVD}
+	\R \approx \P_k \Sig_k \Q^T_k
+\end{align}
+where, $\P_k \in \mathbb{R}^{m \times k}$, $\Q_k \in \mathbb{R}^{n \times k}$ and $\Sig_k \in \mathbb{R}^{k \times k}$. Given the truncated SVD solution, they initialize the item latent factor with the SVD solution and solve
+\begin{align} \label{eqn:I-MF-RSVD}
+\underset{\A}{\mathrm{argmin}} & \left \| \R - \A^T\B\right \|_F^2 + \lambda \left \|  \A \right \|_F^2 & s.t.\  \B = \Sig_k^{\frac{1}{2}} \Q^T_k
 \end{align}
 Similarly, if the matrix $\A$ is fixed instead of the matrix $\B$, the objective becomes
 \begin{align}
 \label{eqn:U-MF-RSVD}
 % \label{eqn:U-MF-RSVD}
-\underset{\B}{\mathrm{argmin}} & \left \| \R - \A^T\B\right \|_F^2 + \lambda \left \|  \B \right \|_F^2 \\
-s.t.\ & \A = \P_k \Sig_k^{\frac{1}{2}} \nonumber
+\underset{\B}{\mathrm{argmin}} & \left \| \R - \A^T\B\right \|_F^2 + \lambda \left \|  \B \right \|_F^2 & s.t.\  \A = \P_k \Sig_k^{\frac{1}{2}}
 \end{align}
 We refer to (\ref{eqn:U-MF-RSVD}) and (\ref{eqn:I-MF-RSVD}) as U-MF-RSVD and I-MF-RSVD respectively. As we will see in the results, the performance of these two models can vary significantly.

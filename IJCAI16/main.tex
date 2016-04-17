@@ -82,6 +82,8 @@
 \newcommand{\RHat}{\hat{\mathbf{R}}}
 \newcommand{\Sim}{\mathbf{S}}
 \newcommand{\A}{\mathbf{A}}
+\newcommand{\I}{\mathbf{I}}
+
 \newcommand{\B}{\mathbf{B}}
 \newcommand{\C}{\mathcal{C}}
 \newcommand{\I}{\mathbf{I}}
@@ -165,8 +167,12 @@
 \title{Scaling Linear Models for One-Class Collaborative Filtering via Dimensionality Reduction}
 \title{Practical Linear Models for Large-Scale One-Class Collaborative Filtering}
 
-\author{Anonymous}
-% \author{ Suvash Sedhain \\ 
+\author { \textbf{Suvash Sedhain$^{\dag\ddagger}$, Hung Bui$^{*}$, Jaya Kawale $^{*}$, Nikos Vlassis$^{*}$,} \\ \textbf{Branislav Kveton$^{*}$, Aditya Menon$^{\ddagger\dag}$, Trung Bui$^{*}$, Scott Sanner$^{\S}$}\\
+\{$^{\dag}$Australian National University, $^{\ddagger}$NICTA\}, Canberra, ACT, Australia\\
+$^{*}$ Adobe Systems Inc, San Jose,  USA\\
+$^{\S}$  University of Toronto, Toronto, Canada\\
+suvash.sedhain@anu.edu.au,\{hbui,kawale,vlassis,kveton\}@adobe.com\\ aditya.menon@nicta.com.au, bui@adobe.com, ssanner@mie.utoronto.ca
+}% \author{ Suvash Sedhain \\
 % Australian National University, Canberra, Australia \\
 % suvash.sedhain@anu.edu.au}
 
@@ -176,15 +182,15 @@
 \begin{abstract}
 
 % In recent years, collaborative filtering has emerged as the de facto approach to personalized recommendation problems. However, a practically pervasive scenario that proves difficult for most collaborative filtering techniques is where one has only examples of items a user prefers, but no examples of items they do not prefer. In such implicit feedback or one-class collaborative filtering(OC-CF) problems, it is desirable to have recommendation methods that are personalized, learning based and highly scalable. Linear recommenders are proven to be very effective in OC-CF task and have several desirable properties. Although they have superior performance, linear models involves solving a large number of a regression problem making them computationally expensive and limiting their applicability in a large-scale recommendation task. This paper focuses on developing a pipeline and fast algorithm for fast large scale linear  OC-CF models to large datasets.
-% %This paper focuses on developing a fast algorithm to scale linear OC-CF models to large datasets. 
+% %This paper focuses on developing a fast algorithm to scale linear OC-CF models to large datasets.
 % We propose a fast low dimensional regularized linear model, \LinearLow, that learns OC-CF model on low dimensional projection of large scale user-item interaction matrix.
-% %Proposed method 
+% %Proposed method
 % %Efficient dimensionality reduction using randomized SVD and closed form multi-regression solution allows \LinearLow to scale on large scale datasets.
 % A comprehensive set of experiments illustrates that \LinearLow is computationally superior and yields competitive performance compared to the state-of-the-art methods.
 % % A comprehensive set of experiments illustrates that \LinearLow is 10 fold faster than the linear method with competitive performance compared to the state-of-the-art methods.
 
-Collaborative filtering has emerged as the de facto approach to personalized recommendation problems. However, a scenario that has proven difficult in practice is the 
-%implicit feedback or 
+Collaborative filtering has emerged as the de facto approach to personalized recommendation problems. However, a scenario that has proven difficult in practice is the
+%implicit feedback or
 one-class collaborative filtering case (OC-CF), where one has examples of items that a user prefers, but no examples of items they do not prefer. In such cases, it is desirable to have recommendation algorithms that are personalized, learning-based, and highly scalable. Existing linear recommenders for OC-CF achieve good performance in benchmarking tasks, but they involve solving a large number of a regression subproblems, limiting their applicability to large-scale problems. We show that it is possible to scale up linear recommenders to big data by learning an OC-CF model in a randomized low-dimensional embedding of the user-item interaction matrix. Our algorithm, Linear-Flow, achieves state-of-the-art performance in a comprehensive set of experiments on standard benchmarks as well as real data.
 
 \end{abstract}
