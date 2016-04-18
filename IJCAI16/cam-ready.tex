@@ -1,0 +1,808 @@
+\documentclass{article}
+\usepackage{multirow}
+\usepackage{ijcai16}
+\usepackage{times}
+%Todo: use proper bibliography style
+\usepackage{helvet}
+\usepackage{courier}
+% ===============================================================
+\usepackage{verbatim}
+\usepackage{color}
+\usepackage{epstopdf}
+
+\usepackage{abbrevs}
+
+% incompatible with AAAI
+%\usepackage[colorlinks=true,citecolor=blue]{hyperref}
+\usepackage{url}
+
+%\usepackage{mathptmx}
+
+\usepackage{subfig}
+\usepackage{graphicx}
+% \graphicspath{{plots//}}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+%\usepackage[mathscr]{eucal}
+\usepackage{stmaryrd}
+% \usepackage{algorithmicx}e
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{natbib}
+\usepackage{multirow}
+%\setlength{\bibsep}{4pt}
+
+\renewcommand{\citep}{\cite}
+\renewcommand{\citet}{\cite}
+
+%\usepackage[doi=false, isbn=false, url=false, natbib=true, style=numeric, backend=bibtex]{biblatex}
+%\addbibresource{bib/references.bib}
+%\setlength\bibitemsep{0.5\itemsep}
+
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{multicol}
+\usepackage{booktabs,colortbl}
+\usepackage{siunitx}
+\sisetup{detect-weight, detect-family=true}
+\definecolor{tabgrey}{rgb}{0.8,0.8,0.8}
+\arrayrulecolor{tabgrey}
+
+%\usepackage{paralist}
+%\setlength{\plitemsep}{1ex}
+\usepackage{enumitem}
+\newlist{compactitem}{itemize}{3} % 3 is max-depth
+\setlist[compactitem]{label=\textbullet, nosep, leftmargin=2em}
+
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[backgroundcolor=White,textwidth=0.75in]{todonotes}
+\setlength{\marginparwidth}{0.6in}
+\newcommand{\todob}[2][]{\todo[color=Apricot!50,size=\tiny,#1]{B: #2}} % Brano's comments
+\newcommand{\todos}[2][]{\todo[color=LimeGreen!50,size=\tiny,#1]{S: #2}} % Suvash's comments
+\newcommand{\todon}[2][]{\todo[color=yellow!50,size=\tiny,#1]{S: #2}} % Nikos's comments
+
+% ===============================================================
+% ===============================================================
+\newcommand{\ie}{i.e.\ }
+\newcommand{\eg}{e.g.\ }
+\newcommand{\etc}{\emph{et cetera}}
+
+\newcommand{\tick}{$\checkmark$}
+\newcommand{\cross}{$\times$}
+
+\newcommand{\indicator}[1]{\llbracket #1 \rrbracket}
+
+\newcommand{\id}{\mathbf{I}}
+
+\newcommand{\Real}{\mathbb{R}}
+\newcommand{\PMOne}{\{ \pm 1 \}}
+
+\newcommand{\R}{\mathbf{R}}
+\newcommand{\RHat}{\hat{\mathbf{R}}}
+\newcommand{\Sim}{\mathbf{S}}
+\newcommand{\A}{\mathbf{A}}
+
+\newcommand{\B}{\mathbf{B}}
+\newcommand{\C}{\mathcal{C}}
+\newcommand{\I}{\mathbf{I}}
+
+\newcommand{\J}{\mathbf{J}}
+\newcommand{\Sig}{\mathbf{\Sigma}}
+
+\renewcommand{\P}{\mathbf{P}}
+\newcommand{\Q}{\mathbf{Q}}
+\newcommand{\K}{K}
+\newcommand{\V}{\mathbf{V}}
+\newcommand{\w}{\mathbf{w}}
+\newcommand{\W}{\mathbf{W}}
+\newcommand{\X}{\mathbf{X}}
+\newcommand{\Y}{\mathbf{Y}}
+\newcommand{\y}{\mathbf{y}}
+
+\newcommand{\numUsers}{m}
+\newcommand{\numItems}{n}
+\newcommand{\userSet}{\mathcal{U}}
+\newcommand{\itemSet}{\mathcal{I}}
+\newcommand{\itemVec}{\mathbf{v}}
+
+\renewcommand{\u}{u}
+\renewcommand{\i}{i}
+\newcommand{\ui}{\u\i}
+\newcommand{\nij}{\u\i'}
+
+\newcommand{\predUserItem}{\RHat_{\ui}}
+
+\newcommand{\ratedSet}[1]{\mathcal{R}(#1)}
+\newcommand{\itemNgbhd}[1]{\mathcal{N}(#1)}
+\newcommand{\ratedTestSet}[1]{\mathcal{R}_{\text{te}}(#1)}
+
+\newcommand{\MLens}{{\sc Ml10M }}
+\newcommand{\LastFM}{{\sc LastFM }}
+% \newcommand{\Guitar}{{\sc Adobe-1}}
+% \newcommand{\Lowes}{{\sc Adobe-2}}
+\newcommand{\Guitar}{{\sc Proprietary-1 }}
+\newcommand{\Lowes}{{\sc Proprietary-2 }}
+\newcommand{\Fotolia}{{\sc Proprietary-3 }}
+
+
+%\newcommand{\ISLIM}{SLIM }
+\newname\ISLIM{{\rm {SLIM}}}
+\newcommand{\USLIM}{LRec+Sq+$\ell_1$+NN}
+\newcommand{\LRecSq}{LRec+Sq}
+%\newcommand{\LinearLow}{Linear-FLow }
+\newname{\LinearLow}{Linear-FLow}
+
+% ===============================================================
+
+
+
+
+\begin{document}
+
+% \setcopyright{acmcopyright}
+
+
+% DOI
+% \doi{10.475/123_4}
+
+% % ISBN
+% \isbn{123-4567-24-567/08/06}
+
+% %Conference
+% \conferenceinfo{PLDI '13}{June 16--19, 2013, Seattle, WA, USA}
+
+% \acmPrice{\$15.00}
+
+% %
+% % --- Author Metadata here ---
+% \conferenceinfo{WOODSTOCK}{'97 El Paso, Texas USA}
+% %\CopyrightYear{2007} % Allows default copyright year (20XX) to be over-ridden - IF NEED BE.
+% %\crdata{0-12345-67-8/90/01}  % Allows default copyright data (0-89791-88-6/97/05) to be over-ridden - IF NEED BE.
+% % --- End of Author Metadata ---
+
+% % \title{Dimensionality Reducion for Large Scale One Class Collaborative Filtering}
+
+\title{Scaling Linear Models for One-Class Collaborative Filtering via Dimensionality Reduction}
+\title{Practical Linear Models for Large-Scale One-Class Collaborative Filtering}
+
+\author { \textbf{Suvash Sedhain$^{\dag\ddagger}$, Hung Bui$^{*}$, Jaya Kawale $^{*}$, Nikos Vlassis$^{*}$,} \\ \textbf{Branislav Kveton$^{*}$, Aditya Menon$^{\ddagger\dag}$, Trung Bui$^{*}$, Scott Sanner$^{\S}$}\\
+\{$^{\dag}$Australian National University, $^{\ddagger}$DATA61\}, Canberra, ACT, Australia\\
+$^{*}$ Adobe Systems Inc, San Jose,  USA\\
+$^{\S}$  University of Toronto, Toronto, Canada\\
+suvash.sedhain@anu.edu.au,\{hbui,kawale,vlassis,kveton\}@adobe.com\\ aditya.menon@nicta.com.au, bui@adobe.com, ssanner@mie.utoronto.ca
+}% \author{ Suvash Sedhain \\
+% Australian National University, Canberra, Australia \\
+% suvash.sedhain@anu.edu.au}
+
+
+
+\maketitle
+\begin{abstract}
+Collaborative filtering has emerged as the de facto approach to personalized recommendation problems. However, a scenario that has proven difficult in practice is the
+%implicit feedback or
+one-class collaborative filtering case (OC-CF), where one has examples of items that a user prefers, but no examples of items they do not prefer. In such cases, it is desirable to have recommendation algorithms that are personalized, learning-based, and highly scalable. Existing linear recommenders for OC-CF achieve good performance in benchmarking tasks, but they involve solving a large number of a regression subproblems, limiting their applicability to large-scale problems. We show that it is possible to scale up linear recommenders to big data by learning an OC-CF model in a randomized low-dimensional embedding of the user-item interaction matrix. Our algorithm, Linear-FLow, achieves state-of-the-art performance in a comprehensive set of experiments on standard benchmarks as well as real data.
+
+\end{abstract}
+
+% A category with the (minimum) three required fields
+% \category{H.3.3}{Information Search and Retrieval}{Retrieval models}
+% \terms{Algorithms}
+% \keywords{one-class collaborative filtering, implicit feedback, linear models, Randomized SVD}
+
+
+\section{Introduction}
+Personalized recommendation systems are a core component
+in many modern e-commerce services~\citep{Leavitt:2006}. Collaborative
+filtering (CF) is the de-facto standard approach for making recommendations
+based on information in a database
+of item preferences from a population of users~\citep{Goldberg:1992, Sarwar:2001}. Most of the work on CF has considered
+the explicit feedback
+setting, where users express both positive and negative preferences
+for items in terms of ratings or likes/dislikes~\citep{koren2009matrix}. In
+contrast, in the one-class collaborative filtering setting (OC-CF)~\citep{Pan:2008}, we do not have
+explicit negative preference information. For example, consider
+recommending items to users of an e-commerce website
+based on their purchase history. One can assume that a
+purchase indicates a positive preference for an item. However,
+the lack of a purchase does not necessarily indicate
+a negative preference; it may just be that the user is unaware
+of the item.
+
+In designing a real world recommender system there are various factors to be
+considered~\citep{adomavicius2005toward, ricci2011introduction}. First and foremost, a recommender system should  produce good recommendations which can be quantified in terms of \textsl{relevance}. The relevance of a recommender system is measured using evaluation metrics such as \textsf{precision@k}, \textsf{recall@k} etc. Second, a recommender system should be highly \textsl{scalable}. In modern day applications, it is very common to have millions of users and items and billions of recorded interactions. A model should be able to handle the data in a computationally efficient manner as the number of users and items grow to this scale.Recommending similar items is very prevalent in  real-world recommender systems. For instance, Amazon.com shows product suggestions to customers based on the items they are browsing~\citep{linden2003amazon}. Hence, the recommendation algorithm should ideally produce item similarities. Also, \textsl{interpretability} of the recommendation is very critical in persuading users. By explaining the recommendations, the system becomes more transparent, builds users' trust in the system and convinces them to consume the recommended items. For example, the ``why this was recommended" feature on Netflix.com explains to users their recommendations by showing them the similar movies that they liked in the past. A lack of interpretability weakens the ability to persuade the users in their decision making~\citep{explainabiltyVIG2009}.
+
+\begin{table*}[!t]
+	\centering
+
+		\begin{tabular}{llccc}
+		\toprule
+		\toprule
+		\textbf{Method} & \textbf{Relevance} & \textbf{Scalability} & \textbf{Similarity} & \textbf{Interpretability} \\
+		\toprule
+		Neighborhood & \cross & \tick & \tick & \tick \\
+		MF & \cross & \tick$^*$  & \cross & \cross \\
+		Linear & \tick & \cross & \tick & \tick \\
+		\LinearLow & \tick & \tick & \tick & \tick \\
+		\bottomrule
+		\end{tabular}
+	\caption{Comparison of recommendation methods for OC-CF. The $^*$ for MF is added because weighted MF, WRMF, is relatively expensive.}
+	\label{tbl:comparison}
+\end{table*}
+
+While there is a rich literature on OC-CF (discussed subsequently),
+to our knowledge, all existing methods lack one
+or more desiderata.Neighborhood-based methods~\citep{Sarwar:2001, Linden:2003} are scalable, incorporate a similarity metric in the model and give explainable recommendations. However, the relevance of their recommendation is weaker as compared to other methods. Matrix factorization models~\citep{Hu:2008} optimize a non-convex objective whose solution is sensitive to initialization and hyperparameters. Matrix factorization models are  %scalable but are also
+not competitive in terms of top-k ranking performance~\cite{Ning:2011, Sedhain:2016}. Also, the recommendations are not explainable and there is no notion of similarity in the model. On the other hand, Linear recommenders~\cite{Ning:2011, Sedhain:2016} are the state-of-the-art in terms of relevance. Furthermore, the model explicitly learns a similarity metric. Also, like neighborhood models, recommendations from linear model are easily explainable. However, current linear methods are computationally expensive which limits their applicability to large scale real world problems.
+% computational cost of the linear models limits its applicability in real world recommendation.
+%This motivates us to address the scalability of the linear models which we will discuss in the following section.
+
+In this paper we address the computational bottleneck of linear models, enabling them to scale up to large OC-CF problems without compromising performance. Our method, \LinearLow (Fast Low Rank Linear Model), formulates OC-CF as a regularized linear regression problem with a randomized SVD for fast dimensionality reduction.
+Although regularized regression and randomized SVD are not new ideas,  their combined use in the context of OC-CF is,  to the best of our knowledge, novel.
+Through extensive experiments on known benchmarks and real-world datasets, we demonstrate that \LinearLow achieves state-of-the-art performance as
+compared to other methods, with a significant reduction in computational cost.  Due to its scalability and performance,
+\LinearLow has all the desirable properties of a practical recommender system. Table~\ref{tbl:comparison} summarizes the comparison of the existing OC-CF methods with respect to Linear-FLow.
+
+
+\section{Background}
+Let $\userSet$ denote a set of users, and $\itemSet$ a set of items,
+with $\numUsers = | \userSet |$ and $\numItems = | \itemSet |$.
+In OC-CF, we have a purchase\footnote{We use the word ``purchase'' simply for the purposes of exposition.}
+matrix $\R \in \{ 0, 1 \}^{\numUsers \times \numItems}$. %, where $\numItems$ is the number of items and $\numUsers$ the number of users.
+We use $\R_{\ui}$ to refer to the purchase status for the user $\u$ and item $\i$.
+We use $\R_{:\i}$ to denote the indicator vector of each users' purchase of an item, and similarly $\R_{\u:}$ to denote the vector of a user's preference for each item $i$.
+We denote by  $\ratedSet{\u}$ the set of the items purchased by user $\u$. The goal in OC-CF is to learn a recommender, which for our purposes is simply a matrix $\RHat \in \Real^{\numUsers \times \numItems}$. %of the same size as $\R$.
+We call $\RHat$ the \emph{recommendation matrix}. The notations are summarized in table~\ref{tbl:glossary}.
+
+\begin{table}[t]
+	\centering
+	\caption{Commonly used symbols.}
+	\label{tbl:glossary}
+	\resizebox{0.45\textwidth}{!}{%
+
+	\begin{tabular}{@{}llll@{}}
+	\toprule
+	\toprule
+	\textbf{Symbol} & \textbf{Meaning} & \textbf{Symbol} & \textbf{Meaning} \\
+	\toprule
+	$\userSet$ & Set of users & $\R$ & Purchase matrix \\
+	$\itemSet$ & Set of items & $\RHat$ & Recommendation matrix \\
+	$m$ & Number of users & $\ratedSet{\u}$	& Items purchased by $\u$ \\
+	$n$ & Number of items & $\Sim$ & Item similarity matrix \\
+	\bottomrule
+	\end{tabular}
+	}
+\end{table}
+
+In the rest of this section we review some existing approaches to OC-CF.
+\subsection{Neighbourhood methods}
+label{sec:knn}
+
+In (item-based) neighbourhood methods, we produce a recommendation matrix of the form
+\begin{equation}
+\label{eqn:knn}
+%\predUserItem = \sum_{\i' \in \itemSet} \R_{\u \i'} \cdot \Sim_{\i' \i},
+\RHat = \R \Sim
+\end{equation}
+where $\Sim \in \Real^{\numItems \times \numItems}$ is some \emph{item-similarity matrix}.
+Typically, one uses a predefined matrix $\Sim$ that relies on $\R$. A popular example is cosine similarity \citep{Sarwar:2001, Linden:2003},
+$$ \Sim_{\i' \i} = \frac{ \R_{:\i}^T \R_{:\i'} }{|| \R_{:\i} ||_2 || \R_{:\i'} ||_2}. $$
+It is typical to sparsify $\Sim$ so that its columns only keep the top-k similar items.Neighbourhood methods are attractive for several reasons.
+They are simple to implement, efficient and interpretable. However, they are unable to adapt to the characteristics of the data as they rely on a fixed $\Sim$ that is not learned from the new data \citep{Koren:2008b}. Furthermore, recommendation performance can be quite sensitive to the choice of $\Sim$.
+
+\subsection{Matrix Factorization}
+
+Matrix Factorization methods are the \emph{de facto} approach to collaborative filtering with explicit feedback. The basic idea is to embed users and items into some shared latent space, with the aim of inferring complex preference profiles for both users and items.
+Weighted matrix factorization (WRMF) for one class collaborative filtering~\cite{Hu:2008, Pan:2009} optimizes
+\begin{equation}
+\label{eqn:wrmf}
+\min_{ \A,\B  } \sum_{ u \in \userSet, i \in \itemSet } \J_{\ui} ( \R_{\ui} - \A_{:u}^T \B_{:i} )^2 + \frac{\lambda}{2}  ( ||\A||_F^2 + ||\B||_F^2 )
+\end{equation}
+where, $\A\in\Real^{k\times m}$, $\B\in\Real^{k\times n}$, and $\J \in \Real_+^{\numUsers \times \numItems}$ is some pre-defined weighting matrix  and
+\begin{equation}
+\label{eqn:wrmf-weight}
+\J_{\ui} =  \indicator{ \R_{\ui} = 0 } + \alpha \indicator{ \R_{\ui} > 0 }
+\end{equation}
+where $\alpha$ assigns an importance weight to the observed interaction.
+WRMF uses Alternating Least Squares(ALS) method for optimization. The solution for $\A$ and $\B$ in each step of ALS is given by (\ref{eqn:ALS_A})
+%For instance, equation(~\ref{eqn:ALS_A}) gives ALS solution of $A$ at the given iteration.
+% shown in~\ref{ and vice-versa for $B$
+\begin{align}
+	\label{eqn:ALS_A}
+	\begin{split}
+	\A_{:u} = (\B^T \J^u \B + \lambda \I)^{-1} \B^T \J^u \R_{u:} \\
+	\B_{:i} = (\A^T \J^i \A + \lambda \I)^{-1} \A^T \J^i \R_{i:}
+	\end{split}
+\end{align}
+where, $\J^u \in \mathbb{R}^{n \times n}$ and $\J^i \in \mathbb{R}^{m \times m}$ are diagonal matrix such that $ \J^u_{ij} = \J_{ui}$ and  $\J^i_{uu} = \J_{ui}$. In each iteration of ALS, due to the weighting, we need to compute inverse for each user and item as shown in (\ref{eqn:ALS_A}). This makes WRMF computationally expensive compared to unweighted matrix factorization.
+
+\subsection{Linear Recommenders}
+
+Linear methods~\cite{Ning:2011, Sedhain:2016} learn the similarity metric from the data. SLIM~\citep{Ning:2011} views the recommendation as learning item-item similarity and learns an item-similarity matrix $\W \in \Real^{\numItems \times \numItems}$ via
+\begin{equation}
+\label{eqn:slim}
+\min_{ \W \in \C } || \R - \R \W ||_F^2 + \frac{\lambda}{2} || \W ||_F^2 + \mu || \W ||_1,
+\end{equation}
+where $\lambda, \mu > 0$ are appropriate constants, and
+\begin{equation}
+\label{eqn:slim-constraint}
+\C = \{ \W \in \Real^{\numItems \times \numItems} \colon \text{diag}( \W ) = 0, \W \geq 0 \}.
+\end{equation}
+Here, $|| \cdot ||_1$ denotes the elementwise $\ell_1$ norm of $\W$ so as to encourage sparsity, and the constraint $\text{diag}( \W ) = 0$ prevents a trivial solution of $\W = \id_{\numItems \times \numItems}$. SLIM is equivalent to an item-based neighbourhood approach where the similarity matrix $\Sim = \W$ is \emph{learned} from the data.
+%
+In a related linear model for OC-CF~\citep{Sedhain:2016}, the authors report very good performance, but the proposed method is computationally expensive, which restricts its applicability in real world problems.
+
+Linear methods are attractive for several reasons. They have superior performance, and unlike neighborhood methods, they adapt with the data as the parameters are learned from data itself. Furthermore, the recommendations are easily interpretable. However, linear methods can be computationally expensive as they require solving a large number of regression subproblems with a big design matrix $\R$. This can scale quadratically with the order of $\R$, or worse.
+
+
+\subsection{Randomized SVD}
+SVD is the archetypal matrix factorization algorithm and has been widely used in machine learning for dimensionality reduction. However, SVD is computationally expensive and not scalable to large scale datasets. It has been recently shown that SVD can be significantly scaled up, at a negligible cost in performance, by randomization~\citep{halko2011}. We will describe the randomized SVD algorithm in the next section, in the context of the OC-CF problem.
+
+Randomized SVD has been applied to matrix factorization \citep{Tang:2013}
+(but not in the OC-CF setting that we are considering).
+The authors compute the rank-k randomized SVD of the matrix $\R$,
+\begin{align}
+	\label{eqn:truncatedSVD}
+	\R \approx \P_k \Sig_k \Q^T_k
+\end{align}
+where, $\P_k \in \mathbb{R}^{m \times k}$, $\Q_k \in \mathbb{R}^{n \times k}$ and $\Sig_k \in \mathbb{R}^{k \times k}$. Given the truncated SVD solution, they initialize the item latent factor with the SVD solution and solve
+\begin{align} \label{eqn:I-MF-RSVD}
+\underset{\A}{\mathrm{argmin}} & \left \| \R - \A^T\B\right \|_F^2 + \lambda \left \|  \A \right \|_F^2 & \text{s.t.}\  \B = \Sig_k^{\frac{1}{2}} \Q^T_k
+\end{align}
+Similarly, if the matrix $\A$ is fixed instead of the matrix $\B$, the objective becomes
+\begin{align}
+\label{eqn:U-MF-RSVD}
+% \label{eqn:U-MF-RSVD}
+\underset{\B}{\mathrm{argmin}} & \left \| \R - \A^T\B\right \|_F^2 + \lambda \left \|  \B \right \|_F^2 & \text{s.t.}\  \A = \P_k \Sig_k^{\frac{1}{2}}
+\end{align}
+We refer to (\ref{eqn:U-MF-RSVD}) and (\ref{eqn:I-MF-RSVD}) as U-MF-RSVD and I-MF-RSVD respectively. As we will see in the results, the performance of these two models can vary significantly.
+
+
+\section{Large Scale Linear Methods for One Class Collaborative Filtering}
+Despite their superior performance, the applicability of Linear methods on real world large scale dataset are constrained by their computational cost. Linear methods involve solving  a large number of regression subproblems on a huge design matrix $\R$ making it extremely challenging on real world applications where the number of users and items is in millions.
+
+Here we propose a model and an algorithm for scaling up linear methods to large OC-CF problems.
+In particular, we are seeking an approximation $\R \approx \R \W$ that attempts to capture most of the row space of the matrix $\R$ through a matrix $\W$ that is low-rank {\em and} has small Frobenius norm. The motivation for such a double regularization is to better control the generalization error of the model, an insight that was proven correct by our experiments. Moreover, it turns out that there is a very natural and efficient way to compute such an approximate decomposition of the matrix $\R$ by randomization~\citep{halko2011}, which allows scaling to large problems.
+
+Our model amounts to solving the following optimization problem
+ \begin{align}
+\label{eqn:reg-rank}
+\underset{\mbox{\footnotesize rank}(\W) \le k}{\mathrm{argmin}} & \left \| \R - \R\W\right \|_F^2 + \lambda \left \|  \W \right \|_F^2
+\end{align}
+where, typically, $k\ \ll \ n$.
+For $\lambda = 0$, the optimal solution is given by the Eckart-Young theorem (see, e.g.,~\citep{halko2011})
+   \begin{align}
+   \label{eqn:SVDOptimal}
+   \W = \Q_k \Q_k^ T
+   \end{align}
+where  $\Q_k$ is an orthogonal matrix computed by a truncated SVD as in Equation ~\ref{eqn:truncatedSVD}.
+Similarly, if we drop the low-rank constraint in (\ref{eqn:reg-rank}), the optimal matrix $\W$ is given by the solution of a standard regression problem
+\begin{equation}
+\W = (\R^T \R + \lambda \I)^{-1} \R^T \R
+\end{equation}
+which involves the inverse of the original matrix $\R$ and therefore does not scale to large problems.
+
+However, under both a low-rank constraint and $\lambda > 0$ in (\ref{eqn:reg-rank}), finding the optimal $\W$ involves solving a hard nonconvex problem with no analytical solution in general. Nonetheless, an analytical solution is possible for a certain parametrization of $\W$ as we explain next. We first compute an approximate orthogonal basis $\Q_k$ of the row space of $\R$, i.e.,
+\begin{equation}
+\R \approx \R \Q_k \Q_k^T
+\end{equation}
+using randomized SVD. In Algorithm 1, we outline the randomized SVD algorithm(We refer to Halko et.~al~\citep{halko2011} for more details.)
+Then we re-parametrize the matrix $\W$ as
+\begin{equation}
+\W = \Q_k \Y
+\end{equation}
+for some matrix $\Y$. Note that through this parametrization the rank of $\W$ is automatically controlled, no optimality is lost when $\lambda=0$, and the optimization problem (\ref{eqn:reg-rank}) reads
+\begin{align}
+\label{eqn:i-reg-rank-low}
+\underset{\Y} {\mathrm{argmin}}  \left \| \R - \R \Q_k \Y \right \|_F^2 + \lambda \left \|  \Q_k \Y \right \|_F^2
+\end{align}
+Since $\Q_k$ is orthogonal, we have $\left \| \Q_k \Y \right \|_F = \left \|\Y\right \|_F$, and~(\ref{eqn:i-reg-rank-low}) becomes
+\begin{align}
+% \begin{split}
+\underset{\Y}{\mathrm{argmin}} \left \| \R - \R\Q_k\Y\right \|_F^2 + \lambda \left \|  \Y \right \|_F^2
+% \end{split}
+\end{align}
+The latter can be solved analytically to give
+\begin{align*}
+\Y = (\Q_k^T \R^T\R\Q_k +\lambda I)^{-1} \Q_k^T \R^T \R
+\end{align*}
+Note that this inversion involves a $k \times k$ matrix, and hence it is tractable.
+
+The choice of $\W = \Q_k \Y$ is motivated by the following observation. When $\lambda = 0$, the solution to our problem is $\W = \Q_k \Q_k^T$. This is also the solution to the new formulation of our problem for $\Y = \Q_k^T$. When $\lambda$ is close to zero, we believe that sufficiently good solutions lie close to the span of $\Q_k$. Therefore, we choose $\W = \Q_k \Y$. We demonstrate that this choice performs well empirically in the experimental section. Furthermore, \LinearLow can be seen as an autoencoder collaborative filtering model ~\cite{Sedhain:2015} with linear activation and $\Q_k$ as input-hidden weights.
+
+We refer to (\ref{eqn:i-reg-rank-low}) as I-\LinearLow as it corresponds to item-item model. Similarly, we can define a user-user model, U-\LinearLow
+\begin{align}
+\label{eqn:u-reg-rank-low}
+\underset{\Y}{\mathrm{argmin}}  \left \| \R - \Y\P_k^T\R\right \|_F^2 + \lambda \left \|  \Y \right \|_F^2
+\end{align}
+As we discussed earlier, recommending similar items is very prevalent in real-world recommender systems.
+In I-\LinearLow model, the item-item similarity is explicitly given by the matrix $\W = \Q_k \Y $.
+
+
+\begin{algorithm}
+        % \algsetup{linenosize=\tiny}
+        \small
+        \caption{Given $\textbf{R} \in \mathbb{R}^{m \times n}$, compute approximate rank-k SVD; \textbf{R} $\approx$ $\textbf{P}_\textbf{k} \mathbf{\Sigma}_k \textbf{Q}_k$}
+        \label{algo:RSVD}
+        \begin{algorithmic}[1]
+
+        \Procedure{RSVD}{\textbf{R}, k}
+        \State Draw $n\times k$ Gaussian random matrix $\mathbf{\Omega}$
+        \State Construct $n\times k$ sample matrix $\mathbf{A} = \mathbf{R}\mathbf{\Omega}$
+        \State Construct $m\times k$ orthonormal matrix $\mathbf{Z}$, such that $\mathbf{A}  = \mathbf{Z}\mathbf{X}$
+        \State Constuct $k\times n$ matrix $\mathbf{B} = \mathbf{Z}^T\mathbf{R}$
+        \State Compute the SVD of $\mathbf{B}$, $\mathbf{B}$ =  $\hat{\mathbf{P}_k} \mathbf{\Sigma}_k \mathbf{Q}_k$
+        \State Compute $\mathbf{P}_k$ =  $ \mathbf{Z} \hat{\mathbf{P}_k}$
+        \State return ($\mathbf{P}_k,\ \mathbf{\Sigma}_k,\ \mathbf{Q}_k$)
+        % \State  $\mathbf{R} \Rightarrow \mathbf{Z}\mathbf{B} \Rightarrow \mathbf{Z} \hat{\mathbf{P}_k} \mathbf{\Sigma}_k \mathbf{Q}_k \Rightarrow  \mathbf{P}_k \mathbf{\Sigma}_k \mathbf{Q}_k \\ ;\ \mathbf{P}_k = \mathbf{Z} \hat{\mathbf{P}_k}$
+        % \State return $P_k \Sigma_k Q_k$
+        \EndProcedure
+        \end{algorithmic}
+\end{algorithm}
+
+
+\section{Experiment and Evaluation}
+
+We now present an extensive set of experiments
+where we compare the recommendation performance of the proposed method and the all the baselines described under Section 2 on several real-world datasets.
+\subsection{Datasets}
+For quantitative evaluation, we used two publicly available datasets and two proprietary datasets. In all of our datasets, we remove users with fewer
+that 3 corresponding items and vice-versa. Table \ref{tbl:datasets} summarizes statistics of the 4 datasets and they are desscribed in details below.
+
+\begin{table}
+	\centering
+	\caption{Summary of datasets used in evaluation.}
+	\label{tbl:datasets}
+
+	\begin{tabular}{llll}
+	\toprule
+	\toprule
+	\textbf{Dataset} & $\numUsers$ & $\numItems$ & $ | \R_{\ui} > 0 | $ \\
+	\toprule
+	\MLens  & 69,613 & 9,405 & 5,004,150 \\
+	\LastFM & 992 & 88,428 & 800,274\\
+	\Guitar & 26,928 & 14,399 & 120,268 \\
+	\Lowes & 264,054 & 57,214 & 1,398,332 \\
+	\bottomrule
+	\end{tabular}
+\end{table}
+
+\MLens The MovieLens 10M dataset\footnote{\scriptsize \url{http://grouplens.org/datasets/movielens/}} is a standard benchmark for collaborative filtering tasks.
+Following the ``Who Rated What'' KDD Cup 2007 challenge \citep{Bennett:2007}, we created a binarized version of the dataset suitable for evaluating implicit feedback methods.
+From the original rating matrix $\tilde\R \in \{ 0, 1, \ldots, 5 \}^{\numUsers \times \numItems}$, we created a binarized preference matrix $\R$ with $R_{\ui} = \indicator{\tilde{\R}_{\ui} \geq 4}$.
+
+\LastFM The LastFM dataset\footnote{{\scriptsize \url{http://ocelma.net/MusicRecommendationDataset/index.html}}} \citep{Celma:2008} contains the play counts of $\sim$1000 users on $\sim$170,000 artists. As per \MLens we binarized the raw play counts.
+
+
+\Guitar \& \Lowes  are two real but anonymized purchase datasets.
+\Guitar \ dataset consists of $\sim$27,000 users, $\sim$14,000 items and $\sim$120,000 item purchases. Similarly, \Lowes \ dataset consists of $\sim$264,000 users, $\sim$57,000 items and $\sim$1 million item purchases.
+
+\subsection{Evaluation Protocol}
+We split the datasets into random $90\%$-$10\%$ train-test set and hold out $10\%$ of the training set for hyperparamater tuning. We report the mean test split performance, along with standard errors corresponding to 95\% confidence intervals.
+To evaluate the performance of the various recommenders, we report \textsf{precision@k} and \textsf{recall@k} for $k \in \{ 3, 5, 10, 20 \}$ (averaged over test users), and mean average precision (mAP@20).
+
+
+\subsection{Methods compared}
+
+We compared the proposed method to a number of baselines:
+\begin{compactitem}
+
+	\item User- and item-based nearest neighbour (U-KNN and I-KNN). For each dataset, we use Jaccard and Cosine similarity metric and  picked the best performing one.
+
+	\item PureSVD of \citet{Cremonesi:2010}. Instead of exact SVD, we use randomized SVD for efficiency.
+
+	\item Weighted matrix Factorization (WRMF) as defined in Eq. (\ref{eqn:wrmf}).
+
+	\item MF-RSVD of \citet{Tang:2013}.  We ran this method with user and item based initialization, U-MF-RSVD  and I-MF-RSVD, as discussed in Eq. (\ref{eqn:U-MF-RSVD}) and (\ref{eqn:I-MF-RSVD}) respectively.
+	\item SLIM, as per Eq. (\ref{eqn:slim}). For computational convenience, we used the SGDReg variant \citep{Levy:2013}, which is identical to SLIM  except that the nonnegativity constraint is removed. We did not evaluate SLIM with nonnegativity directly as~\citet{Levy:2013} reports superior performance to SLIM, and is considerably faster to train.
+\end{compactitem}
+We do not compare against LRec~\citep{Sedhain:2016} due to its memory complexity on a large dataset. For instance on the \Lowes dataset, LRec requires $\sim$260GB of memory.
+
+\hspace{-5em}
+\subsection{Performance Evaluation}
+
+Tables \ref{tbl:guitar-results} -- \ref{tbl:ml10m-results} summarize the results of our methods and the various baselines.
+The results demonstrate that in terms of the quality of recommendation, the linear methods (\LinearLow and SLIM) always outperform other methods
+in all four datasets. \LinearLow and SLIM perform equally well and there is little separation between them in terms of the quality of
+the recommendation. However, as we will show in section~\ref{section:scalability}, \LinearLow is much more efficient than SLIM.
+Also, unlike other methods, the performance of \LinearLow is not very sensitive to the choice of user or item based formulation.
+%Furthermore, it consistently outperforms other baselines on all four datasets.
+%\LinearLow is very competitive with SLIM and has much less computational footprint which we will discuss in
+%\LinearLow is very competitive with SLIM and consistently outperforms other baselines on all four datasets.
+
+From these tables, we make the following additional observations:
+\begin{compactitem}
+
+%In our experiments
+ % beyond with the number of projection dimension whereas \WRMF figure~\ref{fig:dimensionPerformance}, we observe that the performance of the \LinearLow method improves with the number of the projection dimensions.
+\item Among the matrix factorization methods, those that use Randomized SVD~\citep{Tang:2013} consistently performs the best. This is possibly due to the fact that SVD provides a good initialization
+% and the optimization finds the optimal solution for the given initialization,
+whereas matrix factorization optimizes a highly nonconvex bilinear objective and is sensitive to the initialization and hyperparameters. In Table~\ref{tbl:guitar-results} -- \ref{tbl:lfm-results}, we observe that the performance of MF-RSVD varies significantly based on whether we initialize user or item latent factors. Also, the factorization methods do not directly provide item-to-item or user-to-user similarity measures, hence are not applicable
+when a recommendation of similar items or users is needed.
+\item We observe that the neighborhood models yield inferior results compared to the Linear models. Also, the performance varies with the user and item based models. While they perform comparatively competitive in \Lowes\ and \Guitar\ dataset, they perform poorly in \LastFM\ and \MLens\ dataset. Hence, we conclude that neighborhood methods are not consistent in their performance.
+\end{compactitem}
+%[TODO: DO WE STILL KEEP THIS?]Furthermore, in Figure~\ref{fig:dimensionPerformance}, we compare the performance of \LinearLow model, namely I-Linear-FLow, and WRMF with the number of the dimensions. We observe that the performance of \LinearLow improves steadily with the dimensionality of projection, but with diminishing returns. However, performance of WRMF improves initially with the number of dimensions and then starts to decrease possibly due to overfitting.
+%\begin{figure}[!ht]
+%  \centering
+%    \includegraphics[width=0.5\textwidth]{imgs/wrmf_lowlinear_vs_dim_larger_font}
+%  \caption{Variation of performance of I-\LinearLow and WRMF with the number of dimensions on \Guitar dataset.}
+%  \label{fig:dimensionPerformance}
+%
+%\end{figure}
+\begin{table*} [!htb]
+\centering
+\caption{Results on the \Guitar\ dataset. Reported numbers are the mean and standard errors across test folds.}
+\label{tbl:guitar-results}
+\sisetup{round-mode=places,round-precision=4}
+\setlength{\arrayrulewidth}{.2em}
+\resizebox{\textwidth}{!}{%
+	\begin{tabular}{l|llll|llll|l}
+
+		\hline
+		& prec@3 & prec@5 & prec@10 & prec@20 & recall@3 & recall@5 & recall@10 & recall@20 & mAP@20 \\
+		\hline
+		I-KNN & \num{0.0392946} $\pm$ \num{0.000740131}&\num{0.0290698} $\pm$ \num{0.000481972}&\num{0.0186035} $\pm$ \num{0.000183558}&\num{0.0114972} $\pm$ \num{0.000173495}&\num{0.0796737} $\pm$ \num{0.00114575}&\num{0.0972945} $\pm$ \num{0.0015189}&\num{0.123216} $\pm$ \num{0.00211853}&\num{0.152093} $\pm$ \num{0.00282882}&\num{0.0724802} $\pm$ \num{0.000847599} \\
+
+		U-KNN & \num{0.0513834} $\pm$ \num{0.000833489}&\num{0.0385951} $\pm$ \num{0.00053828}&\num{0.0248887} $\pm$ \num{0.000286595}&\num{0.0153466} $\pm$ \num{0.000131545}&\num{0.106753} $\pm$ \num{0.00353486}&\num{0.132133} $\pm$ \num{0.00367855}&\num{0.167949} $\pm$ \num{0.00294863}&\num{0.205186} $\pm$ \num{0.00361786}&\num{0.096853} $\pm$ \num{0.00327844}\\
+		\hline
+		PureSVD &\num{0.0376449} $\pm$ \num{0.00127358}&\num{0.0266772} $\pm$ \num{0.00089595}&\num{0.0160128} $\pm$ \num{0.000489187}&\num{0.00935938} $\pm$ \num{0.000274969}&\num{0.077575} $\pm$ \num{0.0018074}&\num{0.0905975} $\pm$ \num{0.00178722}&\num{0.10729} $\pm$ \num{0.00259282}&\num{0.124735} $\pm$ \num{0.00303375}&\num{0.0691732} $\pm$ \num{0.0022488}\\
+
+		WRMF & \num{0.0397423} $\pm$ \num{0.000829807}&\num{0.0292538} $\pm$ \num{0.00130488}&\num{0.0182918} $\pm$ \num{0.000777345}&\num{0.0112631} $\pm$ \num{0.000355525}&\num{0.0787259} $\pm$ \num{0.00205237}&\num{0.0955262} $\pm$ \num{0.00466977}&\num{0.118577} $\pm$ \num{0.00454186}&\num{0.146652} $\pm$ \num{0.00373931}&\num{0.0707377} $\pm$ \num{0.00250011}\\
+
+
+		 U-MF-RSVD & \num{0.0503115} $\pm$ \num{0.000706483}&\num{0.0380556} $\pm$ \num{0.000409447}&\num{0.024716} $\pm$ \num{0.000295929}&\num{0.0154737} $\pm$ \num{0.000138579}&\num{0.100346} $\pm$ \num{0.00244466}&\num{0.130098} $\pm$ \num{0.00172624}&\num{0.169269} $\pm$ \num{0.
+		 00324593}&\num{0.206917} $\pm$ \num{0.00388295}&\num{0.096142} $\pm$ \num{0.00256307}\\
+
+		 I-MF-RSVD &  \num{0.048024} $\pm$ \num{0.00101945}&\num{0.0360405} $\pm$ \num{0.000795975}&\num{0.0233964} $\pm$ \num{0.00040994}&\num{0.0143542} $\pm$ \num{0.000205676}&\num{0.0975785} $\pm$ \num{0.00295556}&\num{0.12106} $\pm$ \num{0.00333514}&\num{0.15495} $\pm$ \num{0.00377634}&\num{0.188591} $\pm$ \num{0.00370206}&\num{0.088872} $\pm$ \num{0.00298146}\\
+		 \hline
+		 SLIM & \textbf{\num{0.05193}} $\pm$ \textbf{\num{0.000993329}} &\num{0.0394536} $\pm$ \num{0.000446818}&\num{0.0258101} $\pm$ \num{0.000370669}&\num{0.0159822} $\pm$ \num{0.000179519}& \textbf{\num{0.106891}} $\pm$ \textbf{\num{0.00336095}} & \num{0.134075} $\pm$ \num{0.00263189}&\num{0.172917} $\pm$ \num{0.00393006}&\num{0.211739} $\pm$ \num{0.00334752}& \textbf{\num{0.0976171}} $\pm$ \textbf{\num{0.00285635}}\\
+
+		U-\LinearLow &  \num{0.0517661} $\pm$ \num{0.0013236}&\num{0.039076} $\pm$ \num{0.000453008}&\num{0.0259077} $\pm$ \num{0.000359636}&\num{0.0160148} $\pm$ \num{0.000156205}&\num{0.106044} $\pm$ \num{0.00354247}&\num{0.134986} $\pm$ \num{0.00321575}&\num{0.171069} $\pm$ \num{0.00256121}&\num{0.21182} $\pm$ \num{0.00287904}&\num{0.0970373} $\pm$ \num{0.00295675}\\
+
+		I-\LinearLow &  \num{0.0519634} $\pm$ \num{0.00118221}& \textbf{\num{0.0398248}} $\pm$ \textbf{\num{0.000395405}}&\textbf{\num{0.0261965}} $\pm$ \textbf{\num{0.00029752}}&\textbf{\num{0.0162194}} $\pm$ \textbf{\num{0.000176304}} &\num{0.106225} $\pm$ \num{0.00318998}&\textbf{\num{0.136158}} $\pm$ \textbf{\num{0.00263693}}& \textbf{\num{0.175846}} $\pm$ \textbf{\num{0.00259154}}&\textbf{\num{0.21445}} $\pm$ \textbf{\num{0.00329417}}&\num{0.0971399} $\pm$ \num{0.00278328} \\
+
+
+		\hline
+	\end{tabular}
+}
+
+\end{table*}
+
+\begin{table*}[!htb]
+
+\centering
+\caption{Results on the \Lowes\ dataset. Reported numbers are the mean and standard errors across test folds.}
+\label{tbl:lowes-results}
+\sisetup{round-mode=places,round-precision=4}
+\setlength{\arrayrulewidth}{.2em}
+\resizebox{\textwidth}{!}{%
+	\begin{tabular}{l|llll|llll|l}
+		\hline
+		& prec@3 & prec@5 & prec@10 & prec@20 & recall@3 & recall@5 & recall@10 & recall@20 & mAP@20 \\
+		\hline
+
+		I-KNN& \num{0.0873112} $\pm$ \num{0.000312328}&\num{0.0641096} $\pm$ \num{0.000188717}&\num{0.039968} $\pm$ \num{2.497e-05}&\num{0.0236268} $\pm$ \num{2.21553e-05}&\num{0.174334} $\pm$ \num{0.000475527}&\num{0.209725} $\pm$ \num{0.000734376}&\num{0.25655} $\pm$ \num{0.000656016}&\num{0.298203} $\pm$ \num{0.000780293}&\num{0.159084} $\pm$ \num{0.000744553}\\
+
+		U-KNN & \num{0.083615} $\pm$ \num{0.000543698}&\num{0.0604791} $\pm$ \num{0.000315813}&\num{0.0365057} $\pm$ \num{0.000158705}&\num{0.0207183} $\pm$ \num{7.63958e-05}&\num{0.171068} $\pm$ \num{0.00114767}&\num{0.202927} $\pm$ \num{0.0013022}&\num{0.240684} $\pm$ \num{0.00133084}&\num{0.269529} $\pm$ \num{0.00139324}&\num{0.153226} $\pm$ \num{0.000677742} \\
+		\hline
+		WRMF & \num{0.0579444} $\pm$ \num{0.000533736}&\num{0.0436854} $\pm$ \num{0.000351719}&\num{0.0283301} $\pm$ \num{0.000132275}&\num{0.0174794} $\pm$ \num{8.66821e-05}&\num{0.114509} $\pm$ \num{0.00127688}&\num{0.141715} $\pm$ \num{0.00145374}&\num{0.180057} $\pm$ \num{0.00123648}&\num{0.218382} $\pm$ \num{0.00118803}&\num{0.105296} $\pm$ \num{0.00113906}\\
+
+		PureSVD& \num{0.0334664} $\pm$ \num{0.000371735}&\num{0.0243872} $\pm$ \num{0.000219215}&\num{0.0153198} $\pm$ \num{0.000192711}&\num{0.00940457} $\pm$ \num{9.78628e-05}&\num{0.0686033} $\pm$ \num{0.000613791}&\num{0.0822981} $\pm$ \num{0.000496161}&\num{0.101772} $\pm$ \num{0.000929943}&\num{0.123281} $\pm$ \num{0.000963618}&\num{0.0624199} $\pm$ \num{0.000409779}\\
+
+		U-MF-RSVD & \num{0.0698511} $\pm$ \num{0.000264063}&\num{0.0501735} $\pm$ \num{0.000168695}&\num{0.0305234} $\pm$ \num{6.92086e-05}&\num{0.0178093} $\pm$ \num{2.44251e-05}&\num{0.140823} $\pm$ \num{0.000744449}&\num{0.166043} $\pm$ \num{0.000756267}&\num{0.198482} $\pm$ \num{0.000496204}&\num{0.228237} $\pm$ \num{0.000372687}&\num{0.127657} $\pm$ \num{0.000605505}\\
+
+		I-MF-RSVD & \num{0.0879546} $\pm$ \num{0.000309565}&\num{0.0652340} $\pm$ \num{0.000125627}&\num{0.0408385} $\pm$ \num{6.59647e-05}&\num{0.024174} $\pm$ \num{3.46969e-05}&\num{0.17195} $\pm$ \num{0.000819305}&\num{0.219902} $\pm$ \num{0.000784415}&\num{0.268505} $\pm$ \num{0.000951328}&\num{0.320267} $\pm$ \num{0.00109792}&\num{0.158156} $\pm$ \num{0.000535714}\\
+
+		\hline
+
+		SLIM & \textbf{\num{0.0893233}} $\pm$ \textbf{\num{0.000368188}} & \textbf{\num{0.067148}} $\pm$ \textbf{\num{0.000265703}} & \textbf{\num{0.0432961}} $\pm$ \textbf{\num{9.56e-05}} & \textbf{\num{0.0264457}} $\pm$ \textbf{\num{4.35806e-05}} & \textbf{\num{0.179554}} $\pm$ \textbf{\num{0.00102426}} & \textbf{\num{0.221297}} $\pm$ \textbf{\num{0.00131012}} & \textbf{\num{0.27899}} $\pm$ \textbf{\num{0.00123667}} & \textbf{\num{0.333619}} $\pm$ \textbf{\num{0.000853983}} &\textbf{\num{0.165406}} $\pm$ \textbf{\num{0.000567257}}\\
+
+		U-\LinearLow & \num{0.0887046} $\pm$ \num{0.000360732}&\num{0.0665582} $\pm$ \num{0.000216048}&\num{0.0430431} $\pm$ \num{8.65977e-05}&\num{0.0258449} $\pm$ \num{4.08943e-05}&\num{0.176274} $\pm$ \num{0.00116389}&\num{0.221449} $\pm$ \num{0.00103377}&\num{0.273932} $\pm$ \num{0.00128104}&\num{0.328884} $\pm$ \num{0.000962716}&\num{0.161136} $\pm$ \num{0.000796471} \\
+
+		I-\LinearLow & \num{0.088546} $\pm$ \num{0.000313667}&\num{0.0655582} $\pm$ \num{0.000184367}&\num{0.0428563} $\pm$ \num{8.65977e-05}&\num{0.0256449} $\pm$ \num{4.08943e-05}&\num{0.178274} $\pm$ \num{0.00116389}&\num{0.22019} $\pm$ \num{0.00115512}&\num{0.271932} $\pm$ \num{0.00098104}&\num{0.325884} $\pm$ \num{0.000962716}&\num{0.1598136} $\pm$ \num{0.00060563}\\
+
+		\hline
+	\end{tabular}
+}
+
+\end{table*}
+
+\begin{table*}[!htb]
+
+\centering
+\caption{Results on the \LastFM\ dataset. Reported numbers are the mean and standard errors across test folds.}
+\label{tbl:lfm-results}
+\sisetup{round-mode=places,round-precision=4}
+\setlength{\arrayrulewidth}{.2em}
+\resizebox{\textwidth}{!}{%
+	\begin{tabular}{l|llll|llll|l}
+		\hline
+		& prec@3 & prec@5 & prec@10 & prec@20 & recall@3 & recall@5 & recall@10 & recall@20 & mAP@20 \\
+		\hline
+
+		I-KNN & \num{0.590416} $\pm$ \num{0.00681256}&\num{0.560014} $\pm$ \num{0.00665502}&\num{0.506819} $\pm$ \num{0.005335}&\num{0.439033} $\pm$ \num{0.00544237}&\num{0.0186925} $\pm$ \num{0.000409293}&\num{0.0284457} $\pm$ \num{0.00019801}&\num{0.0496602} $\pm$ \num{0.000725893}&\num{0.0824128} $\pm$ \num{0.00162769}&\num{0.328037} $\pm$ \num{0.00545731}\\
+
+		U-KNN & \num{0.54343} $\pm$ \num{0.0082815}&\num{0.512716} $\pm$ \num{0.00379193}&\num{0.461895} $\pm$ \num{0.00435141}&\num{0.400865} $\pm$ \num{0.00279941}&\num{0.0168885} $\pm$ \num{0.000401477}&\num{0.0260217} $\pm$ \num{0.00109202}&\num{0.0448487} $\pm$ \num{0.00107688}&\num{0.0747077} $\pm$ \num{0.00137005}&\num{0.289443} $\pm$ \num{0.0028557}\\
+		\hline
+		WRMF& \num{0.627733} $\pm$ \num{0.00706182}&\num{0.589904} $\pm$ \num{0.0048549}&\num{0.530787} $\pm$ \num{0.00494584}&\num{0.457678} $\pm$ \num{0.0031882}&\num{0.0198242} $\pm$ \num{0.000626489}&\num{0.0300178} $\pm$ \num{0.00092226}&\num{0.0515797} $\pm$ \num{0.00145554}&\num{0.0842257} $\pm$ \num{0.00128816}&\num{0.356239} $\pm$ \num{0.00356279}\\
+
+		PureSVD& \num{0.399314} $\pm$ \num{0.0121106}&\num{0.368972} $\pm$ \num{0.00820293}&\num{0.332126} $\pm$ \num{0.00686075}&\num{0.288016} $\pm$ \num{0.00694973}&\num{0.0128221} $\pm$ \num{0.000343921}&\num{0.0193537} $\pm$ \num{0.000436219}&\num{0.0338005} $\pm$ \num{0.000558837}&\num{0.0566592} $\pm$ \num{0.00184532}&\num{0.1723} $\pm$ \num{0.0064526}\\
+
+
+		U-MF-RSVD & \num{0.517611} $\pm$ \num{0.00420094}&\num{0.486515} $\pm$ \num{0.00679594}&\num{0.442329} $\pm$ \num{0.00284252}&\num{0.385893} $\pm$ \num{0.00379811}&\num{0.0141313} $\pm$ \num{0.000466199}&\num{0.0216847} $\pm$ \num{0.000816839}&\num{0.0387367} $\pm$ \num{0.000486377}&\num{0.065261} $\pm$ \num{0.00125401}&\num{0.28104} $\pm$ \num{0.00232539} \\
+
+		I-MF-RSVD & \num{0.577999} $\pm$ \num{0.00634419}&\num{0.544735} $\pm$ \num{0.00495392}&\num{0.490102} $\pm$ \num{0.00113919}&\num{0.423595} $\pm$ \num{0.00294237}&\num{0.0189928} $\pm$ \num{0.000802407}&\num{0.0291943} $\pm$ \num{0.000617191}&\num{0.0496356} $\pm$ \num{0.00111173}&\num{0.0810641} $\pm$ \num{0.000883613}&\num{0.31458} $\pm$ \num{0.00199473}\\
+
+		\hline
+
+		SLIM & \textbf{\num{0.631921}} $\pm$ \textbf{\num{0.00688652}} & \textbf{\num{0.600204}} $\pm$ \textbf{\num{0.00547024}} & \textbf{\num{0.538391}} $\pm$ \textbf{\num{0.00483142}} & \num{0.463855} $\pm$ \num{0.00564272}& \textbf{\num{0.0222616}} $\pm$ \textbf{\num{0.000640118}} & \textbf{\num{0.0345738}} $\pm$ \textbf{\num{0.000432309}} & \textbf{\num{0.0592139}} $\pm$ \textbf{\num{0.000665128}} & \textbf{\num{0.0971651}} $\pm$ \textbf{\num{0.00172048}} & \num{0.358657} $\pm$ \num{0.00648519}\\
+
+		U-\LinearLow & \num{0.622872} $\pm$ \num{0.00808055}&\num{0.591173} $\pm$ \num{0.00669141}&\num{0.533685} $\pm$ \num{0.00267285}&\num{0.462653} $\pm$ \num{0.00200248}&\num{0.0205295} $\pm$ \num{0.00088446}&\num{0.031471} $\pm$ \num{0.00136713}&\num{0.0540013} $\pm$ \num{0.000374292}&\num{0.0881041} $\pm$ \num{0.00104606}&\num{0.356342} $\pm$ \num{0.0024981} \\
+
+		I-\LinearLow & \num{0.622936} $\pm$ \num{0.0103349}&\num{0.591295} $\pm$ \num{0.00457034}&\num{0.533744} $\pm$ \num{0.00213843}& \textbf{\num{0.465254}} $\pm$ \textbf{\num{0.00230385}} & \num{0.0202518} $\pm$ \num{0.00113334}&\num{0.0309846} $\pm$ \num{0.0010114}&\num{0.0529278} $\pm$ \num{0.000586952}&\num{0.0874401} $\pm$ \num{0.00151923}&\textbf{\num{0.361476}} $\pm$ \textbf{\num{0.00135615}} \\
+
+
+		\hline
+	\end{tabular}
+}
+\end{table*}
+
+\begin{table*}[!htb]
+\centering
+\caption{Results on the \MLens \ dataset. Reported numbers are the mean and standard errors across test folds.}
+\label{tbl:ml10m-results}
+\sisetup{round-mode=places,round-precision=4}
+\setlength{\arrayrulewidth}{.2em}
+\resizebox{\textwidth}{!}{%
+	\begin{tabular}{l|llll|llll|l}
+		\hline
+		& prec@3 & prec@5 & prec@10 & prec@20 & recall@3 & recall@5 & recall@10 & recall@20 & mAP@20 \\
+		\hline
+		I-KNN & \num{0.175295} $\pm$ \num{0.00106952}&\num{0.150609} $\pm$ \num{0.00094119}&\num{0.117895} $\pm$ \num{0.000588135}&\num{0.0882615} $\pm$ \num{0.000277381}&\num{0.0994175} $\pm$ \num{0.000436698}&\num{0.139251} $\pm$ \num{0.000863745}&\num{0.212073} $\pm$ \num{0.00122592}&\num{0.306992} $\pm$ \num{0.0011675}&\num{0.121597} $\pm$ \num{0.000341949}\\
+		U-KNN & \multicolumn{9}{c}{Out of Memory} \\
+		\hline
+		WRMF& \num{0.183177} $\pm$ \num{0.000717378}&\num{0.156148} $\pm$ \num{0.000608973}&\num{0.120461} $\pm$ \num{0.000227475}&\num{0.0888908} $\pm$ \num{0.000191351}&\num{0.102434} $\pm$ \num{0.000341573}&\num{0.142791} $\pm$ \num{0.00079676}&\num{0.213899} $\pm$ \num{0.000900389}&\num{0.306102} $\pm$ \num{0.000965358}&\num{0.125477} $\pm$ \num{0.000306481}\\
+		PureSVD& \num{0.121602} $\pm$ \num{0.00130405}&\num{0.105352} $\pm$ \num{0.000630497}&\num{0.0835721} $\pm$ \num{0.00051333}&\num{0.0634407} $\pm$ \num{0.000190345}&\num{0.0729778} $\pm$ \num{0.00135302}&\num{0.103025} $\pm$ \num{0.00112297}&\num{0.157163} $\pm$ \num{0.000933525}&\num{0.226441} $\pm$ \num{0.00108551}&\num{0.0835647} $\pm$ \num{0.00104866}\\
+		U-MF-RSVD & \num{0.222923} $\pm$ \num{0.000720948}&\num{0.189479} $\pm$ \num{0.000693553}&\num{0.145598} $\pm$ \num{0.000755357}&\num{0.1069} $\pm$ \num{0.000389999}&\num{0.127299} $\pm$ \num{0.000347369}&\num{0.175504} $\pm$ \num{0.000534452}&\num{0.259163} $\pm$ \num{0.00140552}&\num{0.365583} $\pm$ \num{0.0018449}&\num{0.158626} $\pm$ \num{0.000496512}\\
+		I-MF-RSVD &\num{0.223153} $\pm$ \num{0.000891741}&\num{0.190154} $\pm$ \num{0.000992553}&\num{0.146148} $\pm$ \num{0.0004936}&\num{0.102704} $\pm$ \num{0.000366158}&\num{0.124622} $\pm$ \num{0.000675105}&\num{0.174479} $\pm$ \num{0.00103911}&\num{0.260198} $\pm$ \num{0.000789582}&\num{0.367512} $\pm$ \num{0.00172003}&\num{0.159046} $\pm$ \num{0.000668585}\\
+		\hline
+		SLIM & \num{0.220762} $\pm$ \num{0.0011295}&\num{0.188849} $\pm$ \num{0.00108041}&\num{0.146434} $\pm$ \num{0.000411703}&\num{0.107985} $\pm$ \num{0.000422922}&\num{0.125832} $\pm$ \num{0.000297234}&\num{0.174751} $\pm$ \num{0.00123935}&\num{0.261108} $\pm$ \num{0.000859885}&\num{0.36903} $\pm$ \num{0.00160871}&\num{0.157878} $\pm$ \num{0.000725628}\\
+
+		U-\LinearLow & \textbf{\num{0.226995}} $\pm$ \textbf{\num{0.00118303} }& \textbf{\num{0.192692}} $\pm$ \textbf{\num{0.000863619}} & \textbf{\num{0.147724}} $\pm$ \textbf{\num{0.000644332}} & \textbf{\num{0.108314}} $\pm$ \textbf{\num{0.000379042}} & \textbf{\num{0.129017}} $\pm$ \textbf{\num{0.00043998} }& \textbf{\num{0.177729}} $\pm$ \textbf{\num{0.000842416}} & \textbf{\num{0.262384}} $\pm$ \textbf{\num{0.00131329} }& \textbf{\num{0.370079}} $\pm$ \textbf{\num{0.00160711} }& \textbf{\num{0.160144}} $\pm$ \textbf{\num{0.000564101}}\\
+
+		I-\LinearLow&\num{0.224153} $\pm$ \num{0.000891741}&\num{0.190854} $\pm$ \num{0.000992553}&\num{0.146848} $\pm$ \num{0.0004936}&\num{0.107704} $\pm$ \num{0.000366158}&\num{0.127622} $\pm$ \num{0.000675105}&\num{0.176479} $\pm$ \num{0.00103911}&\num{0.260898} $\pm$ \num{0.000789582}&\num{0.367572} $\pm$ \num{0.00172003}&\num{0.159246} $\pm$ \num{0.000668585}\\
+		\hline
+		% \hline
+	\end{tabular}
+}
+\end{table*}
+
+
+\subsection{Runtime Evaluation}
+\label{section:scalability}
+
+\begin{table}[!htb]
+\caption{Training times of various methods on  \Lowes  and \MLens Dataset.}
+\label{tbl:runtime_lowes}
+\centering
+\resizebox{0.35\textwidth}{!}{%
+	\begin{tabular}{l|l|l}
+	\toprule
+	\toprule
+	 & \Lowes & \MLens\\
+	\hline
+	I-KNN & 2.5 sec & 10.7 sec\\
+	U-KNN & 46.9 sec & - \\
+	PureSVD & 3 min & 1 min 27 sec\\
+	WRMF & 27 min 3 sec & 12 min 38 sec \\
+	U-MF-SVD &  3 min 10 sec & 1 min 38 sec\\
+	I-MF-SVD & 3 min 8 sec & 1 min 39 sec \\
+	SLIM  & 32 min 37 sec  & 7 min 40 sec\\
+	U-LRec-Low & 3 min 27 sec & 1 min 44 sec\\
+	I-Lrec-Low & 3 min 32 sec & 1 min 42 sec \\
+	\hline
+	\end{tabular}
+}
+\end{table}
+
+To compare the training efficiency of the various algorithms, we choose \Lowes and \MLens, the two largest datasets for analysis.
+%our largest dataset i.e. \Lowes\ in terms of users and items.
+%To compare the runtime of the various algorithm, we choose \Lowes, the largest dataset in terms of users and items.
+We benchmarked the training time of the algorithms
+by training the model on  workstation with 128 GB of main memory and Intel(R) Xeon(R) CPU E5-2650 v2 @ 2.60GHz with 32 cores. All of the methods exploit multi-core enabled via numpy linear algebra library, whereas SLIM and WRMF attains parallelism via multiprocessing. For a fair comparison, we ran  SLIM and WRMF in parallel to use all available cores.  In Table~\ref{tbl:runtime_lowes} we compare the runtime of the proposed method with the baseline methods.
+
+The results demonstrate that while \LinearLow offers the same quality of recommendation as SLIM, its training time is an order-of-magnitude
+faster than SLIM.  SLIM is computationally expensive and is the slowest among the baselines.
+Neighborhood methods are computationally cheap as they only involve sparse linear algebra, however as demonstrated previously, their recommendation
+quality is not consistent and lacking behind the other methods.
+For factorization approaches, those that use randomized SVD has similar computational footprints as \LinearLow while
+WRMF is much more computationally expensive.
+
+
+\subsection{Qualitative Analysis of Learned Similarities}
+In this section, we provide a qualitative evaluation of the item-item similarities learned by our I-\LinearLow model.
+We use \Fotolia, a dataset from a major stock image market site\footnote{\scriptsize The dataset sharing agreement with the provider restricts us from reporting the statistics and quantitative results. Hence, we do not report summary statistics and quantitative results on this dataset}.
+The data provides whether a given user has clicked on a particular image category, and from these our model can infer the similarity measure between
+the image categories. Note that the similarity is inferred solely based on the click patterns, without doing any analysis of the textual content of
+the category names.
+We choose this dataset for the qualitative evaluation mainly because the items are category names and are much easier to interpret
+compared to the other datasets.
+
+
+
+
+
+% users clicks on various image categories.
+% Since the similarity metric is an important aspect of personalization, we evaluate the item-item similarities learned by I-\LinearLow  model on the \Fotolia dataset.
+
+In Table~\ref{tbl:similarity-evaluation}, we show some examples~\footnote{\scriptsize https://drive.google.com/file/d/0B-0mTXCErInJdVRmVzFaaUY3Tjg/view Download and view it in a browser for an interactive exploration of learned item-item similarities.} of top-5 similar items learned by I-\LinearLow model. We observe that the model
+discovers meaningful and explainable similarities, hence making it very applicable in similar item recommendations.
+\begin{table*}[!htb]
+	\centering
+	\caption{Top-5 similar items learned by I-\LinearLow model.}
+	\label{tbl:similarity-evaluation}
+	\setlength{\arrayrulewidth}{.2em}
+	\resizebox{0.85\textwidth}{!}{%
+		% \begin{tabular}{llllllll}
+		\begin{tabular}{lp{1.3in}p{1.3in}p{1.3in}p{1.3in}p{1.3in}p{1.3in}}
+		% \hline
+		\hline
+		\textbf{Item} & Chemistry & Chilling out & Workers & Unemployment & Divorce and Conflict & Museums\\
+		\hline
+		\multirow{5}{*}{\textbf{Similar items}} & Test and Analysis & Beach Holidays & Construction & Job Search & Depression & Painting \\
+		& Drug and Pills & Tourism & Teamwork & Tax and Accounting & Getting upset & Statues\\
+		& Health Care & Relaxing & Manufacturing & Breaking the law & Crying & Artistic monuments\\
+		& Scientists & Hiking & Service industry & Money & Loneliness & Paris\\
+		& Medical Equipments& Consumer service & Beaches& Workers&  Rage & Italy\\
+		\hline
+		\end{tabular}
+		}
+
+		\resizebox{0.85\textwidth}{!}{%
+
+		% \begin{tabular}{lllllllll}
+		% \hline
+		\begin{tabular}{lp{1.3in}p{1.3in}p{1.3in}p{1.3in}p{1.3in}p{1.3in}}
+
+		\hline
+		\textbf{Item} & Dance & Vinegar & Pearls & Graduation& Aging & Homelessness \\
+		\hline
+		\multirow{5}{*}{\textbf{Similar items}} & Exercise & Olive Oil & Wealth & High School & Patients & Depression \\
+		& Running And Jumping & Spice & Wedding & School & Grand Parenting & Loneliness\\
+		& Disco And Clubs & Salads & Accessories & Exams & Disability & Crying \\
+		& Circus And Performing & Garlic & Gold & Job Search & Health Care& Getting Upset\\
+		& Gymnastics & other & Make Up& E-Learning& Doctors & Risk And Danger \\
+		\hline
+		\end{tabular}
+		}
+		% \resizebox{0.85\textwidth}{!}{%
+
+		% \begin{tabular}{lllllllll}
+		% % \hline
+		% \hline
+		% \textbf{Item} & Dance & Vinegar & Pearls & Graduation& Aging & Homelessness & Lizards\\
+		% \hline
+		% \multirow{5}{*}{\textbf{Similar items}} & Exercise & Olive Oil & Wealth & High School & Patients & Depression & Dragons\\
+		% & Running And Jumping & Spice & Wedding & School & Grand Parenting & Loneliness& Snakes\\
+		% & Disco And Clubs & Salads & Accessories & Exams & Disability & Crying & Other\\
+		% & Circus And Performing & Garlic & Gold & Job Search & Health Care& Getting Upset& Butterflies\\
+		% & Gymnastics & other & Make Up& E-Learning& Doctors & Risk And Danger & Owls\\
+		% \hline
+		% \end{tabular}
+		% }
+\end{table*}
+% \input{src/experiments}
+
+\section{Conclusion}
+
+In this paper, we proposed a fast low dimensional regularized linear model, Linear-FLow, to addresses the computational bottleneck of linear model, enabling it to scale up to large OC-CF problem while retaining essentially the same performance. In our comprehensive experimentation, we illustrated that the proposed method is computationally superior to the state-of-the-art (an order-of-magnitude faster than SLIM) and yields competitive performance. Future work may explore user and item side-information as well as further improving the computational and memory footprints by exploring more efficient dimensionality reduction techniques.
+In addition, we note that the computational bottleneck for \LinearLow is mainly in the randomized SVD computation. Since this method heavily depends on the linear algebra library, we expect significant speedup by using a GPU backend linear algebra library~\citep{Voronin:GPURSVD}.
+
+% \newpage
+%\clearpage
+%\onecolumn
+
+\bibliographystyle{unsrt}
+\bibliography{bib/references}
+
+\end{document}
