@@ -1,12 +1,12 @@
 Personalized recommendation systems are a core component
-in many modern e-commerce services. Collaborative
+in many modern e-commerce services~\citep{Leavitt:2006}. Collaborative
 filtering (CF) is the de-facto standard approach for making recommendations
 based on information in a database
 of item preferences from a population of users~\citep{Goldberg:1992, Sarwar:2001}. Most of the work on CF has considered
 the explicit feedback
 setting, where users express both positive and negative preferences
 for items in terms of ratings or likes/dislikes~\citep{koren2009matrix}. In
-contrast, in the one-class collaborative filtering setting(OC-CF)~\citep{Pan:2008}, we do not have
+contrast, in the one-class collaborative filtering setting (OC-CF)~\citep{Pan:2008}, we do not have
 explicit negative preference information. For example, consider
 recommending items to users of an e-commerce website
 based on their purchase history. One can assume that a
@@ -21,7 +21,7 @@ of the item.
 % or more desiderata. For example, methods that do not employ
 % learning (such as neighbourhood approaches) cannot
 % ensure full exploitation of available data. On the other hand,
-% amongst methods that employ learning (such as matrix Factorization),
+% amongst methods that employ learning (such as matrix factorization),
 % it is common to employ learning objectives that
 % are non-convex, which limits the range of methods for effi-
 % cient global optimisation (if even possible); further, parallel
@@ -29,7 +29,11 @@ of the item.
 % between parameters.
 % In this paper, we present a novel scalable OC-CF algorithm suited for large scale real world systems.
 In designing a real world recommender system there are various factors to be
-considered~\citep{adomavicius2005toward, ricci2011introduction}. First and foremost, a recommender system should  produce good recommendations which can be quantified in terms of \textsl{relevance}. The relevance of a recommender system is measured using evaluation metrics such as \textsf{precision@k}, \textsf{recall@k} etc. Second, a recommender system should be highly \textsl{scalable}. In modern day applications, it is very common to have millions of users and items and billions of recorded interactions. A model should be able to handle the data in a computationally efficient manner as the number of users and items grow to this scale. Furthermore, \textsl{Similarity metric} is another important aspect of personalization. Prior work has shown that the similarity metric helps users to find items they are interested in and that just being accurate is not enough~\citep{mcnee2006being}.  Recommending similar items is very prevalent in  real-world recommender systems. For instance, Amazon.com shows product suggestions to customers based on the items they are browsing~\citep{linden2003amazon}. Hence, it is highly desirable to have a recommendation algorithm where the similarity is directly expressed and incorporated in the model. Also, \textsl{interpretability} of the recommendation is very critical in persuading users. By explaining the recommendations, the system becomes more transparent, builds users' trust in the system and convinces them to consume the recommended items. For example, the ``why this was recommended" feature on Netflix.com explains to users their recommendations by showing them the similar movies that they liked in the past. A lack of interpretability weakens the ability to persuade the users in their decision making~\citep{explainabiltyVIG2009}.
+considered~\citep{adomavicius2005toward, ricci2011introduction}. First and foremost, a recommender system should  produce good recommendations which can be quantified in terms of \textsl{relevance}. The relevance of a recommender system is measured using evaluation metrics such as \textsf{precision@k}, \textsf{recall@k} etc. Second, a recommender system should be highly \textsl{scalable}. In modern day applications, it is very common to have millions of users and items and billions of recorded interactions. A model should be able to handle the data in a computationally efficient manner as the number of users and items grow to this scale.
+% Furthermore, \textsl{Similarity metric} is another important aspect of personalization. Prior work has shown that the similarity metric helps users to find items they are interested in and that just being accurate is not enough~\citep{mcnee2006being}.
+Recommending similar items is very prevalent in  real-world recommender systems. For instance, Amazon.com shows product suggestions to customers based on the items they are browsing~\citep{linden2003amazon}. Hence, the recommendation algorithm should ideally produce item similarities.
+ % it is highly desirable to have a recommendation algorithm where the similarity is directly expressed and incorporated in the model.
+  Also, \textsl{interpretability} of the recommendation is very critical in persuading users. By explaining the recommendations, the system becomes more transparent, builds users' trust in the system and convinces them to consume the recommended items. For example, the ``why this was recommended" feature on Netflix.com explains to users their recommendations by showing them the similar movies that they liked in the past. A lack of interpretability weakens the ability to persuade the users in their decision making~\citep{explainabiltyVIG2009}.
 
 \begin{table*}[!t]
 	\centering
@@ -55,16 +59,16 @@ or more desiderata.
 %For example, methods that do not employ
 %learning (such as neighbourhood approaches) cannot
 %ensure optimal exploitation of the available data. On the other hand,
-%amongst methods that employ learning (such as matrix Factorization),
+%amongst methods that employ learning (such as matrix factorization),
 %it is common to employ learning objectives that
 %are non-convex, which limits the range of methods for
 %efficient global optimisation (if even possible) for OC-CF problems.
 %While linear models have been shown to perform well on OC-CF problems, they are
 %computationally expensive as they require solving a large number of regression
 %problems.
-Neighborhood-based methods~\citep{Sarwar:2001, Linden:2003} are scalable, incorporate similarity metric in the model and give explainable recommendations.
+Neighborhood-based methods~\citep{Sarwar:2001, Linden:2003} are scalable, incorporate a similarity metric in the model and give explainable recommendations.
 However, the relevance of their recommendation is weaker as compared to other methods.
-Matrix Factorization models~\citep{Hu:2008} optimize a non-convex objective whose solution is sensitive to initialization and hyperparameters. Matrix factorization models are  %scalable but are also
+Matrix factorization models~\citep{Hu:2008} optimize a non-convex objective whose solution is sensitive to initialization and hyperparameters. Matrix factorization models are  %scalable but are also
 not competitive in terms of top-k ranking performance~\cite{Ning:2011, Sedhain:2016}. Also, the recommendations are not explainable and there is no notion of similarity in the model. On the other hand, Linear recommenders~\cite{Ning:2011, Sedhain:2016} are the state-of-the-art in terms of relevance. Furthermore, the model explicitly learns a similarity metric. Also, like neighborhood models, recommendations from linear model are easily explainable. However, current linear methods are computationally expensive which limits their applicability to large scale real world problems.
 % computational cost of the linear models limits its applicability in real world recommendation.
 %This motivates us to address the scalability of the linear models which we will discuss in the following section.
@@ -74,7 +78,7 @@ In this paper we address the computational bottleneck of linear models, enabling
 Although regularized regression and randomized SVD are not new ideas,  their combined use in the context of OC-CF is,  to the best of our knowledge, novel.
 Through extensive experiments on known benchmarks and real-world datasets, we demonstrate that \LinearLow achieves state-of-the-art performance as
 compared to other methods, with a significant reduction in computational cost.  Due to its scalability and performance,
-\LinearLow has all the desirable properties of a practical recommender system. Table~\ref{tbl:comparison} summarizes the comparison of the existing OC-CF methods with respect to Linear-Flow.
+\LinearLow has all the desirable properties of a practical recommender system. Table~\ref{tbl:comparison} summarizes the comparison of the existing OC-CF methods with respect to Linear-FLow.
 
 %This paper addresses the computational bottleneck of linear model, enabling it to scale up to large OC-CF problem while retaining essentially
 %the same performance. Our method, \LinearLow (Fast Low Rank Linear Model), employ two ingredients that are known in the literature:

@@ -77,10 +77,9 @@ Matrix Factorization methods are the \emph{de facto} approach to collaborative f
 Weighted matrix factorization (WRMF) for one class collaborative filtering~\cite{Hu:2008, Pan:2009} optimizes
 \begin{equation}
 \label{eqn:wrmf}
-\min_{ \A,\B  } \sum_{ u \in \userSet, i \in \itemSet } \J_{\ui} ( \R_{\ui} - \A_u^T \B_i )^2 + \frac{\lambda}{2}  ( ||\A||_F^2 + ||\B||_F^2 )
+\min_{ \A,\B  } \sum_{ u \in \userSet, i \in \itemSet } \J_{\ui} ( \R_{\ui} - \A_{:u}^T \B_{:i} )^2 + \frac{\lambda}{2}  ( ||\A||_F^2 + ||\B||_F^2 )
 \end{equation}
-where
-$\J \in \Real_+^{\numUsers \times \numItems}$ is some pre-defined weighting matrix  and
+where, $\A\in\Real^{k\times m}$, $\B\in\Real^{k\times n}$, and $\J \in \Real_+^{\numUsers \times \numItems}$ is some pre-defined weighting matrix  and
 \begin{equation}
 \label{eqn:wrmf-weight}
 \J_{\ui} =  \indicator{ \R_{\ui} = 0 } + \alpha \indicator{ \R_{\ui} > 0 }
@@ -92,8 +91,8 @@ WRMF uses Alternating Least Squares(ALS) method for optimization. The solution f
 \begin{align}
 	\label{eqn:ALS_A}
 	\begin{split}
-	\A_u = (\B^T \J^u \B + \lambda \I)^{-1} \B^T \J^u \R_{u:} \\
-	\B_i = (\A^T \J^i \A + \lambda \I)^{-1} \A^T \J^i \R_{i:}
+	\A_{:u} = (\B^T \J^u \B + \lambda \I)^{-1} \B^T \J^u \R_{u:} \\
+	\B_{:i} = (\A^T \J^i \A + \lambda \I)^{-1} \A^T \J^i \R_{i:}
 	\end{split}
 \end{align}
 where, $\J^u \in \mathbb{R}^{n \times n}$ and $\J^i \in \mathbb{R}^{m \times m}$ are diagonal matrix such that $ \J^u_{ij} = \J_{ui}$ and  $\J^i_{uu} = \J_{ui}$. In each iteration of ALS, due to the weighting, we need to compute inverse for each user and item as shown in (\ref{eqn:ALS_A}). This makes WRMF computationally expensive compared to unweighted matrix factorization.

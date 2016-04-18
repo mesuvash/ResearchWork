@@ -106,12 +106,14 @@ In I-\LinearLow model, the item-item similarity is explicitly given by the matri
 
         \Procedure{RSVD}{\textbf{R}, k}
         \State Draw $n\times k$ Gaussian random matrix $\mathbf{\Omega}$
-        \State Construct $n\times k$ sample matrix $A = \matbhf{R}\mathbf{\Omega}$
+        \State Construct $n\times k$ sample matrix $\mathbf{A} = \mathbf{R}\mathbf{\Omega}$
         \State Construct $m\times k$ orthonormal matrix $\mathbf{Z}$, such that $\mathbf{A}  = \mathbf{Z}\mathbf{X}$
         \State Constuct $k\times n$ matrix $\mathbf{B} = \mathbf{Z}^T\mathbf{R}$
-        \State Compute the SVD of \textbf{B}, \textbf{B} =  $\hat{\mathbf{P}_k} \mathbf{\Sigma}_k \mathbf{Q}_k$
-        \State  $\mathbf{R} \Rightarrow \mathbf{Z}\mathbf{B} \Rightarrow \mathbf{Z} \hat{\mathbf{P}_k} \mathbf{\Sigma}_k \mathbf{Q}_k \Rightarrow  \mathbf{P}_k \mathbf{\Sigma}_k \mathbf{Q}_k \\ ;\ \mathbf{P}_k = \mathbf{Z} \hat{\mathbf{P}_k}$
-        \State return $P_k \Sigma_k Q_k$
+        \State Compute the SVD of $\mathbf{B}$, $\mathbf{B}$ =  $\hat{\mathbf{P}_k} \mathbf{\Sigma}_k \mathbf{Q}_k$
+        \State Compute $\mathbf{P}_k$ =  $ \mathbf{Z} \hat{\mathbf{P}_k}$
+        \State return ($\mathbf{P}_k,\ \mathbf{\Sigma}_k,\ \mathbf{Q}_k$)
+        % \State  $\mathbf{R} \Rightarrow \mathbf{Z}\mathbf{B} \Rightarrow \mathbf{Z} \hat{\mathbf{P}_k} \mathbf{\Sigma}_k \mathbf{Q}_k \Rightarrow  \mathbf{P}_k \mathbf{\Sigma}_k \mathbf{Q}_k \\ ;\ \mathbf{P}_k = \mathbf{Z} \hat{\mathbf{P}_k}$
+        % \State return $P_k \Sigma_k Q_k$
         \EndProcedure
         \end{algorithmic}
 \end{algorithm}
