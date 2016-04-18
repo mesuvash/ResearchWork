@@ -310,7 +310,7 @@ WRMF uses Alternating Least Squares(ALS) method for optimization. The solution f
 \begin{align}
 	\label{eqn:ALS_A}
 	\begin{split}
-	\A_{:u} = (\B^T \J^u \B + \lambda \I)^{-1} \B^T \J^u \R_{u:} \\
+	\A_{:u} = (\B \J^u \B^T + \lambda \I)^{-1} \B \J^u \R_{u:} \\
 	\B_{:i} = (\A \J^i \A^T + \lambda \I)^{-1} \A \J^i \R_{:i}
 	\end{split}
 \end{align}
