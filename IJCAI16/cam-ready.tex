@@ -167,7 +167,7 @@
 \title{Practical Linear Models for Large-Scale One-Class Collaborative Filtering}
 
 \author { \textbf{Suvash Sedhain$^{\dag\ddagger}$, Hung Bui$^{*}$, Jaya Kawale $^{*}$, Nikos Vlassis$^{*}$,} \\ \textbf{Branislav Kveton$^{*}$, Aditya Menon$^{\ddagger\dag}$, Trung Bui$^{*}$, Scott Sanner$^{\S}$}\\
-\{$^{\dag}$Australian National University, $^{\ddagger}$DATA61\}, Canberra, ACT, Australia\\
+\{$^{\dag}$Australian National University, $^{\ddagger}$Data61\}, Canberra, ACT, Australia\\
 $^{*}$ Adobe Systems Inc, San Jose,  USA\\
 $^{\S}$  University of Toronto, Toronto, Canada\\
 suvash.sedhain@anu.edu.au,\{hbui,kawale,vlassis,kveton\}@adobe.com\\ aditya.menon@nicta.com.au, bui@adobe.com, ssanner@mie.utoronto.ca
@@ -210,7 +210,7 @@ a negative preference; it may just be that the user is unaware
 of the item.
 
 In designing a real world recommender system there are various factors to be
-considered~\citep{adomavicius2005toward, ricci2011introduction}. First and foremost, a recommender system should  produce good recommendations which can be quantified in terms of \textsl{relevance}. The relevance of a recommender system is measured using evaluation metrics such as \textsf{precision@k}, \textsf{recall@k} etc. Second, a recommender system should be highly \textsl{scalable}. In modern day applications, it is very common to have millions of users and items and billions of recorded interactions. A model should be able to handle the data in a computationally efficient manner as the number of users and items grow to this scale.Recommending similar items is very prevalent in  real-world recommender systems. For instance, Amazon.com shows product suggestions to customers based on the items they are browsing~\citep{linden2003amazon}. Hence, the recommendation algorithm should ideally produce item similarities. Also, \textsl{interpretability} of the recommendation is very critical in persuading users. By explaining the recommendations, the system becomes more transparent, builds users' trust in the system and convinces them to consume the recommended items. For example, the ``why this was recommended" feature on Netflix.com explains to users their recommendations by showing them the similar movies that they liked in the past. A lack of interpretability weakens the ability to persuade the users in their decision making~\citep{explainabiltyVIG2009}.
+considered~\citep{adomavicius2005toward, ricci2011introduction}. First and foremost, a recommender system should  produce good recommendations which can be quantified in terms of \textsl{relevance}. The relevance of a recommender system is measured using evaluation metrics such as \textsf{precision@k}, \textsf{recall@k} etc. Second, a recommender system should be highly \textsl{scalable}. In modern day applications, it is very common to have millions of users and items and billions of recorded interactions. A model should be able to handle the data in a computationally efficient manner as the number of users and items grow to this scale. Third, recommending similar items is very prevalent in  real-world recommender systems. For instance, Amazon.com shows product suggestions to customers based on the items they are browsing~\citep{linden2003amazon}. Hence, the recommendation algorithm should ideally produce \textsl{item similarities}. Also, \textsl{interpretability} of the recommendation is very critical in persuading users. By explaining the recommendations, the system becomes more transparent, builds users' trust in the system and convinces them to consume the recommended items. For example, the ``why this was recommended" feature on Netflix.com explains to users their recommendations by showing them the similar movies that they liked in the past. A lack of interpretability weakens the ability to persuade the users in their decision making~\citep{explainabiltyVIG2009}.
 
 \begin{table*}[!t]
 	\centering
@@ -340,7 +340,7 @@ SVD is the archetypal matrix factorization algorithm and has been widely used in
 
 Randomized SVD has been applied to matrix factorization \citep{Tang:2013}
 (but not in the OC-CF setting that we are considering).
-The authors compute the rank-k randomized SVD of the matrix $\R$,
+The authors compute the rank-k randomized SVD of the matrix $\R$ (Algorithm 1),
 \begin{align}
 	\label{eqn:truncatedSVD}
 	\R \approx \P_k \Sig_k \Q^T_k
@@ -681,7 +681,22 @@ when a recommendation of similar items or users is needed.
 \subsection{Runtime Evaluation}
 \label{section:scalability}
 
-\begin{table}[!htb]
+
+
+To compare the training efficiency of the various algorithms, we choose \Lowes and \MLens, the two largest datasets for analysis.
+%our largest dataset i.e. \Lowes\ in terms of users and items.
+%To compare the runtime of the various algorithm, we choose \Lowes, the largest dataset in terms of users and items.
+We benchmarked the training time of the algorithms
+by training the model on  workstation with 128 GB of main memory and Intel(R) Xeon(R) CPU E5-2650 v2 @ 2.60GHz with 32 cores. All of the methods exploit multi-core enabled via numpy linear algebra library, whereas SLIM and WRMF attains parallelism via multiprocessing. For a fair comparison, we ran  SLIM and WRMF in parallel to use all available cores.  In Table~\ref{tbl:runtime_lowes} we compare the runtime of the proposed method with the baseline methods.
+
+The results demonstrate that while \LinearLow offers the same quality of recommendation as SLIM, its training time is an order-of-magnitude
+faster than SLIM.  SLIM is computationally expensive and is the slowest among the baselines.
+Neighborhood methods are computationally cheap as they only involve sparse linear algebra, however as demonstrated previously, their recommendation
+quality is not consistent and lacking behind the other methods.
+For factorization approaches, those that use randomized SVD has similar computational footprints as \LinearLow while
+WRMF is much more computationally expensive.
+
+\begin{table}[htb!]
 \caption{Training times of various methods on  \Lowes  and \MLens Dataset.}
 \label{tbl:runtime_lowes}
 \centering
@@ -704,20 +719,6 @@ when a recommendation of similar items or users is needed.
 	\end{tabular}
 }
 \end{table}
-
-To compare the training efficiency of the various algorithms, we choose \Lowes and \MLens, the two largest datasets for analysis.
-%our largest dataset i.e. \Lowes\ in terms of users and items.
-%To compare the runtime of the various algorithm, we choose \Lowes, the largest dataset in terms of users and items.
-We benchmarked the training time of the algorithms
-by training the model on  workstation with 128 GB of main memory and Intel(R) Xeon(R) CPU E5-2650 v2 @ 2.60GHz with 32 cores. All of the methods exploit multi-core enabled via numpy linear algebra library, whereas SLIM and WRMF attains parallelism via multiprocessing. For a fair comparison, we ran  SLIM and WRMF in parallel to use all available cores.  In Table~\ref{tbl:runtime_lowes} we compare the runtime of the proposed method with the baseline methods.
-
-The results demonstrate that while \LinearLow offers the same quality of recommendation as SLIM, its training time is an order-of-magnitude
-faster than SLIM.  SLIM is computationally expensive and is the slowest among the baselines.
-Neighborhood methods are computationally cheap as they only involve sparse linear algebra, however as demonstrated previously, their recommendation
-quality is not consistent and lacking behind the other methods.
-For factorization approaches, those that use randomized SVD has similar computational footprints as \LinearLow while
-WRMF is much more computationally expensive.
-
 
 \subsection{Qualitative Analysis of Learned Similarities}
 In this section, we provide a qualitative evaluation of the item-item similarities learned by our I-\LinearLow model.
