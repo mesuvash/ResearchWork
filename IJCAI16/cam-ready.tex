@@ -199,7 +199,7 @@ Personalized recommendation systems are a core component
 in many modern e-commerce services~\citep{Leavitt:2006}. Collaborative
 filtering (CF) is the de-facto standard approach for making recommendations
 based on information in a database
-of item preferences from a population of users~\citep{Goldberg:1992, Sarwar:2001}. Most of the work on CF has considered
+of item preferences from a population of users~\citep{Goldberg:1992,Sarwar:2001}. Most of the work on CF has considered
 the explicit feedback
 setting, where users express both positive and negative preferences
 for items in terms of ratings or likes/dislikes~\citep{koren2009matrix}. In
@@ -213,7 +213,7 @@ a negative preference; it may just be that the user is unaware
 of the item.
 
 In designing a real world recommender system there are various factors to be
-considered~\citep{adomavicius2005toward, ricci2011introduction}. First and foremost, a recommender system should  produce good recommendations which can be quantified in terms of \textsl{relevance}. The relevance of a recommender system is measured using evaluation metrics such as \textsf{precision@k}, \textsf{recall@k} etc. Second, a recommender system should be highly \textsl{scalable}. In modern day applications, it is very common to have millions of users and items and billions of recorded interactions. A model should be able to handle the data in a computationally efficient manner as the number of users and items grow to this scale. Third, recommending similar items is very prevalent in  real-world recommender systems. For instance, Amazon.com shows product suggestions to customers based on the items they are browsing~\citep{linden2003amazon}. Hence, a recommendation algorithm should ideally produce \textsl{item similarities}. Also, \textsl{interpretability} of the recommendation is very critical in persuading users. By explaining the recommendations, the system becomes more transparent, builds users' trust in the system and convinces them to consume the recommended items. For example, the ``why this was recommended" feature on Netflix.com explains to users their recommendations by showing them the similar movies that they liked in the past. A lack of interpretability weakens the ability to persuade the users in their decision making~\citep{explainabiltyVIG2009}.
+considered~\citep{adomavicius2005toward,ricci2011introduction}. First and foremost, a recommender system should  produce good recommendations which can be quantified in terms of \textsl{relevance}. The relevance of a recommender system is measured using evaluation metrics such as \textsf{precision@k}, \textsf{recall@k} etc. Second, a recommender system should be highly \textsl{scalable}. In modern day applications, it is very common to have millions of users and items and billions of recorded interactions. A model should be able to handle the data in a computationally efficient manner as the number of users and items grow to this scale. Third, recommending similar items is very prevalent in  real-world recommender systems. For instance, Amazon.com shows product suggestions to customers based on the items they are browsing~\citep{linden2003amazon}. Hence, a recommendation algorithm should ideally produce \textsl{item similarities}. Also, \textsl{interpretability} of the recommendation is very critical in persuading users. By explaining the recommendations, the system becomes more transparent, builds users' trust in the system and convinces them to consume the recommended items. For example, the ``why this was recommended" feature on Netflix.com explains to users their recommendations by showing them the similar movies that they liked in the past. A lack of interpretability weakens the ability to persuade the users in their decision making~\citep{explainabiltyVIG2009}.
 
 \begin{table*}[!t]
 	\centering
@@ -235,8 +235,8 @@ considered~\citep{adomavicius2005toward, ricci2011introduction}. First and forem
 
 While there is a rich literature on OC-CF (discussed subsequently),
 to our knowledge, all existing methods lack one
-or more desiderata.Neighborhood-based methods~\citep{Sarwar:2001, Linden:2003} are scalable, incorporate a similarity metric in the model and give explainable recommendations. However, the relevance of their recommendation is weaker as compared to other methods. Matrix factorization models~\citep{Hu:2008} optimize a non-convex objective whose solution is sensitive to initialization and hyperparameters. Matrix factorization models are  %scalable but are also
-not competitive in terms of top-k ranking performance~\cite{Ning:2011, Sedhain:2016}. Also, the recommendations are not explainable and there is no notion of similarity in the model. On the other hand, Linear recommenders~\cite{Ning:2011, Sedhain:2016} are the state-of-the-art in terms of relevance. Furthermore, the model explicitly learns a similarity metric. Also, like neighborhood models, recommendations from linear model are easily explainable. However, current linear methods are computationally expensive which limits their applicability to large scale real world problems.
+or more desiderata.Neighborhood-based methods~\citep{Sarwar:2001,Linden:2003} are scalable, incorporate a similarity metric in the model and give explainable recommendations. However, the relevance of their recommendation is weaker as compared to other methods. Matrix factorization models~\citep{Hu:2008} optimize a non-convex objective whose solution is sensitive to initialization and hyperparameters. Matrix factorization models are  %scalable but are also
+not competitive in terms of top-k ranking performance~\cite{Ning:2011,Sedhain:2016}. Also, the recommendations are not explainable and there is no notion of similarity in the model. On the other hand, Linear recommenders~\cite{Ning:2011,Sedhain:2016} are the state-of-the-art in terms of relevance. Furthermore, the model explicitly learns a similarity metric. Also, like neighborhood models, recommendations from linear model are easily explainable. However, current linear methods are computationally expensive which limits their applicability to large scale real world problems.
 % computational cost of the linear models limits its applicability in real world recommendation.
 %This motivates us to address the scalability of the linear models which we will discuss in the following section.
 
@@ -296,7 +296,7 @@ They are simple to implement, efficient and interpretable. However, they are una
 \subsection{Matrix Factorization}
 
 Matrix Factorization methods are the \emph{de facto} approach to collaborative filtering with explicit feedback. The basic idea is to embed users and items into some shared latent space, with the aim of inferring complex preference profiles for both users and items.
-Weighted matrix factorization (WRMF) for one class collaborative filtering~\cite{Hu:2008, Pan:2009} optimizes
+Weighted matrix factorization (WRMF) for one class collaborative filtering~\cite{Hu:2008,Pan:2009} optimizes
 \begin{equation}
 \label{eqn:wrmf}
 \min_{ \A,\B  } \sum_{ u \in \userSet, i \in \itemSet } \J_{\ui} ( \R_{\ui} - \A_{:u}^T \B_{:i} )^2 + \frac{\lambda}{2}  ( ||\A||_F^2 + ||\B||_F^2 )
@@ -321,7 +321,7 @@ where, $\J^u \in \mathbb{R}^{n \times n}$ and $\J^i \in \mathbb{R}^{m \times m}$
 
 \subsection{Linear Recommenders}
 
-Linear methods~\cite{Ning:2011, Sedhain:2016} learn the similarity metric from the data. SLIM~\citep{Ning:2011} views the recommendation as learning item-item similarity and learns an item-similarity matrix $\W \in \Real^{\numItems \times \numItems}$ via
+Linear methods~\cite{Ning:2011,Sedhain:2016} learn the similarity metric from the data. SLIM~\citep{Ning:2011} views the recommendation as learning item-item similarity and learns an item-similarity matrix $\W \in \Real^{\numItems \times \numItems}$ via
 \begin{equation}
 \label{eqn:slim}
 \min_{ \W \in \C } || \R - \R \W ||_F^2 + \frac{\lambda}{2} || \W ||_F^2 + \mu || \W ||_1,
