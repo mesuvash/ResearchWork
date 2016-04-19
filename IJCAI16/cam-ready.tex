@@ -276,7 +276,7 @@ We call $\RHat$ the \emph{recommendation matrix}. The notations are summarized i
 
 In the rest of this section we review some existing approaches to OC-CF.
 \subsection{Neighbourhood methods}
-label{sec:knn}
+\label{sec:knn}
 
 In (item-based) neighbourhood methods, we produce a recommendation matrix of the form
 \begin{equation}
@@ -310,7 +310,7 @@ WRMF uses Alternating Least Squares(ALS) method for optimization. The solution f
 \begin{align}
 	\label{eqn:ALS_A}
 	\begin{split}
-	\A_{:u} = (\B \J^u \B^T + \lambda \I)^{-1} \B \J^u \R_{u:} \\
+	\A_{:u} = (\B \J^u \B^T + \lambda \I)^{-1} \B \J^u \R_{u:}^{T} \\
 	\B_{:i} = (\A \J^i \A^T + \lambda \I)^{-1} \A \J^i \R_{:i}
 	\end{split}
 \end{align}
@@ -736,7 +736,7 @@ compared to the other datasets.
 % users clicks on various image categories.
 % Since the similarity metric is an important aspect of personalization, we evaluate the item-item similarities learned by I-\LinearLow  model on the \Fotolia dataset.
 
-In Table~\ref{tbl:similarity-evaluation}, we show some examples~\footnote{Visit http://ssedhain.com/demos/Item-Item.html for interactive visualization} of top-5 similar items learned by I-\LinearLow model. We observe that the model
+In Table~\ref{tbl:similarity-evaluation}, we show some examples~\footnote{\scriptsize{Visit http://ssedhain.com/demos/Item-Item.html for interactive visualization}} of top-5 similar items learned by I-\LinearLow model. We observe that the model
 discovers meaningful and explainable similarities, hence making it very applicable in similar item recommendations.
 \begin{table*}[!htb]
 	\centering
