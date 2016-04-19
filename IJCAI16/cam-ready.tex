@@ -33,8 +33,11 @@
 \usepackage{multirow}
 %\setlength{\bibsep}{4pt}
 
-\renewcommand{\citep}{\cite}
-\renewcommand{\citet}{\cite}
+\newcommand{\citep}{\cite}
+\newcommand{\citet}{\cite}
+
+% \renewcommand{\citep}{\cite}
+% \renewcommand{\citet}{\cite}
 
 %\usepackage[doi=false, isbn=false, url=false, natbib=true, style=numeric, backend=bibtex]{biblatex}
 %\addbibresource{bib/references.bib}
@@ -696,7 +699,7 @@ quality is not consistent and lacking behind the other methods.
 For factorization approaches, those that use randomized SVD has similar computational footprints as \LinearLow while
 WRMF is much more computationally expensive.
 
-\begin{table}[htb!]
+\begin{table}[H]
 \caption{Training times of various methods on  \Lowes  and \MLens Dataset.}
 \label{tbl:runtime_lowes}
 \centering
@@ -803,6 +806,6 @@ In this paper, we proposed a fast low dimensional regularized linear model, Line
 %\onecolumn
 
 \bibliographystyle{named}
-\bibliography{references}
+\bibliography{bib/references}
 
 \end{document}
