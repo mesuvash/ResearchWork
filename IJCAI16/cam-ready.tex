@@ -29,7 +29,7 @@
 % \usepackage{algorithmicx}e
 \usepackage{algorithm}
 \usepackage{algpseudocode}
-\usepackage{natbib}
+% \usepackage{natbib}
 \usepackage{multirow}
 %\setlength{\bibsep}{4pt}
 
@@ -50,7 +50,7 @@
 \arrayrulecolor{tabgrey}
 
 %\usepackage{paralist}
-%\setlength{\plitemsep}{1ex}
+%\setlength{\plitemsep}{1ex}bib
 \usepackage{enumitem}
 \newlist{compactitem}{itemize}{3} % 3 is max-depth
 \setlist[compactitem]{label=\textbullet, nosep, leftmargin=2em}
@@ -796,14 +796,13 @@ discovers meaningful and explainable similarities, hence making it very applicab
 
 \section{Conclusion}
 
-In this paper, we proposed a fast low dimensional regularized linear model, Linear-FLow, to addresses the computational bottleneck of linear model, enabling it to scale up to large OC-CF problem while retaining essentially the same performance. In our comprehensive experimentation, we illustrated that the proposed method is computationally superior to the state-of-the-art (an order-of-magnitude faster than SLIM) and yields competitive performance. Future work may explore user and item side-information as well as further improving the computational and memory footprints by exploring more efficient dimensionality reduction techniques.
-In addition, we note that the computational bottleneck for \LinearLow is mainly in the randomized SVD computation. Since this method heavily depends on the linear algebra library, we expect significant speedup by using a GPU backend linear algebra library~\citep{Voronin:GPURSVD}.
+In this paper, we proposed a fast low dimensional regularized linear model, Linear-FLow, to address the computational bottleneck of linear model, enabling it to scale up to large OC-CF problem while retaining essentially the same performance. In our experiments, we illustrated that the proposed method is computationally superior to the state-of-the-art (an order-of-magnitude faster than SLIM) and yields competitive performance. Future work may explore user and item side-information as well as further improving the computational and memory footprints by exploring more efficient dimensionality reduction techniques. In addition, we note that the computational bottleneck for \LinearLow is mainly in the randomized SVD computation. Since this method heavily depends on the linear algebra library, we expect significant speedup by using a GPU backend linear algebra library~\citep{Voronin:GPURSVD}.
 
-% \newpage
+\newpage
 %\clearpage
 %\onecolumn
 
-\bibliographystyle{unsrt}
+\bibliographystyle{named}
 \bibliography{references}
 
 \end{document}
