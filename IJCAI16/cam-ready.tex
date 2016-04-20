@@ -288,7 +288,7 @@ In (item-based) neighbourhood methods, we produce a recommendation matrix of the
 \RHat = \R \Sim
 \end{equation}
 where $\Sim \in \Real^{\numItems \times \numItems}$ is some \emph{item-similarity matrix}.
-Typically, one uses a predefined matrix $\Sim$ that relies on $\R$. A popular example is cosine similarity \citep{Sarwar:2001, Linden:2003},
+Typically, one uses a predefined matrix $\Sim$ that relies on $\R$. A popular example is cosine similarity \citep{Sarwar:2001,Linden:2003},
 $$ \Sim_{\i' \i} = \frac{ \R_{:\i}^T \R_{:\i'} }{|| \R_{:\i} ||_2 || \R_{:\i'} ||_2}. $$
 It is typical to sparsify $\Sim$ so that its columns only keep the top-k similar items.Neighbourhood methods are attractive for several reasons.
 They are simple to implement, efficient and interpretable. However, they are unable to adapt to the characteristics of the data as they rely on a fixed $\Sim$ that is not learned from the new data \citep{Koren:2008b}. Furthermore, recommendation performance can be quite sensitive to the choice of $\Sim$.
@@ -365,7 +365,7 @@ We refer to (\ref{eqn:U-MF-RSVD}) and (\ref{eqn:I-MF-RSVD}) as U-MF-RSVD and I-M
 Despite their superior performance, the applicability of Linear methods on real world large scale dataset are constrained by their computational cost. Linear methods involve solving  a large number of regression subproblems on a huge design matrix $\R$ making it extremely challenging on real world applications where the number of users and items is in millions.
 
 Here we propose a model and an algorithm for scaling up linear methods to large OC-CF problems.
-In particular, we are seeking an approximation $\R \approx \R \W$ that attempts to capture most of the row space of the matrix $\R$ through a matrix $\W$ that is low-rank {\em and} has small Frobenius norm. The motivation for such a double regularization is to better control the generalization error of the model, an insight that was proven correct by our experiments. Moreover, it turns out that there is a very natural and efficient way to compute such an approximate decomposition of the matrix $\R$ by randomization~\citep{halko2011}, which allows scaling to large problems.
+In particular, we are seeking an approximation $\R \approx \R \W$ that attempts to capture most of the row space of the matrix $\R$ through a matrix $\W$ that is low-rank {\em and} has small Frobenius norm. The motivation for such a double regularization is to better control the generalization error of the model, an insight that was proven correct by our experiments. Moreover, it turns out that there is a natural and efficient way to compute such an approximate decomposition of the matrix $\R$ by randomization~\citep{halko2011}, which allows scaling to large problems.
 
 Our model amounts to solving the following optimization problem
  \begin{align}
@@ -507,7 +507,7 @@ We do not compare against LRec~\citep{Sedhain:2016} due to its memory complexity
 Tables \ref{tbl:guitar-results} -- \ref{tbl:ml10m-results} summarize the results of our methods and the various baselines.
 The results demonstrate that in terms of the quality of recommendation, the linear methods (\LinearLow and SLIM) always outperform other methods
 in all four datasets. \LinearLow and SLIM perform equally well and there is little separation between them in terms of the quality of
-the recommendation. However, as we will show in section~\ref{section:scalability}, \LinearLow is much more efficient than SLIM.
+the recommendation. However, as we will show in section~\ref{section:scalability}, \LinearLow is much efficient than SLIM.
 Also, unlike other methods, the performance of \LinearLow is not very sensitive to the choice of user or item based formulation.
 %Furthermore, it consistently outperforms other baselines on all four datasets.
 %\LinearLow is very competitive with SLIM and has much less computational footprint which we will discuss in
@@ -729,7 +729,7 @@ We use \Fotolia, a dataset from a major stock image market site\footnote{\script
 The data provides whether a given user has clicked on a particular image category, and from these our model can infer the similarity measure between
 the image categories. Note that the similarity is inferred solely based on the click patterns, without doing any analysis of the textual content of
 the category names.
-We choose this dataset for the qualitative evaluation mainly because the items are category names and are much easier to interpret
+We choose this dataset for the qualitative evaluation mainly because the category names and are much easier to interpret
 compared to the other datasets.
 
 
@@ -739,8 +739,8 @@ compared to the other datasets.
 % users clicks on various image categories.
 % Since the similarity metric is an important aspect of personalization, we evaluate the item-item similarities learned by I-\LinearLow  model on the \Fotolia dataset.
 
-In Table~\ref{tbl:similarity-evaluation}, we show some examples~\footnote{\scriptsize{Visit http://ssedhain.com/demos/Item-Item.html for interactive visualization}} of top-5 similar items learned by I-\LinearLow model. We observe that the model
-discovers meaningful and explainable similarities, hence making it very applicable in similar item recommendations.
+In Table~\ref{tbl:similarity-evaluation}, we show some examples\footnote{\scriptsize{Visit http://ssedhain.com/demos/Item-Item.html for interactive visualization}} of top-5 similar items learned by I-\LinearLow model. We observe that the model
+discovers meaningful and explainable similarities, hence making it applicable in similar item recommendations.
 \begin{table*}[!htb]
 	\centering
 	\caption{Top-5 similar items learned by I-\LinearLow model.}
@@ -799,7 +799,8 @@ discovers meaningful and explainable similarities, hence making it very applicab
 
 \section{Conclusion}
 
-In this paper, we proposed a fast low dimensional regularized linear model, Linear-FLow, to address the computational bottleneck of linear model, enabling it to scale up to large OC-CF problem while retaining essentially the same performance. In our experiments, we illustrated that the proposed method is computationally superior to the state-of-the-art (an order-of-magnitude faster than SLIM) and yields competitive performance. Future work may explore user and item side-information as well as further improving the computational and memory footprints by exploring more efficient dimensionality reduction techniques. In addition, we note that the computational bottleneck for \LinearLow is mainly in the randomized SVD computation. Since this method heavily depends on the linear algebra library, we expect significant speedup by using a GPU backend linear algebra library~\citep{Voronin:GPURSVD}.
+In this paper, we proposed a fast low dimensional regularized linear model, Linear-FLow, to address the computational bottleneck of the linear model, enabling it to scale up to a large OC-CF problem while retaining the same performance. In our experiments, we illustrated that the proposed method is computationally superior to the state-of-the-art (an order-of-magnitude faster than SLIM) and yields competitive performance. Future work may explore user and item side-information, and further improving the computational and memory footprints by exploring more efficient dimensionality reduction techniques. Furthermore, the computational bottleneck for \LinearLow is in the computation of randomized SVD, which heavily depends on a linear algebra library. Hence, we expect significant speedup by using a GPU backend linear algebra library~\citep{Voronin:GPURSVD}.
+
 
 \newpage
 %\clearpage
